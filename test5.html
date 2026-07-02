@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Simple2</title>
+  <title>Simple3</title>
   <style>
     body { font-family: system-ui, sans-serif; padding: 20px; }
     button { margin: 8px 0; padding: 8px 12px; }
@@ -11,12 +11,13 @@
   </style>
 </head>
 <body>
-  <h1>Simple2</h1>
+  <h1>Simple3</h1>
 
   <button id="check">Prüfen</button>
 
   <div id="msg" class="msg">Start...</div>
 
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script>
     const msgEl = document.getElementById("msg");
     const checkBtn = document.getElementById("check");
@@ -26,7 +27,7 @@
 
       if (!window.supabase) {
         msgEl.className = "msg error";
-        msgEl.textContent += "\nSupabase-js nicht geladen.";
+        msgEl.textContent += "\nSupabase-js von unpkg nicht geladen.";
         return;
       }
 
