@@ -2,25 +2,30 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Simple4</title>
+  <title>Simple5</title>
   <style>
     body { font-family: system-ui, sans-serif; padding: 20px; }
-    button { margin: 8px 0; padding: 8px 12px; }
+    input, button { margin: 8px 0; padding: 8px 12px; }
     .msg { margin-top: 10px; font-weight: bold; }
   </style>
 </head>
 <body>
-  <h1>Simple4</h1>
+  <h1>Simple5</h1>
 
-  <button id="testButton" onclick="klickTest()">Klick mich</button>
+  <div>
+    <label>Match-Code:</label><br />
+    <input id="matchCode" type="text" value="spiel1" /><br />
+    <button id="loadMatch" onclick="loadMatch()">Spiel öffnen</button>
+  </div>
 
   <div id="msg" class="msg">Start...</div>
 
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script>
-    function klickTest() {
+    function loadMatch() {
       const msg = document.getElementById("msg");
-      msg.textContent = "Klick funktioniert! window.supabase? " + (window.supabase ? "ja" : "nein");
+      const code = document.getElementById("matchCode").value.trim();
+      msg.textContent = "loadMatch() wurde ausgeführt! Code: " + code;
     }
   </script>
 </body>
