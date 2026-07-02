@@ -19,7 +19,7 @@
   <div>
     <label>Match-Code:</label><br />
     <input id="matchCode" type="text" placeholder="z. B. spiel1" /><br />
-    <button id="loadMatch">Spiel öffnen</button>
+    <button id="loadMatch" onclick="loadMatch()">Spiel öffnen</button>
   </div>
 
   <div class="status" id="status">Status: noch nicht geöffnet</div>
@@ -50,7 +50,6 @@
     const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
     const matchCodeInput = document.getElementById("matchCode");
-    const loadMatchBtn = document.getElementById("loadMatch");
     const statusEl = document.getElementById("status");
     const syncStatusEl = document.getElementById("syncStatus");
     const errorBoxEl = document.getElementById("errorBox");
@@ -66,7 +65,7 @@
       }
     }
 
-    loadMatchBtn.addEventListener("click", async () => {
+    async function loadMatch() {
       const code = matchCodeInput.value.trim();
       if (!code) {
         statusEl.textContent = "Status: Kein Code eingegeben";
@@ -143,7 +142,7 @@
         showError("Unbekannter Fehler: " + e.message);
         tableEl.style.display = "none";
       }
-    });
+    }
 
     function renderTable(match) {
       tbodyEl.innerHTML = "";
