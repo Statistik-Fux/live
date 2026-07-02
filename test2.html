@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Test 2</title>
+  <style>
+    body { font-family: system-ui, sans-serif; padding: 20px; }
+    .msg { margin-top: 10px; font-weight: bold; }
+    .error { color: #cc0000; }
+  </style>
+</head>
+<body>
+  <h1>Test 2</h1>
+  <div id="msg" class="msg">Lade...</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const msgEl = document.getElementById("msg");
+
+    msgEl.textContent = "Supabase-js geladen?";
+
+    if (!window.supabase) {
+      msgEl.className = "msg error";
+      msgEl.textContent = "window.supabase ist nicht vorhanden!";
+      return;
+    }
+
+    const supabaseUrl = "https://tmadmhayyudwbbzxfqnl.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtYWRtaGF5eXVkd2JienhmcW5sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMTA3ODIsImV4cCI6MjA5ODU4Njc4Mn0.cu70uZwFw_eKOAuzHQijgokrDrpDN4C4kCRgfQfwUxY";
+
+    msgEl.textContent = "Client erstelle...";
+
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    msgEl.textContent = "Client erstellt? " + (supabase ? "ja" : "nein");
+
+    supabase
+      .from("matches")
+      .select("*")
+      .then(({ data, error }) => {
+        if (error) {
+          msgEl.className = "msg error";
+          msgEl.textContent = "Supabase-Fehler: " + error.message;
+        } else if (!data || data.length === 0) {
+          msgEl.textContent = "Keine Matches gefunden.";
+        } else {
+          msgEl.textContent = "Gefundene Matches: " + data.map(m => m.code).join(", ");
+        }
+      });
+  </script>
+</body>
+</html>
