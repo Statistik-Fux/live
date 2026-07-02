@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Mein Spiel - Supabase (Debug)</title>
+  <title>Mein Spiel</title>
   <style>
     body { font-family: system-ui, sans-serif; padding: 20px; }
     input, button { margin: 8px 0; padding: 8px 12px; }
@@ -14,7 +14,7 @@
   </style>
 </head>
 <body>
-  <h1>Mein Spiel (Debug)</h1>
+  <h1>Mein Spiel</h1>
 
   <div>
     <label>Match-Code:</label><br />
@@ -43,6 +43,7 @@
     <tbody id="matchBody"></tbody>
   </table>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     const supabaseUrl = "https://tmadmhayyudwbbzxfqnl.supabase.co";
     const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtYWRtaGF5eXVkd2JienhmcW5sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMTA3ODIsImV4cCI6MjA5ODU4Njc4Mn0.cu70uZwFw_eKOAuzHQijgokrDrpDN4C4kCRgfQfwUxY";
@@ -77,15 +78,11 @@
       showError("");
 
       try {
-        console.log("Suche Match mit Code:", code);
-
         const { data, error } = await supabase
           .from("matches")
           .select("*")
           .eq("code", code)
           .single();
-
-        console.log("Ergebnis:", data, error);
 
         if (error) {
           statusEl.textContent = "Status: Fehler beim Lesen des Matchs";
