@@ -41,9 +41,22 @@
 
       msg.textContent += " | window.supabase vorhanden.";
 
-      const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+      try {
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-      msg.textContent += " | supabase erstellt.";
+        msg.textContent += " | supabase erstellt.";
+
+        const query = supabase
+          .from("matches")
+          .select("*")
+          .eq("code", code);
+
+        msg.textContent += " | query gebaut.";
+
+      } catch (e) {
+        msg.className = "msg error";
+        msg.textContent += " | Fehler: " + e.message;
+      }
     }
   </script>
 </body>
