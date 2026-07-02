@@ -7,6 +7,8 @@
     body { font-family: system-ui, sans-serif; padding: 20px; }
     input, button { margin: 8px 0; padding: 8px 12px; }
     .msg { margin-top: 10px; font-weight: bold; }
+    .error { color: #cc0000; }
+    .success { color: #0077cc; }
   </style>
 </head>
 <body>
@@ -22,11 +24,44 @@
 
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script>
+    const supabaseUrl = "https://tmadmhayyudwbbzxfqnl.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtYWRtaGF5eXVkd2JienhmcW5sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMTA3ODIsImV4cPI6MjA5ODU4Njc4Mn0.cu70uZwFw_eKOAuzHQijgokrDrpDN4C4kCRgfQfwUxY";
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
     const msg = document.getElementById("msg");
 
     function loadMatch() {
       const code = document.getElementById("matchCode").value.trim();
-      msg.textContent = "loadMatch() ausgeführt! Code: " + code;
+      msg.className = "msg";
+      msg.textContent = "Suche Match: " + code;
+
+      supabase
+        .from("matches")
+        .select("*")
+        .eq("code", code)
+        .single()
+        .then(({ data, error }) => {
+          if (error) {
+            msg.className = "msg error";
+            msg.textContent = "Supabase-Fehler: " + error.message;
+            return;
+          }
+
+          if (!data) {
+            msg.className = "msg error";
+            msg.textContent = "Kein Match mit Code '" + code + "' gefunden.";
+            return;
+          }
+
+          msg.className = "msg success";
+          msg.textContent =
+            "Match gefunden: " +
+            data.code +
+            " | id: " +
+            data.id +
+            " | reihe1: " +
+            JSON.stringify(data.reihe1);
+        });
     }
   </script>
 </body>
