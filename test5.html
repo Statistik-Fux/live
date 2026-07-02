@@ -8,6 +8,7 @@
     input, button { margin: 8px 0; padding: 8px 12px; }
     .msg { margin-top: 10px; font-weight: bold; }
     .error { color: #cc0000; }
+    .success { color: #0077cc; }
   </style>
 </head>
 <body>
@@ -52,6 +53,31 @@
           .eq("code", code);
 
         msg.textContent += " | query gebaut.";
+
+        query
+          .single()
+          .then(({ data, error }) => {
+            if (error) {
+              msg.className = "msg error";
+              msg.textContent = "Supabase-Fehler: " + error.message;
+              return;
+            }
+
+            if (!data) {
+              msg.className = "msg error";
+              msg.textContent = "Kein Match mit Code '" + code + "' gefunden.";
+              return;
+            }
+
+            msg.className = "msg success";
+            msg.textContent =
+              "Match gefunden: " +
+              data.code +
+              " | id: " +
+              data.id +
+              " | reihe1: " +
+              JSON.stringify(data.reihe1);
+          });
 
       } catch (e) {
         msg.className = "msg error";
