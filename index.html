@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Mein Spiel - Supabase</title>
+  <title>Mein Spiel - Supabase (Debug)</title>
   <style>
     body { font-family: system-ui, sans-serif; padding: 20px; }
     input, button { margin: 8px 0; padding: 8px 12px; }
@@ -10,10 +10,11 @@
     th, td { border: 1px solid #ccc; padding: 6px 10px; }
     .status { margin-top: 10px; font-weight: bold; }
     .sync { margin-top: 10px; color: #0077cc; }
+    .error { margin-top: 10px; color: #cc0000; }
   </style>
 </head>
 <body>
-  <h1>Mein Spiel</h1>
+  <h1>Mein Spiel (Debug)</h1>
 
   <div>
     <label>Match-Code:</label><br />
@@ -23,6 +24,7 @@
 
   <div class="status" id="status">Status: noch nicht geöffnet</div>
   <div class="sync" id="syncStatus">Sync: ausge ↷</div>
+  <div class="error" id="errorBox"></div>
 
   <table id="matchTable" style="display:none;">
     <thead>
@@ -51,66 +53,88 @@
     const loadMatchBtn = document.getElementById("loadMatch");
     const statusEl = document.getElementById("status");
     const syncStatusEl = document.getElementById("syncStatus");
+    const errorBoxEl = document.getElementById("errorBox");
     const tableEl = document.getElementById("matchTable");
     const tbodyEl = document.getElementById("matchBody");
 
     let currentMatch = null;
     let realtimeChannel = null;
 
+    function showError(msg) {
+      errorBoxEl.textContent = msg;
+    }
+
     loadMatchBtn.addEventListener("click", async () => {
       const code = matchCodeInput.value.trim();
       if (!code) {
         statusEl.textContent = "Status: Kein Code eingegeben";
+        showError("Kein Match-Code eingegeben.");
         return;
       }
 
       statusEl.textContent = "Status: Suche Match...";
+      errorBoxEl.textContent = "";
 
-      const { data, error } = await supabase
-        .from("matches")
-        .select("*")
-        .eq("code", code)
-        .single();
+      try {
+        const { data, error } = await supabase
+          .from("matches")
+          .select("*")
+          .eq("code", code)
+          .single();
 
-      if (error || !data) {
-        statusEl.textContent = "Status: Match nicht gefunden";
-        tableEl.style.display = "none";
-        return;
-      }
+        if (error) {
+          statusEl.textContent = "Status: Fehler beim Lesen des Matchs";
+          showError("Supabase-Fehler: " + error.message);
+          tableEl.style.display = "none";
+          return;
+        }
 
-      currentMatch = data;
-      statusEl.textContent = "Status: Match geladen (" + currentMatch.code + ")";
-      syncStatusEl.textContent = "Sync: ausge ↷";
-      tableEl.style.display = "table";
+        if (!data) {
+          statusEl.textContent = "Status: Match nicht gefunden";
+          showError("Kein Match mit Code '" + code + "' gefunden.");
+          tableEl.style.display = "none";
+          return;
+        }
 
-      renderTable(currentMatch);
+        currentMatch = data;
+        statusEl.textContent = "Status: Match geladen (" + currentMatch.code + ")";
+        syncStatusEl.textContent = "Sync: ausge ↷";
+        tableEl.style.display = "table";
 
-      if (realtimeChannel) {
-        supabase.removeChannel(realtimeChannel);
-      }
+        renderTable(currentMatch);
 
-      realtimeChannel = supabase
-        .channel("match_" + currentMatch.id)
-        .on(
-          "postgres_changes",
-          {
-            event: "*",
-            schema: "public",
-            table: "score_tabelle",
-            filter: `match_id==${currentMatch.id}`
-          },
-          (payload) => {
-            syncStatusEl.textContent = "Sync: frisch ↷";
-            if (currentMatch) {
-              renderTable(currentMatch);
+        if (realtimeChannel) {
+          supabase.removeChannel(realtimeChannel);
+        }
+
+        realtimeChannel = supabase
+          .channel("match_" + currentMatch.id)
+          .on(
+            "postgres_changes",
+            {
+              event: "*",
+              schema: "public",
+              table: "score_tabelle",
+              filter: `match_id==${currentMatch.id}`
+            },
+            (payload) => {
+              syncStatusEl.textContent = "Sync: frisch ↷";
+              if (currentMatch) {
+                renderTable(currentMatch);
+              }
             }
-          }
-        )
-        .subscribe();
+          )
+          .subscribe();
 
-      syncStatusEl.textContent = "Sync: ausge ↷";
-      statusEl.textContent =
-        "Status: Match geladen + Live-Updates aktiv (" + currentMatch.code + ")";
+        syncStatusEl.textContent = "Sync: ausge ↷";
+        statusEl.textContent =
+          "Status: Match geladen + Live-Updates aktiv (" + currentMatch.code + ")";
+        showError("");
+      } catch (e) {
+        statusEl.textContent = "Status: Unbekannter Fehler";
+        showError("Unbekannter Fehler: " + e.message);
+        tableEl.style.display = "none";
+      }
     });
 
     function renderTable(match) {
