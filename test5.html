@@ -2,65 +2,36 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Simple Match Test</title>
+  <title>Simple2</title>
   <style>
     body { font-family: system-ui, sans-serif; padding: 20px; }
-    input, button { margin: 8px 0; padding: 8px 12px; }
+    button { margin: 8px 0; padding: 8px 12px; }
     .msg { margin-top: 10px; font-weight: bold; }
     .error { color: #cc0000; }
   </style>
 </head>
 <body>
-  <h1>Simple Match Test</h1>
+  <h1>Simple2</h1>
 
-  <div>
-    <label>Match-Code:</label><br />
-    <input id="matchCode" type="text" placeholder="z. B. spiel1" /><br />
-    <button id="loadMatch">Spiel öffnen</button>
-  </div>
+  <button id="check">Prüfen</button>
 
-  <div id="msg" class="msg">Lade...</div>
+  <div id="msg" class="msg">Start...</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     const msgEl = document.getElementById("msg");
-    const matchCodeInput = document.getElementById("matchCode");
-    const loadMatchBtn = document.getElementById("loadMatch");
+    const checkBtn = document.getElementById("check");
 
-    const supabaseUrl = "https://tmadmhayyudwbbzxfqnl.supabase.co";
-    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtYWRtaGF5eXVkd2JienhmcW5sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMTA3ODIsImV4cCI6MjA5ODU4Njc4Mn0.cu70uZwFw_eKOAuzHQijgokrDrpDN4C4kCRgfQfwUxY";
-    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+    checkBtn.addEventListener("click", () => {
+      msgEl.textContent = "window.supabase? " + (window.supabase ? "ja" : "nein");
 
-    loadMatchBtn.addEventListener("click", async () => {
-      const code = matchCodeInput.value.trim();
-      msgEl.className = "msg";
-      msgEl.textContent = "Starte...";
-
-      try {
-        msgEl.textContent = "Suche Match: " + code;
-
-        const { data, error } = await supabase
-          .from("matches")
-          .select("*")
-          .eq("code", code)
-          .single();
-
-        msgEl.textContent = " " + JSON.stringify(data);
-        msgEl.textContent += "\nerror: " + JSON.stringify(error);
-
-        if (error) {
-          msgEl.className = "msg error";
-          msgEl.textContent = "Supabase-Fehler: " + error.message;
-        } else if (!data) {
-          msgEl.className = "msg error";
-          msgEl.textContent = "Kein Match mit Code '" + code + "' gefunden.";
-        } else {
-          msgEl.textContent = "Match gefunden: " + data.code + " | id: " + data.id;
-        }
-      } catch (e) {
+      if (!window.supabase) {
         msgEl.className = "msg error";
-        msgEl.textContent = "Unbekannter Fehler: " + e.message;
+        msgEl.textContent += "\nSupabase-js nicht geladen.";
+        return;
       }
+
+      msgEl.textContent += "\nSupabase ist vorhanden.";
+      msgEl.textContent += "\ncreateClient? " + (window.supabase.createClient ? "ja" : "nein");
     });
   </script>
 </body>
