@@ -2,74 +2,33 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Button Test</title>
+  <title>Button Test 2</title>
   <style>
     body { font-family: system-ui, sans-serif; padding: 20px; }
     input, button { margin: 8px 0; padding: 8px 12px; }
     .msg { margin-top: 10px; font-weight: bold; }
     .error { color: #cc0000; }
-    .success { color: #0077cc; }
   </style>
 </head>
 <body>
-  <h1>Button Test</h1>
+  <h1>Button Test 2</h1>
 
   <div>
     <label>Match-Code:</label><br />
-    <input id="matchCode" type="text" placeholder="z. B. spiel1" /><br />
-    <button id="loadMatch">Spiel öffnen</button>
+    <input id="matchCode" type="text" value="spiel1" /><br />
+    <button id="loadMatch" onclick="loadMatch()">Spiel öffnen</button>
   </div>
 
   <div id="msg" class="msg">Start...</div>
 
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script>
     const msgEl = document.getElementById("msg");
-    const matchCodeInput = document.getElementById("matchCode");
-    const loadMatchBtn = document.getElementById("loadMatch");
 
-    const supabaseUrl = "https://tmadmhayyudwbbzxfqnl.supabase.co";
-    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtYWRtaGF5eXVkd2JienhmcW5sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMTA3ODIsImV4cCI6MjA5ODU4Njc4Mn0.cu70uZwFw_eKOAuzHQijgokrDrpDN4C4kCRgfQfwUxY";
-    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-
-    loadMatchBtn.addEventListener("click", async () => {
-      const code = matchCodeInput.value.trim();
+    function loadMatch() {
+      const code = document.getElementById("matchCode").value.trim();
       msgEl.className = "msg";
       msgEl.textContent = "Button wurde geklickt! Code: " + code;
-
-      if (!code) {
-        msgEl.className = "msg error";
-        msgEl.textContent += " | Kein Code eingegeben.";
-        return;
-      }
-
-      try {
-        msgEl.textContent += " | Suche Match...";
-
-        const { data, error } = await supabase
-          .from("matches")
-          .select("*")
-          .eq("code", code)
-          .single();
-
-        msgEl.textContent += " |  " + JSON.stringify(data);
-        msgEl.textContent += " | error: " + JSON.stringify(error);
-
-        if (error) {
-          msgEl.className = "msg error";
-          msgEl.textContent = "Supabase-Fehler: " + error.message;
-        } else if (!data) {
-          msgEl.className = "msg error";
-          msgEl.textContent = "Kein Match mit Code '" + code + "' gefunden.";
-        } else {
-          msgEl.className = "msg success";
-          msgEl.textContent = "Match gefunden: " + data.code + " | id: " + data.id;
-        }
-      } catch (e) {
-        msgEl.className = "msg error";
-        msgEl.textContent = "Unbekannter Fehler: " + e.message;
-      }
-    });
+    }
   </script>
 </body>
 </html>
