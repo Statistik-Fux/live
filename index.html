@@ -2,644 +2,145 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Spielstand</title>
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <title>Mein Spiel - Supabase</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: black;
-      color: white;
-      touch-action: manipulation;
-      user-select: none;
-    }
-
-    header {
-      background: green;
-      color: white;
-      padding: 10px;
-      text-align: center;
-    }
-
-    #logo {
-      max-width: 100px;
-      height: auto;
-      margin-bottom: 10px;
-    }
-
-    .nav {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-
-    .nav button {
-      background: grey;
-      color: white;
-      border: none;
-      padding: 10px 14px;
-      font-size: 14px;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-
-    .nav button.active {
-      background: yellow;
-      color: black;
-    }
-
-    .content {
-      padding: 10px;
-      text-align: center;
-    }
-
-    .match-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .match-card {
-      background: grey;
-      border-radius: 4px;
-      padding: 10px;
-      text-align: center;
-      color: white;
-    }
-
-    .match-card button {
-      background: green;
-      color: white;
-      border: none;
-      padding: 8px 10px;
-      font-size: 14px;
-      cursor: pointer;
-      border-radius: 4px;
-      margin-top: 5px;
-    }
-
-    .score-inputs {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      white-space: nowrap;
-      margin-top: 5px;
-    }
-
-    .score-input {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-    }
-
-    .score-input span {
-      font-size: 14px;
-    }
-
-    .score-input input {
-      width: 40px;
-      text-align: center;
-      font-size: 14px;
-      padding: 2px;
-      border-radius: 4px;
-      border: 1px solid #555;
-    }
-
-    #score-inputs-thin {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      white-space: nowrap;
-      margin-top: 5px;
-      font-size: 12px;
-    }
-
-    .score-input-thin {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-    }
-
-    .score-input-thin span {
-      font-size: 12px;
-    }
-
-    .score-input-thin input {
-      width: 30px;
-      text-align: center;
-      font-size: 12px;
-      padding: 2px;
-      border-radius: 4px;
-      border: 1px solid #555;
-    }
-
-    .details {
-      text-align: left;
-      margin-top: 10px;
-      font-size: 14px;
-    }
-
-    .details p {
-      margin: 3px 0;
-    }
-
-    .edit-btn {
-      background: yellow;
-      color: black;
-      border: none;
-      padding: 6px 10px;
-      font-size: 12px;
-      cursor: pointer;
-      border-radius: 4px;
-      margin-top: 5px;
-    }
-
-    .date-preview {
-      background: #333;
-      padding: 6px;
-      margin: 5px 0;
-      border-radius: 4px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .match-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      font-size: 14px;
-    }
-
-    .match-table th,
-    .match-table td {
-      border: 1px solid #555;
-      padding: 4px 6px;
-      text-align: center;
-    }
-
-    .match-table th {
-      background: #222;
-    }
-
-    .match-table td {
-      background: #111;
-    }
+    body { font-family: system-ui, sans-serif; padding: 20px; }
+    input, button { margin: 8px 0; padding: 8px 12px; }
+    table { border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 6px 10px; }
+    .status { margin-top: 10px; font-weight: bold; }
+    .sync { margin-top: 10px; color: #0077cc; }
   </style>
 </head>
 <body>
+  <h1>Mein Spiel</h1>
 
-<header>
   <div>
-    <img id="logo" src="logo.png.JPG" alt="Logo" />
+    <label>Match-Code:</label><br />
+    <input id="matchCode" type="text" placeholder="z. B. spiel1" /><br />
+    <button id="loadMatch">Spiel öffnen</button>
   </div>
-  <h1>Spielstand</h1>
-  <div class="nav">
-    <button id="btn-home" class="active">Home</button>
-    <button id="btn-my-matches">Meine Matches</button>
-    <button id="btn-new-match">Neues Match</button>
-    <button id="btn-settings">Settings</button>
-  </div>
-</header>
 
-<div id="main" class="content"></div>
-<div id="detail" class="content" style="display:none"></div>
+  <div class="status" id="status">Status: noch nicht geöffnet</div>
+  <div class="sync" id="syncStatus">Sync: ausge ↷</div>
 
-<div id="table-section" class="content" style="display:none">
-  <h2 id="table-title">Match</h2>
-  <div id="table-container"></div>
-</div>
+  <table id="matchTable" style="display:none;">
+    <thead>
+      <tr>
+        <th>Reihe</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+      </tr>
+    </thead>
+    <tbody id="matchBody"></tbody>
+  </table>
 
-<script>
-// --- KONFIGURATION ---
-const SUPABASE_URL = 'https://pgvpspqztriqjhhbnqrh.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBndnBzcHp0cmlxamhnYm5xcmgiLCJyb2xlIjoiYW5vIiwiaWF0IjoxNzQ5Mzk0Nzc3LCJleHAiOjIwNjQ5NzA3Nzd9.MT158jU9fxlNepHzz2CCqD2-0qVZKMFgLJ6ycRF-WmA';
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const supabaseUrl = "https://tmadmhayyudwbbzxfqnl.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtYWRtaGF5eXVkd2JienhmcW5sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMTA3ODIsImV4cCI6MjA5ODU4Njc4Mn0.cu70uZwFw_eKOAuzHQijgokrDrpDN4C4kCRgfQfwUxY";
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const matchCodeInput = document.getElementById("matchCode");
+    const loadMatchBtn = document.getElementById("loadMatch");
+    const statusEl = document.getElementById("status");
+    const syncStatusEl = document.getElementById("syncStatus");
+    const tableEl = document.getElementById("matchTable");
+    const tbodyEl = document.getElementById("matchBody");
 
-let currentUser = null;
-let currentlyEditing = null;
+    let currentMatch = null;
+    let realtimeChannel = null;
 
-// --- SEITEN ---
-function showHome() {
-  document.getElementById('main').style.display = 'block';
-  document.getElementById('detail').style.display = 'none';
-  document.getElementById('table-section').style.display = 'none';
-  setActiveButton('btn-home');
-  renderMatches();
-}
-
-function showMyMatches() {
-  document.getElementById('main').style.display = 'block';
-  document.getElementById('detail').style.display = 'none';
-  document.getElementById('table-section').style.display = 'none';
-  setActiveButton('btn-my-matches');
-  renderMyMatches();
-}
-
-function showNewMatch() {
-  document.getElementById('main').style.display = 'block';
-  document.getElementById('detail').style.display = 'none';
-  document.getElementById('table-section').style.display = 'none';
-  setActiveButton('btn-new-match');
-  renderNewMatch();
-}
-
-function showSettings() {
-  document.getElementById('main').style.display = 'block';
-  document.getElementById('detail').style.display = 'none';
-  document.getElementById('table-section').style.display = 'none';
-  setActiveButton('btn-settings');
-  renderSettings();
-}
-
-function setActiveButton(id) {
-  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-// --- MATCHES ---
-async function renderMatches() {
-  const main = document.getElementById('main');
-  main.innerHTML = '<h2>Matches</h2>';
-
-  const { data, error } = await supabase.from('matches').select('*');
-  if (error) {
-    main.innerHTML += '<p>Fehler beim Laden der Matches.</p>';
-    return;
-  }
-
-  if (!data || data.length === 0) {
-    main.innerHTML += '<p>Keine Matches gefunden.</p>';
-    return;
-  }
-
-  const grid = document.createElement('div');
-  grid.className = 'match-grid';
-
-  data.forEach(match => {
-    const card = document.createElement('div');
-    card.className = 'match-card';
-
-    const dateStr = match.match_date
-      ? new Date(match.match_date).toLocaleDateString('de-DE')
-      : '—';
-
-    card.innerHTML = `
-      <strong>${match.code}</strong><br/>
-      <span>${match.opponent || '—'} @ ${dateStr}</span>
-      <div class="score-inputs">
-        <div class="score-input">
-          <span>WSV:</span>
-          <input type="text" value="${match.ws_score || ''}" data-match-id="${match.id}" data-field="ws_score" />
-        </div>
-        <div class="score-input">
-          <span>Gast:</span>
-          <input type="text" value="${match.gast_score || ''}" data-match-id="${match.id}" data-field="gast_score" />
-        </div>
-      </div>
-      <button class="details-btn" data-match-id="${match.id}">Details</button>
-    `;
-
-    grid.appendChild(card);
-  });
-
-  main.appendChild(grid);
-
-  document.querySelectorAll('.details-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const matchId = btn.getAttribute('data-match-id');
-      openDetail(matchId);
-    });
-  });
-}
-
-async function renderMyMatches() {
-  const main = document.getElementById('main');
-  main.innerHTML = '<h2>Meine Matches</h2>';
-
-  if (!currentUser) {
-    main.innerHTML += '<p>Zuerst einloggen.</p>';
-    return;
-  }
-
-  const { data, error } = await supabase
-    .from('matches')
-    .select('*')
-    .eq('owner_user_id', currentUser.id);
-
-  if (error) {
-    main.innerHTML += '<p>Fehler beim Laden deiner Matches.</p>';
-    return;
-  }
-
-  if (!data || data.length === 0) {
-    main.innerHTML += '<p>Keine Matches gefunden.</p>';
-    return;
-  }
-
-  const grid = document.createElement('div');
-  grid.className = 'match-grid';
-
-  data.forEach(match => {
-    const card = document.createElement('div');
-    card.className = 'match-card';
-
-    const dateStr = match.match_date
-      ? new Date(match.match_date).toLocaleDateString('de-DE')
-      : '—';
-
-    card.innerHTML = `
-      <strong>${match.code}</strong><br/>
-      <span>${match.opponent || '—'} @ ${dateStr}</span>
-      <div class="score-inputs">
-        <div class="score-input">
-          <span>WSV:</span>
-          <input type="text" value="${match.ws_score || ''}" data-match-id="${match.id}" data-field="ws_score" />
-        </div>
-        <div class="score-input">
-          <span>Gast:</span>
-          <input type="text" value="${match.gast_score || ''}" data-match-id="${match.id}" data-field="gast_score" />
-        </div>
-      </div>
-      <button class="details-btn" data-match-id="${match.id}">Details</button>
-    `;
-
-    grid.appendChild(card);
-  });
-
-  main.appendChild(grid);
-
-  document.querySelectorAll('.details-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const matchId = btn.getAttribute('data-match-id');
-      openDetail(matchId);
-    });
-  });
-}
-
-async function renderNewMatch() {
-  const main = document.getElementById('main');
-  main.innerHTML = `
-    <h2>Neues Match</h2>
-    <div style="text-align:left;max-width:300px;margin:auto;">
-      <label>Code:</label><br/>
-      <input type="text" id="new-code" style="width:100%;margin-bottom:10px;" /><br/>
-
-      <label>Opponent:</label><br/>
-      <input type="text" id="new-opponent" style="width:100%;margin-bottom:10px;" /><br/>
-
-      <label>Match Date:</label><br/>
-      <input type="date" id="new-date" style="width:100%;margin-bottom:10px;" /><br/>
-
-      <button id="create-match-btn" style="width:100%">Match erstellen</button>
-    </div>
-  `;
-
-  document.getElementById('create-match-btn').addEventListener('click', async () => {
-    const code = document.getElementById('new-code').value.trim();
-    const opponent = document.getElementById('new-opponent').value.trim();
-    const dateVal = document.getElementById('new-date').value;
-
-    if (!code || !opponent) {
-      alert('Code und Opponent müssen ausgefüllt sein.');
-      return;
-    }
-
-    let matchDate = null;
-    if (dateVal) {
-      matchDate = new Date(dateVal + 'T00:00:00').toISOString();
-    }
-
-    if (!currentUser) {
-      alert('Du musst zuerst einloggen.');
-      return;
-    }
-
-    const { data, error } = await supabase.from('matches').insert({
-      code,
-      opponent,
-      match_date: matchDate,
-      owner_user_id: currentUser.id,
-      status: 'scheduled',
-    }).select();
-
-    if (error) {
-      alert('Fehler beim Erstellen: ' + error.message);
-      return;
-    }
-
-    alert('Match erstellt: ' + data[0].code);
-    showHome();
-  });
-}
-
-// --- DETAILS ---
-async function openDetail(matchId) {
-  document.getElementById('main').style.display = 'none';
-  document.getElementById('detail').style.display = 'block';
-  document.getElementById('table-section').style.display = 'none';
-
-  const detail = document.getElementById('detail');
-  detail.innerHTML = '<h2>Match</h2><p>...</p>';
-
-  const {  match, error } = await supabase
-    .from('matches')
-    .select('*')
-    .eq('id', matchId)
-    .single();
-
-  if (error || !match) {
-    detail.innerHTML = '<p>Match nicht gefunden.</p>';
-    return;
-  }
-
-  const dateStr = match.match_date
-    ? new Date(match.match_date).toLocaleDateString('de-DE')
-    : '—';
-
-  detail.innerHTML = `
-    <h2>${match.code}</h2>
-    <div class="details">
-      <p><strong>Opponent:</strong> ${match.opponent || '—'}</p>
-      <p><strong>Match Date:</strong> ${dateStr}</p>
-      <p><strong>Status:</strong> ${match.status || '—'}</p>
-      <p><strong>WS Score:</strong> ${match.ws_score || '0'}</p>
-      <p><strong>Gast Score:</strong> ${match.gast_score || '0'}</p>
-      <p><strong>Notes:</strong> ${match.notes || '—'}</p>
-    </div>
-    <button class="edit-btn" id="edit-score-btn">Score bearbeiten</button>
-  `;
-
-  document.getElementById('edit-score-btn').addEventListener('click', () => {
-    currentlyEditing = matchId;
-    editScore(match);
-  });
-}
-
-async function editScore(match) {
-  const detail = document.getElementById('detail');
-  detail.innerHTML = `
-    <h2>${match.code} – Score bearbeiten</h2>
-    <div id="score-inputs-thin">
-      <div class="score-input-thin">
-        <span>WSV:</span>
-        <input type="text" id="edit-ws" value="${match.ws_score || ''}" />
-      </div>
-      <div class="score-input-thin">
-        <span>Gast:</span>
-        <input type="text" id="edit-gast" value="${match.gast_score || ''}" />
-      </div>
-    </div>
-    <button class="edit-btn" id="save-score-btn" style="margin-top:10px;">Speichern</button>
-    <button class="edit-btn" id="cancel-edit-btn" style="margin-top:10px;">Zurück</button>
-  `;
-
-  document.getElementById('save-score-btn').addEventListener('click', async () => {
-    const wsScore = document.getElementById('edit-ws').value.trim();
-    const gastScore = document.getElementById('edit-gast').value.trim();
-
-    const { error } = await supabase
-      .from('matches')
-      .update({ ws_score: wsScore, gast_score: gastScore })
-      .eq('id', currentlyEditing);
-
-    if (error) {
-      alert('Fehler beim Speichern: ' + error.message);
-      return;
-    }
-
-    alert('Score gespeichert.');
-    openDetail(currentlyEditing);
-  });
-
-  document.getElementById('cancel-edit-btn').addEventListener('click', () => {
-    openDetail(currentlyEditing);
-  });
-}
-
-// --- SETTINGS ---
-async function renderSettings() {
-  const main = document.getElementById('main');
-
-  if (!currentUser) {
-    main.innerHTML = `
-      <h2>Settings</h2>
-      <p>Zuerst einloggen:</p>
-      <input type="text" id="settings-email" placeholder="Email" style="width:200px;margin-bottom:5px;" /><br/>
-      <input type="password" id="settings-password" placeholder="Password" style="width:200px;margin-bottom:10px;" /><br/>
-      <button id="login-btn">Einloggen</button>
-    `;
-
-    document.getElementById('login-btn').addEventListener('click', async () => {
-      const email = document.getElementById('settings-email').value.trim();
-      const password = document.getElementById('settings-password').value;
-
-      if (!email || !password) {
-        alert('Email und Password müssen ausgefüllt sein.');
+    loadMatchBtn.addEventListener("click", async () => {
+      const code = matchCodeInput.value.trim();
+      if (!code) {
+        statusEl.textContent = "Status: Kein Code eingegeben";
         return;
       }
 
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      statusEl.textContent = "Status: Suche Match...";
 
-      if (error) {
-        alert('Login fehlgeschlagen: ' + error.message);
+      const { data, error } = await supabase
+        .from("matches")
+        .select("*")
+        .eq("code", code)
+        .single();
+
+      if (error || !data) {
+        statusEl.textContent = "Status: Match nicht gefunden";
+        tableEl.style.display = "none";
         return;
       }
 
-      currentUser = data.user;
-      alert('Einloggen erfolgreich.');
-      renderSettings();
+      currentMatch = data;
+      statusEl.textContent = "Status: Match geladen (" + currentMatch.code + ")";
+      syncStatusEl.textContent = "Sync: ausge ↷";
+      tableEl.style.display = "table";
+
+      renderTable(currentMatch);
+
+      if (realtimeChannel) {
+        supabase.removeChannel(realtimeChannel);
+      }
+
+      realtimeChannel = supabase
+        .channel("match_" + currentMatch.id)
+        .on(
+          "postgres_changes",
+          {
+            event: "*",
+            schema: "public",
+            table: "score_tabelle",
+            filter: `match_id==${currentMatch.id}`
+          },
+          (payload) => {
+            syncStatusEl.textContent = "Sync: frisch ↷";
+            if (currentMatch) {
+              renderTable(currentMatch);
+            }
+          }
+        )
+        .subscribe();
+
+      syncStatusEl.textContent = "Sync: ausge ↷";
+      statusEl.textContent =
+        "Status: Match geladen + Live-Updates aktiv (" + currentMatch.code + ")";
     });
-  } else {
-    main.innerHTML = `
-      <h2>Settings</h2>
-      <p>Eingeloggt als: ${currentUser.email}</p>
-      <button id="logout-btn">Ausloggen</button>
-    `;
 
-    document.getElementById('logout-btn').addEventListener('click', async () => {
-      await supabase.auth.signOut();
-      currentUser = null;
-      alert('Ausloggen erfolgreich.');
-      renderSettings();
-    });
-  }
-}
+    function renderTable(match) {
+      tbodyEl.innerHTML = "";
 
-// --- TABELLE START ---
-const tableContainer = document.getElementById('table-container');
-let aktuellCode = null;
+      const rows = [
+        { key: "reihe1", label: "Reihe 1" },
+        { key: "reihe2", label: "Reihe 2" },
+        { key: "reihe3", label: "Reihe 3" },
+        { key: "reihe4", label: "Reihe 4" },
+        { key: "reihe5", label: "Reihe 5" },
+      ];
 
-// Lade den Match und zeige die Tabelle
-async function loadMatchAndShowTable() {
-  const {  match, error } = await supabase
-    .from('matches')
-    .select('*')
-    .eq('code', aktuellCode)
-    .single();
+      for (const row of rows) {
+        const tr = document.createElement("tr");
 
-  if (error || !match) {
-    console.error('Match nicht gefunden:', error);
-    tableContainer.innerHTML = '<p>Match nicht gefunden.</p>';
-    return;
-  }
+        const labelTd = document.createElement("td");
+        labelTd.textContent = row.label;
+        tr.appendChild(labelTd);
 
-  console.log('Match gefunden:', match);
+        for (let i = 1; i <= 8; i++) {
+          const td = document.createElement("td");
+          const value = match[row.key] ? match[row.key][i - 1] ?? "" : "";
+          td.textContent = value;
+          tr.appendChild(td);
+        }
 
-  // Prüfen ob reihe1-5 existieren
-  const reihen = [
-    match.reihe1 || [],
-    match.reihe2 || [],
-    match.reihe3 || [],
-    match.reihe4 || [],
-    match.reihe5 || [],
-  ];
-
-  // Tabelle bauen
-  let html = '<table class="match-table">';
-  html += '<tr><th>Reihe</th>';
-  for (let i = 1; i <= 8; i++) {
-    html += `<th>${i}</th>`;
-  }
-  html += '</tr>';
-
-  for (let r = 0; r < reihen.length; r++) {
-    const reihe = reihen[r];
-    html += `<tr><td>Reihe ${r + 1}</td>`;
-    for (let i = 0; i < 8; i++) {
-      const wert = reihe[i] || '';
-      html += `<td data-reihe="${r}" data-pos="${i}">${wert}</td>`;
+        tbodyEl.appendChild(tr);
+      }
     }
-    html += '</tr>';
-  }
-
-  html += '</table>';
-  tableContainer.innerHTML = html;
-}
-
-// --- TABELLE END ---
-
-document.getElementById('btn-home').addEventListener('click', showHome);
-document.getElementById('btn-my-matches').addEventListener('click', showMyMatches);
-document.getElementById('btn-new-match').addEventListener('click', showNewMatch);
-document.getElementById('btn-settings').addEventListener('click', showSettings);
-
-// --- INITIALIZATION ---
-document.getElementById('btn-home').click();
-
-supabase.auth.getSession().then(({  { session } }) => {
-  currentUser = session?.user || null;
-});
-</script>
-
+  </script>
 </body>
 </html>
