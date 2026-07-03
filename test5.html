@@ -1,68 +1,250 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8" />
-  <title>Mein Spiel</title>
-  <style>
-    body { font-family: system-ui, sans-serif; padding: 20px; }
-    input, button { margin: 8px 0; padding: 8px 12px; }
-    .msg { margin-top: 10px; font-weight: bold; }
-    .error { color: #cc0000; }
-    .success { color: #0077cc; }
-  </style>
-</head>
-<body>
-  <h1>Mein Spiel</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Handball – Match View</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      async
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+    <script
+      async
+      src="https://unpkg.com/react@18/umd/react.production.min.js"
+    ></script>
+    <script
+      async
+      src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+    ></script>
+    <script
+      async
+      src="https://unpkg.com/@babel/standalone/babel.min.js"
+    ></script>
+    <style>
+      /* iPad: etwas kompaktere Tabelle, aber gut lesbar */
+      .match-table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 14px;
+      }
+      .match-table th,
+      .match-table td {
+        border: 1px solid #d1d5db; /* gray-300 */
+        padding: 6px 8px;
+        text-align: center;
+        min-width: 32px;
+      }
+      .match-table th {
+        background-color: #f3f4f6; /* gray-100 */
+        font-weight: 600;
+      }
+      .box-cell {
+        cursor: pointer;
+        background-color: #ffffff;
+      }
+      .box-cell.filled {
+        background-color: #3b82f6; /* blue-500 */
+        color: white;
+      }
+      .box-cell:hover {
+        background-color: #e5e7eb;
+      }
+      .box-cell.filled:hover {
+        background-color: #2563eb;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    <div id="root"></div>
 
-  <div>
-    <label>Match-Code:</label><br />
-    <input id="matchCode" type="text" value="spiel1" /><br />
-    <button id="loadMatch" onclick="loadMatch()">Spiel öffnen</button>
-  </div>
+    <script type="text/babel">
+      const { useState, useEffect, useRef } = React;
 
-  <div id="msg" class="msg">Start...</div>
+      //════════════════════════════════════════════════════════
+      // KONFIGURATION
+      //══════════════════════════════════════════════════════════
+      const SUPABASE_URL = "https://nljxqkwoxqjxqfxoylhc.supabase.co";
+      const SUPABASE_ANON_KEY =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5sanhxa3dveHFqeHhmeG95bGhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY3NjYyNDQsImV4cGI6MjA2MjM0MjI0NH0.A71AItMVLfD3YQXj53q6XirZE1_TimeKmMpYBftEv8";
 
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-  <script>
-    const supabaseUrl = "https://tmadmhayyudwbbzxfqnl.supabase.co";
-    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtYWRtaGF5eXVkd2JienhmcW5sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMTA3ODIsImV4cPI6MjA5ODU4Njc4Mn0.cu70uZwFw_eKOAuzHQijgokrDrpDN4C4kCRgfQfwUxY";
-    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+      const supabase = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+      );
 
-    const msg = document.getElementById("msg");
+      //══════════════════════════════════════════════════════════
+      // APP
+      //══════════════════════════════════════════════════════════
+      function App() {
+        const [user, setUser] = useState(null);
+        const [match, setMatch] = useNullableState(null);
+        const [globalReady, setGlobalReady] = useState(false);
 
-    function loadMatch() {
-      const code = document.getElementById("matchCode").value.trim();
-      msg.className = "msg";
-      msg.textContent = "Suche Match: " + code;
+        useEffect(() => {
+          supabase.auth.onAuthStateChange((_event, session) => {
+            setUser(session?.user ?? null);
+          });
+          supabase.auth.getSession().then(({  { session } }) => {
+            setUser(session?.user ?? null);
+          });
+          setGlobalReady(true);
+        }, []);
 
-      supabase
-        .from("matches")
-        .select("*")
-        .eq("code", code)
-        .single()
-        .then(({ data, error }) => {
+        const handleLoginClick = async () => {
+          const email = "thorben.born@gmail.com";
+          const password = "Test1234!";
+          const { data, error } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+          });
           if (error) {
-            msg.className = "msg error";
-            msg.textContent = "Supabase-Fehler: " + error.message;
-            return;
+            console.error("Login error:", error);
+          } else {
+            setUser(data.user);
           }
+        };
 
-          if (!data) {
-            msg.className = "msg error";
-            msg.textContent = "Kein Match mit Code '" + code + "' gefunden.";
-            return;
+        const handleMatchClick = async () => {
+          if (!user) return;
+          const { data, error } = await supabase
+            .from("matches")
+            .select("*")
+            .eq("code", "spiel1")
+            .single();
+
+          if (error) {
+            console.error("Match fetch error:", error);
+            setMatch(null);
+          } else {
+            setMatch(data);
           }
+        };
 
-          msg.className = "msg success";
-          msg.textContent =
-            "Match gefunden: " +
-            data.code +
-            " | id: " +
-            data.id +
-            " | reihe1: " +
-            JSON.stringify(data.reihe1);
-        });
-    }
-  </script>
-</body>
+        if (!globalReady) {
+          return (
+            <div className="flex items-center justify-center h-screen">
+              <p>App wird geladen...</p>
+            </div>
+          );
+        }
+
+        if (!user) {
+          return (
+            <div className="flex items-center justify-center h-screen">
+              <button
+                onClick={handleLoginClick}
+                className="px-4 py-2 bg-blue-600 text-white rounded"
+              >
+                Login
+              </button>
+            </div>
+          );
+        }
+
+        return (
+          <div className="max-w-4xl mx-auto p-4">
+            <h1 className="text-2xl font-bold mb-4">Handball – Match View</h1>
+
+            <div className="mb-4">
+              <button
+                onClick={handleMatchClick}
+                className="px-4 py-2 bg-green-600 text-white rounded"
+              >
+                Match „spiel1" laden
+              </button>
+            </div>
+
+            {match ? (
+              <MatchTable match={match} />
+            ) : (
+              <p className="text-gray-600">
+                Kein Match geladen. Klicke auf „Match laden".
+              </p>
+            )}
+          </div>
+        );
+      }
+
+      //══════════════════════════════════════════════════════════
+      // MatchTable – Tabelle mit 5 Reihen × 8 Kästchen
+      //══════════════════════════════════════════════════════════
+      function MatchTable({ match }) {
+        // Reihen aus match reihe1–reihe5 extrahieren (leer, wenn undefined)
+        const rows = [
+          match.reihe1 ?? [],
+          match.reihe2 ?? [],
+          match.reihe3 ?? [],
+          match.reihe4 ?? [],
+          match.reihe5 ?? [],
+        ];
+
+        // Nur für Visualisierung: 8 Kästchen per Reihe
+        const ROW_COUNT = 5;
+        const BOX_COUNT = 8;
+
+        return (
+          <div className="bg-white rounded shadow p-4">
+            <h2 className="text-lg font-semibold mb-2">Match: {match.code}</h2>
+            <p className="text-sm text-gray-600 mb-4">
+              Gegner: {match.opponent} – Datum: {match.match_date}
+            </p>
+
+            <table className="match-table">
+              <thead>
+                <tr>
+                  <th>Reihe</th>
+                  {Array.from({ length: BOX_COUNT }).map((_, i) => (
+                    <th key={i}>{i + 1}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row, rIndex) => {
+                  const rowLabel = `Reihe ${rIndex + 1}`;
+                  return (
+                    <tr key={rIndex}>
+                      <th className="font-semibold">{rowLabel}</th>
+                      {Array.from({ length: BOX_COUNT }).map((_, bIndex) => {
+                        const value = row[bIndex];
+                        const filled = value != null && value !== "";
+                        return (
+                          <td
+                            key={bIndex}
+                            className={`box-cell ${filled ? "filled" : ""}`}
+                          >
+                            {filled ? value : ""}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+
+            <p className="text-xs text-gray-500 mt-3">
+              Hinweis: Die Felder sind noch leer, weil reihe1–reihe5 in der
+              Tabelle keine Werte haben. Im nächsten Schritt können wir Einträge
+              direkt auf dem iPad ermöglichen.
+            </p>
+          </div>
+        );
+      }
+
+      //══════════════════════════════════════════════════════════
+      // useNullableState – erlaubt null als initial value
+      //══════════════════════════════════════════════════════════
+      function useNullableState(initialValue) {
+        const [state, setState] = useState(() => initialValue);
+        return [state, setState];
+      }
+
+      //══════════════════════════════════════════════════════════
+      // RENDER
+      //══════════════════════════════════════════════════════════
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
+  </body>
 </html>
