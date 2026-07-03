@@ -2,14 +2,13 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Mein Spiel - Supabase</title>
+  <title>Mein Spiel</title>
   <style>
     body { font-family: system-ui, sans-serif; padding: 20px; }
     input, button { margin: 8px 0; padding: 8px 12px; }
-    table { border-collapse: collapse; margin-top: 20px; }
-    th, td { border: 1px solid #ccc; padding: 6px 10px; }
-    .status { margin-top: 10px; font-weight: bold; }
-    .sync { margin-top: 10px; color: #0077cc; }
+    .msg { margin-top: 10px; font-weight: bold; }
+    .error { color: #cc0000; }
+    .success { color: #0077cc; }
   </style>
 </head>
 <body>
@@ -17,129 +16,52 @@
 
   <div>
     <label>Match-Code:</label><br />
-    <input id="matchCode" type="text" placeholder="z. B. spiel1" /><br />
-    <button id="loadMatch">Spiel öffnen</button>
+    <input id="matchCode" type="text" value="spiel1" /><br />
+    <button id="loadMatch" onclick="loadMatch()">Spiel öffnen</button>
   </div>
 
-  <div class="status" id="status">Status: noch nicht geöffnet</div>
-  <div class="sync" id="syncStatus">Sync: ausge ↷</div>
+  <div id="msg" class="msg">Start...</div>
 
-  <table id="matchTable" style="display:none;">
-    <thead>
-      <tr>
-        <th>Reihe</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>6</th>
-        <th>7</th>
-        <th>8</th>
-      </tr>
-    </thead>
-    <tbody id="matchBody"></tbody>
-  </table>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script>
     const supabaseUrl = "https://tmadmhayyudwbbzxfqnl.supabase.co";
-    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtYWRtaGF5eXVkd2JienhmcW5sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMTA3ODIsImV4cCI6MjA5ODU4Njc4Mn0.cu70uZwFw_eKOAuzHQijgokrDrpDN4C4kCRgfQfwUxY";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtYWRtaGF5eXVkd2JienhmcW5sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMTA3ODIsImV4cPI6MjA5ODU4Njc4Mn0.cu70uZwFw_eKOAuzHQijgokrDrpDN4C4kCRgfQfwUxY";
     const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-    const matchCodeInput = document.getElementById("matchCode");
-    const loadMatchBtn = document.getElementById("loadMatch");
-    const statusEl = document.getElementById("status");
-    const syncStatusEl = document.getElementById("syncStatus");
-    const tableEl = document.getElementById("matchTable");
-    const tbodyEl = document.getElementById("matchBody");
+    const msg = document.getElementById("msg");
 
-    let currentMatch = null;
-    let realtimeChannel = null;
+    function loadMatch() {
+      const code = document.getElementById("matchCode").value.trim();
+      msg.className = "msg";
+      msg.textContent = "Suche Match: " + code;
 
-    loadMatchBtn.addEventListener("click", async () => {
-      const code = matchCodeInput.value.trim();
-      if (!code) {
-        statusEl.textContent = "Status: Kein Code eingegeben";
-        return;
-      }
-
-      statusEl.textContent = "Status: Suche Match...";
-
-      const { data, error } = await supabase
+      supabase
         .from("matches")
         .select("*")
         .eq("code", code)
-        .single();
-
-      if (error || !data) {
-        statusEl.textContent = "Status: Match nicht gefunden";
-        tableEl.style.display = "none";
-        return;
-      }
-
-      currentMatch = data;
-      statusEl.textContent = "Status: Match geladen (" + currentMatch.code + ")";
-      syncStatusEl.textContent = "Sync: ausge ↷";
-      tableEl.style.display = "table";
-
-      renderTable(currentMatch);
-
-      if (realtimeChannel) {
-        supabase.removeChannel(realtimeChannel);
-      }
-
-      realtimeChannel = supabase
-        .channel("match_" + currentMatch.id)
-        .on(
-          "postgres_changes",
-          {
-            event: "*",
-            schema: "public",
-            table: "score_tabelle",
-            filter: `match_id==${currentMatch.id}`
-          },
-          (payload) => {
-            syncStatusEl.textContent = "Sync: frisch ↷";
-            if (currentMatch) {
-              renderTable(currentMatch);
-            }
+        .single()
+        .then(({ data, error }) => {
+          if (error) {
+            msg.className = "msg error";
+            msg.textContent = "Supabase-Fehler: " + error.message;
+            return;
           }
-        )
-        .subscribe();
 
-      syncStatusEl.textContent = "Sync: ausge ↷";
-      statusEl.textContent =
-        "Status: Match geladen + Live-Updates aktiv (" + currentMatch.code + ")";
-    });
+          if (!data) {
+            msg.className = "msg error";
+            msg.textContent = "Kein Match mit Code '" + code + "' gefunden.";
+            return;
+          }
 
-    function renderTable(match) {
-      tbodyEl.innerHTML = "";
-
-      const rows = [
-        { key: "reihe1", label: "Reihe 1" },
-        { key: "reihe2", label: "Reihe 2" },
-        { key: "reihe3", label: "Reihe 3" },
-        { key: "reihe4", label: "Reihe 4" },
-        { key: "reihe5", label: "Reihe 5" },
-      ];
-
-      for (const row of rows) {
-        const tr = document.createElement("tr");
-
-        const labelTd = document.createElement("td");
-        labelTd.textContent = row.label;
-        tr.appendChild(labelTd);
-
-        for (let i = 1; i <= 8; i++) {
-          const td = document.createElement("td");
-          const value = match[row.key] ? match[row.key][i - 1] ?? "" : "";
-          td.textContent = value;
-          tr.appendChild(td);
-        }
-
-        tbodyEl.appendChild(tr);
-      }
+          msg.className = "msg success";
+          msg.textContent =
+            "Match gefunden: " +
+            data.code +
+            " | id: " +
+            data.id +
+            " | reihe1: " +
+            JSON.stringify(data.reihe1);
+        });
     }
   </script>
 </body>
