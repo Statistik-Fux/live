@@ -255,7 +255,10 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
       created_order: payload.createdOrder
     };
 
-    const { error } = await supabase.from('match_actions').insert(row);
+    const { error } = await supabase
+  .from('match_actions')
+  .insert(row, { returning: 'minimal' });
+
     if (error) {
       console.error('Fehler beim Speichern in Supabase:', error);
       alert('Eintrag konnte nicht in Supabase gespeichert werden. Bitte prüfen, ob die Tabelle existiert und Realtime aktiv ist.');
