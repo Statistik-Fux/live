@@ -64,11 +64,19 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
       <button id="startBtn" class="start-btn" type="button">Start</button>
     </div>
   </section>
+
   <section id="workspace" class="workspace hidden">
     <div class="panel topbar">
-      <div class="brand-stack"><img id="brandLogo" src="./logo.png.JPG" alt="Logo" class="brand-logo" loading="eager" width="72" height="72" /><div><h1 id="headline">Statistik</h1><div class="topbar-meta" id="topMeta"></div></div></div>
-      <div class="topbar-actions"><button id="undoBtn" class="utility-btn undo" type="button" aria-label="Undo">↶</button><button id="pdfBtn" class="utility-btn primary" type="button">Export PDF</button></div>
+      <div class="brand-stack">
+        <img id="brandLogo" src="./logo.png.JPG" alt="Logo" class="brand-logo" loading="eager" width="72" height="72" />
+        <div><h1 id="headline">Statistik</h1><div class="topbar-meta" id="topMeta"></div></div>
+      </div>
+      <div class="topbar-actions">
+        <button id="undoBtn" class="utility-btn undo" type="button" aria-label="Undo">↶</button>
+        <button id="pdfBtn" class="utility-btn primary" type="button">Export PDF</button>
+      </div>
     </div>
+
     <div class="dual-grid">
       <section class="panel section-card offense">
         <div class="section-head"><h2>Offensive Aktionen</h2><div class="entry-count" id="offenseCount">0 Einträge</div></div>
@@ -79,6 +87,7 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
           <div class="action-row"><button id="offenseResetBtn" class="save-btn" type="button">Auswahl leeren</button><button id="offenseSaveBtn" class="save-btn primary" type="button">Offensive Aktion speichern</button></div>
         </div>
       </section>
+
       <section class="panel section-card defense">
         <div class="section-head"><h2>Defensive Aktionen</h2><div class="entry-count" id="defenseCount">0 Einträge</div></div>
         <div class="controls">
@@ -89,23 +98,31 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
         </div>
       </section>
     </div>
+
     <div class="tables">
       <section class="panel table-card offense">
         <div class="table-tools"><h2>Angriff</h2><div id="offenseSortInfo"></div></div>
         <div class="table-wrap"><table><thead><tr><th style="width:7%"><button type="button" data-table="offense" data-sort="index">#</button></th><th style="width:18%"><button type="button" data-table="offense" data-sort="trigger">Auslösehandlung</button></th><th style="width:39%"><button type="button" data-table="offense" data-sort="follow">Folgehandlung</button></th><th style="width:20%"><button type="button" data-table="offense" data-sort="result">Ergebnis</button></th></tr></thead><tbody id="offenseTableBody"><tr><td colspan="4" class="empty">Noch keine offensiven Einträge.</td></tr></tbody></table></div>
       </section>
+
       <section class="panel table-card defense">
         <div class="table-tools"><h2>Abwehr</h2><div id="defenseSortInfo"></div></div>
         <div class="table-wrap"><table><thead><tr><th style="width:7%"><button type="button" data-table="defense" data-sort="index">#</button></th><th style="width:18%"><button type="button" data-table="defense" data-sort="trigger">Auslösehandlung</button></th><th style="width:39%"><button type="button" data-table="defense" data-sort="follow">Folgehandlung</button></th><th style="width:20%"><button type="button" data-table="defense" data-sort="result">Ergebnis</button></th></tr></thead><tbody id="defenseTableBody"><tr><td colspan="4" class="empty">Noch keine defensiven Einträge.</td></tr></tbody></table></div>
       </section>
     </div>
+
     <section class="panel stats-card" id="statsSection">
       <div class="stats-wrap">
         <div><h2>Statistik</h2><div class="stats-grid"><div class="stats-block"><h3>Angriff</h3><div id="offenseStats" class="stats-list"></div></div><div class="stats-block"><h3>Abwehr</h3><div id="defenseStats" class="stats-list"></div></div></div></div>
         <div class="stats-block hot-takes"><h3>Hot takes</h3><div class="stats-grid hot-grid"><div><h4>Angriff</h4><div id="offenseHotTakes" class="stats-list"></div><div id="offenseHotSingles" class="stats-list hot-singles"></div></div><div><h4>Abwehr</h4><div id="defenseHotTakes" class="stats-list"></div><div id="defenseHotSingles" class="stats-list hot-singles"></div></div></div></div>
       </div>
     </section>
-    <section class="panel notes"><label for="notes">Notizen</label><textarea id="notes" placeholder="Notizen zum Spiel eingeben..."></textarea><p class="install-note">Nach dem ersten Online-Laden kann diese Version über den Homescreen offline nutzbar sein, wenn sie über eine feste Webadresse mit Service Worker bereitgestellt wird.</p></section>
+
+    <section class="panel notes">
+      <label for="notes">Notizen</label>
+      <textarea id="notes" placeholder="Notizen zum Spiel eingeben..."></textarea>
+      <p class="install-note">Nach dem ersten Online-Laden kann diese Version über den Homescreen offline nutzbar sein, wenn sie über eine feste Webadresse mit Service Worker bereitgestellt wird.</p>
+    </section>
   </section>
 </div>
 
@@ -123,88 +140,575 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
   const followOptions = ['Brustsperre','Außensperre','Stoßen','Gisli-Sperre','weg','weg fake','Nantes','6','6+6','Check','zurück'];
   const shotLabels = ['DBR','SLW','SPW','Kreis','Außen','TGS','7m','leeres Tor'];
 
-  function makeResults(){ const positives = shotLabels.map(label => ({ key: `${label}_pos`, display: label, group: 'green' })); const negatives = shotLabels.map(label => ({ key: `${label}_neg`, display: label, group: 'red' })); return [...positives,...negatives,{ key: 'TF', display: 'TF', group: 'red' },{ key: 'Freiwurf', display: 'Freiwurf', group: 'yellow' }]; }
+  function makeResults() {
+    const positives = shotLabels.map(label => ({ key: `${label}_pos`, display: label, group: 'green' }));
+    const negatives = shotLabels.map(label => ({ key: `${label}_neg`, display: label, group: 'red' }));
+    return [...positives, ...negatives, { key: 'TF', display: 'TF', group: 'red' }, { key: 'Freiwurf', display: 'Freiwurf', group: 'yellow' }];
+  }
+
   const offenseResults = makeResults();
   const defenseResults = makeResults();
 
-  const state = { meta:{ opponent:'', matchDate:'' }, undoStack:[], offense:{ entries:[], editingId:null, selection:{ trigger:'', follows:[], result:'', resultDisplay:'', group:'' }, sort:{ key:'index', dir:'desc' } }, defense:{ entries:[], editingId:null, selection:{ trigger:'', follows:[], result:'', resultDisplay:'', group:'' }, sort:{ key:'index', dir:'desc' } } };
-  const els = { setup:document.getElementById('setup'), workspace:document.getElementById('workspace'), opponent:document.getElementById('opponent'), matchDate:document.getElementById('matchDate'), startBtn:document.getElementById('startBtn'), headline:document.getElementById('headline'), topMeta:document.getElementById('topMeta'), undoBtn:document.getElementById('undoBtn'), pdfBtn:document.getElementById('pdfBtn'), notes:document.getElementById('notes'), offenseCount:document.getElementById('offenseCount'), defenseCount:document.getElementById('defenseCount'), offenseSortInfo:document.getElementById('offenseSortInfo'), defenseSortInfo:document.getElementById('defenseSortInfo'), offenseTableBody:document.getElementById('offenseTableBody'), defenseTableBody:document.getElementById('defenseTableBody'), offenseTriggerButtons:document.getElementById('offenseTriggerButtons'), offenseFollowButtons:document.getElementById('offenseFollowButtons'), offenseResultButtons:document.getElementById('offenseResultButtons'), defenseTriggerButtons:document.getElementById('defenseTriggerButtons'), defenseFollowButtons:document.getElementById('defenseFollowButtons'), defenseResultButtons:document.getElementById('defenseResultButtons'), offenseSaveBtn:document.getElementById('offenseSaveBtn'), defenseSaveBtn:document.getElementById('defenseSaveBtn'), offenseResetBtn:document.getElementById('offenseResetBtn'), defenseResetBtn:document.getElementById('defenseResetBtn') };
-  let pressTimer=null,longPressFired=false;
+  const state = {
+    meta: { opponent: '', matchDate: '' },
+    undoStack: [],
+    offense: {
+      entries: [],
+      editingId: null,
+      selection: { trigger: '', follows: [], result: '', resultDisplay: '', group: '' },
+      sort: { key: 'index', dir: 'desc' }
+    },
+    defense: {
+      entries: [],
+      editingId: null,
+      selection: { trigger: '', follows: [], result: '', resultDisplay: '', group: '' },
+      sort: { key: 'index', dir: 'desc' }
+    }
+  };
 
-  const setToday=()=>els.matchDate.value=new Date().toISOString().split('T')[0];
-  const fmtDate=v=>new Date(v+'T00:00:00').toLocaleDateString('de-DE');
-  const h=s=>String(s??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll(\"'\",'&#039;');
-  const currentStore=t=>state[t];
-  const joinList=a=>a.length?a.join(' | '):'—';
-  const displayResult=v=>v&&(v.endsWith('_pos')||v.endsWith('_neg'))?v.replace(/_(pos|neg)$/,''):(v||'');
-  const cloneEntry=e=>JSON.parse(JSON.stringify(e));
+  const els = {
+    setup: document.getElementById('setup'),
+    workspace: document.getElementById('workspace'),
+    opponent: document.getElementById('opponent'),
+    matchDate: document.getElementById('matchDate'),
+    startBtn: document.getElementById('startBtn'),
+    headline: document.getElementById('headline'),
+    topMeta: document.getElementById('topMeta'),
+    undoBtn: document.getElementById('undoBtn'),
+    pdfBtn: document.getElementById('pdfBtn'),
+    notes: document.getElementById('notes'),
+    offenseCount: document.getElementById('offenseCount'),
+    defenseCount: document.getElementById('defenseCount'),
+    offenseSortInfo: document.getElementById('offenseSortInfo'),
+    defenseSortInfo: document.getElementById('defenseSortInfo'),
+    offenseTableBody: document.getElementById('offenseTableBody'),
+    defenseTableBody: document.getElementById('defenseTableBody'),
+    offenseTriggerButtons: document.getElementById('offenseTriggerButtons'),
+    offenseFollowButtons: document.getElementById('offenseFollowButtons'),
+    offenseResultButtons: document.getElementById('offenseResultButtons'),
+    defenseTriggerButtons: document.getElementById('defenseTriggerButtons'),
+    defenseFollowButtons: document.getElementById('defenseFollowButtons'),
+    defenseResultButtons: document.getElementById('defenseResultButtons'),
+    offenseSaveBtn: document.getElementById('offenseSaveBtn'),
+    defenseSaveBtn: document.getElementById('defenseSaveBtn'),
+    offenseResetBtn: document.getElementById('offenseResetBtn'),
+    defenseResetBtn: document.getElementById('defenseResetBtn')
+  };
+
+  let pressTimer = null;
+  let longPressFired = false;
+
+  const setToday = () => els.matchDate.value = new Date().toISOString().split('T')[0];
+  const fmtDate = v => new Date(v + 'T00:00:00').toLocaleDateString('de-DE');
+  const h = s => String(s ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
+  const currentStore = t => state[t];
+  const joinList = a => a.length ? a.join(' | ') : '—';
+  const displayResult = v => v && (v.endsWith('_pos') || v.endsWith('_neg')) ? v.replace(/_(pos|neg)$/, '') : (v || '');
+  const cloneEntry = e => JSON.parse(JSON.stringify(e));
 
   async function loadMatchActionsForCurrentGame() {
-    const opponent = state.meta.opponent, matchDate = state.meta.matchDate;
-    if (!opponent || !matchDate) { state.offense.entries=[]; state.defense.entries=[]; return; }
-    const { data, error } = await supabase.from('match_actions').select('*').eq('match_opponent', opponent).eq('match_date', matchDate).order('created_order', { ascending:true });
-    if (error) { console.error(error); state.offense.entries=[]; state.defense.entries=[]; return; }
-    state.offense.entries = data.filter(r=>r.side==='offense').map(r=>({ ...r, id:r.id, createdOrder:r.created_order ?? r.createdOrder, follows:r.follows ? r.follows.split(' | ') : [], group:r.result_group }));
-    state.defense.entries = data.filter(r=>r.side==='defense').map(r=>({ ...r, id:r.id, createdOrder:r.created_order ?? r.createdOrder, follows:r.follows ? r.follows.split(' | ') : [], group:r.result_group }));
+    const opponent = state.meta.opponent;
+    const matchDate = state.meta.matchDate;
+    if (!opponent || !matchDate) {
+      state.offense.entries = [];
+      state.defense.entries = [];
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from('match_actions')
+      .select('*')
+      .eq('match_opponent', opponent)
+      .eq('match_date', matchDate)
+      .order('created_order', { ascending: true });
+
+    if (error) {
+      console.error(error);
+      state.offense.entries = [];
+      state.defense.entries = [];
+      return;
+    }
+
+    state.offense.entries = data
+      .filter(r => r.side === 'offense')
+      .map(r => ({
+        ...r,
+        id: r.id,
+        createdOrder: r.created_order ?? r.createdOrder,
+        follows: r.follows ? r.follows.split(' | ') : [],
+        group: r.result_group
+      }));
+
+    state.defense.entries = data
+      .filter(r => r.side === 'defense')
+      .map(r => ({
+        ...r,
+        id: r.id,
+        createdOrder: r.created_order ?? r.createdOrder,
+        follows: r.follows ? r.follows.split(' | ') : [],
+        group: r.result_group
+      }));
   }
 
   async function saveEntryToSupabase(domain, payload) {
-    const row = { match_opponent: state.meta.opponent, match_date: state.meta.matchDate, side: domain, trigger: payload.trigger, follows: payload.follows.join(' | '), result: payload.result, result_display: payload.resultDisplay, result_group: payload.group, created_order: payload.createdOrder };
+    const row = {
+      match_opponent: state.meta.opponent,
+      match_date: state.meta.matchDate,
+      side: domain,
+      trigger: payload.trigger,
+      follows: payload.follows.join(' | '),
+      result: payload.result,
+      result_display: payload.resultDisplay,
+      result_group: payload.group,
+      created_order: payload.createdOrder
+    };
+
     const { error } = await supabase.from('match_actions').insert(row, { returning: 'minimal' });
-    if (error) { console.log(error); alert(error.message || JSON.stringify(error)); }
+    if (error) {
+      console.log(error);
+      alert(error.message || JSON.stringify(error));
+    }
   }
 
   function renderButtons(mount, items, type, domain) {
-    if (type!=='result'){ mount.innerHTML=''; items.forEach(item=>{ const b=document.createElement('button'); b.type='button'; b.dataset.value=item; b.dataset.domain=domain; b.dataset.type=type; b.className='choice-btn'; b.textContent=item; b.addEventListener('click',()=>handleSelection(domain,type,item)); mount.appendChild(b); }); return; }
-    const positives=items.filter(i=>i.group==='green'); const negatives=items.filter(i=>i.group==='red'&&i.key!=='TF'); const tf=items.filter(i=>i.key==='TF'); const yellow=items.filter(i=>i.group==='yellow');
-    mount.innerHTML='<div class="result-column" data-col="c1"></div><div class="result-column" data-col="c2"></div><div class="result-column" data-col="c3"></div><div class="result-column" data-col="c4"></div><div class="result-column" data-col="c5"></div>';
-    const c1=mount.querySelector('[data-col="c1"]'), c2=mount.querySelector('[data-col="c2"]'), c3=mount.querySelector('[data-col="c3"]'), c4=mount.querySelector('[data-col="c4"]'), c5=mount.querySelector('[data-col="c5"]');
-    positives.slice(0,4).forEach(i=>c1.appendChild(createResultButton(i,domain,type))); positives.slice(4,8).forEach(i=>c2.appendChild(createResultButton(i,domain,type))); negatives.slice(0,4).forEach(i=>c3.appendChild(createResultButton(i,domain,type))); negatives.slice(4,8).forEach(i=>c4.appendChild(createResultButton(i,domain,type))); tf.concat(yellow).forEach(i=>c5.appendChild(createResultButton(i,domain,type)));
-  }
-  function createResultButton(item,domain,type){ const b=document.createElement('button'); b.type='button'; b.dataset.value=item.key; b.dataset.domain=domain; b.dataset.type=type; b.className=`result-btn ${item.group}`; b.textContent=item.display; b.addEventListener('click',()=>handleSelection(domain,type,item.key,item.group,item.display)); return b; }
-  function handleSelection(domain,type,value,group='',display=''){ const store=currentStore(domain); if(type==='trigger')store.selection.trigger=value; if(type==='result'){store.selection.result=value; store.selection.group=group; store.selection.resultDisplay=display||displayResult(value);} if(type==='follows')toggleMulti(store.selection.follows,value,3); updateSelectedButtons(domain); }
-  function toggleMulti(arr,value,max){ const idx=arr.indexOf(value); if(idx>=0)arr.splice(idx,1); else if(arr.length<max)arr.push(value); }
-  function updateSelectedButtons(domain){ const store=currentStore(domain); ['TriggerButtons','FollowButtons','ResultButtons'].forEach(s=>{ const el=els[`${domain}${s}`]; if(!el)return; el.querySelectorAll('button').forEach(btn=>{ const type=btn.dataset.type; if(type==='trigger')btn.classList.toggle('selected',btn.dataset.value===store.selection.trigger); if(type==='result')btn.classList.toggle('selected',btn.dataset.value===store.selection.result); if(type==='follows')btn.classList.toggle('selected',store.selection.follows.includes(btn.dataset.value)); }); }); }
-  function clearSelection(domain){ const store=currentStore(domain); store.selection={ trigger:'', follows:[], result:'', resultDisplay:'', group:'' }; store.editingId=null; updateSelectedButtons(domain); renderTable(domain); }
-  function validate(domain){ const s=currentStore(domain).selection; if(!s.trigger||!s.result){ alert('Bitte Auslösehandlung und Ergebnis auswählen.'); return false; } return true; }
-  const pushUndo=a=>state.undoStack.push(a);
+    if (type !== 'result') {
+      mount.innerHTML = '';
+      items.forEach(item => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.dataset.value = item;
+        b.dataset.domain = domain;
+        b.dataset.type = type;
+        b.className = 'choice-btn';
+        b.textContent = item;
+        b.addEventListener('click', () => handleSelection(domain, type, item));
+        mount.appendChild(b);
+      });
+      return;
+    }
 
-  function saveEntry(domain){
-    if(!validate(domain))return;
-    const store=currentStore(domain);
-    const payload={ trigger:store.selection.trigger, follows:[...store.selection.follows], result:store.selection.result, resultDisplay:store.selection.resultDisplay||displayResult(store.selection.result), group:store.selection.group, createdOrder:store.entries.length+1 };
-    const entry={ id:Date.now()+Math.floor(Math.random()*1000), createdOrder:store.entries.length+1, ...payload };
+    const positives = items.filter(i => i.group === 'green');
+    const negatives = items.filter(i => i.group === 'red' && i.key !== 'TF');
+    const tf = items.filter(i => i.key === 'TF');
+    const yellow = items.filter(i => i.group === 'yellow');
+
+    mount.innerHTML =
+      '<div class="result-column" data-col="c1"></div>' +
+      '<div class="result-column" data-col="c2"></div>' +
+      '<div class="result-column" data-col="c3"></div>' +
+      '<div class="result-column" data-col="c4"></div>' +
+      '<div class="result-column" data-col="c5"></div>';
+
+    const c1 = mount.querySelector('[data-col="c1"]');
+    const c2 = mount.querySelector('[data-col="c2"]');
+    const c3 = mount.querySelector('[data-col="c3"]');
+    const c4 = mount.querySelector('[data-col="c4"]');
+    const c5 = mount.querySelector('[data-col="c5"]');
+
+    positives.slice(0, 4).forEach(i => c1.appendChild(createResultButton(i, domain, type)));
+    positives.slice(4, 8).forEach(i => c2.appendChild(createResultButton(i, domain, type)));
+    negatives.slice(0, 4).forEach(i => c3.appendChild(createResultButton(i, domain, type)));
+    negatives.slice(4, 8).forEach(i => c4.appendChild(createResultButton(i, domain, type)));
+    tf.concat(yellow).forEach(i => c5.appendChild(createResultButton(i, domain, type)));
+  }
+
+  function createResultButton(item, domain, type) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.dataset.value = item.key;
+    b.dataset.domain = domain;
+    b.dataset.type = type;
+    b.className = `result-btn ${item.group}`;
+    b.textContent = item.display;
+    b.addEventListener('click', () => handleSelection(domain, type, item.key, item.group, item.display));
+    return b;
+  }
+
+  function handleSelection(domain, type, value, group = '', display = '') {
+    const store = currentStore(domain);
+    if (type === 'trigger') store.selection.trigger = value;
+    if (type === 'result') {
+      store.selection.result = value;
+      store.selection.group = group;
+      store.selection.resultDisplay = display || displayResult(value);
+    }
+    if (type === 'follows') toggleMulti(store.selection.follows, value, 3);
+    updateSelectedButtons(domain);
+  }
+
+  function toggleMulti(arr, value, max) {
+    const idx = arr.indexOf(value);
+    if (idx >= 0) arr.splice(idx, 1);
+    else if (arr.length < max) arr.push(value);
+  }
+
+  function updateSelectedButtons(domain) {
+    const store = currentStore(domain);
+    ['TriggerButtons', 'FollowButtons', 'ResultButtons'].forEach(s => {
+      const el = els[`${domain}${s}`];
+      if (!el) return;
+      el.querySelectorAll('button').forEach(btn => {
+        const type = btn.dataset.type;
+        if (type === 'trigger') btn.classList.toggle('selected', btn.dataset.value === store.selection.trigger);
+        if (type === 'result') btn.classList.toggle('selected', btn.dataset.value === store.selection.result);
+        if (type === 'follows') btn.classList.toggle('selected', store.selection.follows.includes(btn.dataset.value));
+      });
+    });
+  }
+
+  function clearSelection(domain) {
+    const store = currentStore(domain);
+    store.selection = { trigger: '', follows: [], result: '', resultDisplay: '', group: '' };
+    store.editingId = null;
+    updateSelectedButtons(domain);
+    renderTable(domain);
+  }
+
+  function validate(domain) {
+    const s = currentStore(domain).selection;
+    if (!s.trigger || !s.result) {
+      alert('Bitte Auslösehandlung und Ergebnis auswählen.');
+      return false;
+    }
+    return true;
+  }
+
+  const pushUndo = a => state.undoStack.push(a);
+
+  function saveEntry(domain) {
+    if (!validate(domain)) return;
+    const store = currentStore(domain);
+    const payload = {
+      trigger: store.selection.trigger,
+      follows: [...store.selection.follows],
+      result: store.selection.result,
+      resultDisplay: store.selection.resultDisplay || displayResult(store.selection.result),
+      group: store.selection.group,
+      createdOrder: store.entries.length + 1
+    };
+
+    const entry = {
+      id: Date.now() + Math.floor(Math.random() * 1000),
+      createdOrder: store.entries.length + 1,
+      ...payload
+    };
+
     store.entries.push(entry);
-    pushUndo({ type:'add', domain, entry:cloneEntry(entry) });
-    saveEntryToSupabase(domain,payload);
+    pushUndo({ type: 'add', domain, entry: cloneEntry(entry) });
+
+    saveEntryToSupabase(domain, payload);
+
     clearSelection(domain);
     renderTable(domain);
     renderStats();
   }
 
-  function undoLast(){ const action=state.undoStack.pop(); if(!action){ alert('Es gibt keine Aktion zum Rückgängigmachen.'); return; } const store=currentStore(action.domain); if(action.type==='add')store.entries=store.entries.filter(e=>e.id!==action.entry.id); renderTable(action.domain); renderStats(); }
-  function sortValue(row,key){ if(key==='index')return row.createdOrder; if(key==='trigger')return row.trigger||''; if(key==='follow')return joinList(row.follows||[]); if(key==='result')return row.resultDisplay||displayResult(row.result||''); return ''; }
-  function sortEntries(domain){ const store=currentStore(domain),rows=[...store.entries],{key,dir}=store.sort,f=dir==='asc'?1:-1; rows.sort((a,b)=>{ const av=sortValue(a,key),bv=sortValue(b,key); let v=typeof av==='number'&&typeof bv==='number'?av-bv:String(av).localeCompare(String(bv),'de'); if(v===0)v=a.createdOrder-b.createdOrder; return v*f; }); return rows; }
-  function setSort(domain,key){ const store=currentStore(domain); if(store.sort.key===key)store.sort.dir=store.sort.dir==='asc'?'desc':'asc'; else { store.sort.key=key; store.sort.dir=key==='index'?'desc':'asc'; } renderTable(domain); }
-  const startLongPress=(domain,id)=>{ stopLongPress(); longPressFired=false; pressTimer=setTimeout(()=>{ longPressFired=true; loadForEdit(domain,id); },550); }; const stopLongPress=()=>clearTimeout(pressTimer);
-  function loadForEdit(domain,id){ const store=currentStore(domain),entry=store.entries.find(r=>r.id===id); if(!entry)return; store.editingId=id; store.selection={ trigger:entry.trigger, follows:[...(entry.follows||[])], result:entry.result, resultDisplay:entry.resultDisplay||displayResult(entry.result), group:entry.group }; updateSelectedButtons(domain); renderTable(domain); window.scrollTo({top:0,behavior:'smooth'}); }
-  function pills(arr,cls){ if(!arr||!arr.length)return'—'; return `<div class="pill-list">${arr.map(v=>`<span class="pill ${cls}">${h(v)}</span>`).join('')}</div>`; }
+  function undoLast() {
+    const action = state.undoStack.pop();
+    if (!action) {
+      alert('Es gibt keine Aktion zum Rückgängigmachen.');
+      return;
+    }
+    const store = currentStore(action.domain);
+    if (action.type === 'add') {
+      store.entries = store.entries.filter(e => e.id !== action.entry.id);
+    } else if (action.type === 'edit') {
+      const idx = store.entries.findIndex(e => e.id === action.after.id);
+      if (idx !== -1) store.entries[idx] = cloneEntry(action.before);
+    }
+    clearSelection(action.domain);
+    renderTable(action.domain);
+    renderStats();
+  }
 
-  function renderTable(domain){ const store=currentStore(domain),body=els[`${domain}TableBody`],countEl=els[`${domain}Count`],sortInfoEl=els[`${domain}SortInfo`],rows=sortEntries(domain); countEl.textContent=`${store.entries.length} Einträge`; const labels={index:'#',trigger:'Auslösehandlung',follow:'Folgehandlung',result:'Ergebnis'}; sortInfoEl.textContent=`${labels[store.sort.key]} ${store.sort.dir==='asc'?'↑':'↓'}`; if(!rows.length){ body.innerHTML=`<tr><td colspan="4" class="empty">Noch keine ${domain==='offense'?'offensiven':'defensiven'} Einträge.</td></tr>`; return; } body.innerHTML=rows.map((row,idx)=>`<tr data-domain="${domain}" data-id="${row.id}" class="${store.editingId===row.id?'editing':''}"><td>${idx+1}</td><td>${h(row.trigger||'')}</td><td>${pills(row.follows||[],'follow')}</td><td class="result-cell ${row.group||''}">${h(row.resultDisplay||displayResult(row.result||''))}</td></tr>`).join(''); body.querySelectorAll('tr[data-id]').forEach(tr=>{ const id=Number(tr.dataset.id); tr.addEventListener('mousedown',()=>startLongPress(domain,id)); tr.addEventListener('mouseup',()=>{ if(!longPressFired)stopLongPress(); }); tr.addEventListener('mouseleave',stopLongPress); tr.addEventListener('touchstart',e=>{ startLongPress(domain,id); e.preventDefault(); },{passive:false}); tr.addEventListener('touchend',e=>{ stopLongPress(); e.preventDefault(); },{passive:false}); tr.addEventListener('touchcancel',stopLongPress); }); }
-  function resultIsPositive(value){ return String(value||'').endsWith('_pos'); }
-  function comboStats(domain){ const rows=currentStore(domain).entries,map=new Map(); rows.forEach(row=>{ const key=`${row.trigger||''} + ${(row.follows||[]).join(' / ')||'—'}`; const item=map.get(key)||{ key,wins:0,total:0 }; item.total+=1; if(resultIsPositive(row.result))item.wins+=1; map.set(key,item); }); return [...map.values()].sort((a,b)=>(b.wins/b.total)-(a.wins/a.total)||b.total-a.total||a.key.localeCompare(b.key,'de')); }
-  function hotTakes(domain){ const rows=currentStore(domain).entries.slice(-10).filter(r=>resultIsPositive(r.result)); const comboMap=new Map(),triggerMap=new Map(),followMap=new Map(); rows.forEach(row=>{ const combo=`${row.trigger||''} + ${(row.follows||[]).join(' / ')||'—'}`; comboMap.set(combo,(comboMap.get(combo)||0)+1); triggerMap.set(row.trigger||'—',(triggerMap.get(row.trigger||'—')||0)+1); (row.follows||[]).forEach(f=>followMap.set(f,(followMap.get(f)||0)+1)); }); return { combos:[...comboMap.entries()].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],'de')).slice(0,3), triggers:[...triggerMap.entries()].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],'de')).slice(0,3), follows:[...followMap.entries()].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],'de')).slice(0,3) }; }
-  function renderStats(){ [['offense','offenseStats','offenseHotTakes','offenseHotSingles'],['defense','defenseStats','defenseHotTakes','defenseHotSingles']].forEach(([domain,statsId,hotId,singleId])=>{ const statsEl=document.getElementById(statsId),hotEl=document.getElementById(hotId),singleEl=document.getElementById(singleId); const rows=comboStats(domain).filter(x=>x.total>=2).slice(0,8); statsEl.innerHTML=rows.length?rows.map(r=>{ const pct=Math.round(r.wins/r.total*100); return `<div class="stats-item"><span>${h(r.key)}</span><strong>${pct}% (${r.wins} aus ${r.total})</strong></div>`; }).join(''):'<div class="empty">Noch keine belastbaren Kombinationen.</div>'; const hot=hotTakes(domain); hotEl.innerHTML=hot.combos.length?hot.combos.map(([key,count])=>`<div class="stats-item"><span>${h(key)}</span><strong>${count}x</strong></div>`).join(''):'<div class="empty">Noch keine Hot takes.</div>'; singleEl.innerHTML=[...hot.triggers.map(([key,count])=>`<div class="stats-item"><span>Trigger: ${h(key)}</span><strong>${count}x</strong></div>`),...hot.follows.map(([key,count])=>`<div class="stats-item"><span>Follow: ${h(key)}</span><strong>${count}x</strong></div>`)].join('')||'<div class="empty">Noch keine Einzelwerte.</div>'; }); }
-  function applyResultColor(data){ if(data.section!=='body'||data.column.index!==3)return; const v=String(data.cell.raw||''); if(v==='Freiwurf')data.cell.styles.fillColor=[247,237,198]; else if(v==='TF')data.cell.styles.fillColor=[247,219,219]; else if(v==='DBR'||v==='SLW'||v==='SPW'||v==='Kreis'||v==='Außen'||v==='TGS'||v==='7m'||v==='leeres Tor')data.cell.styles.fillColor=[220,239,214]; }
-  function exportPdf(){ if(!window.jspdf||!window.jspdf.jsPDF||typeof window.jspdf.jsPDF!=='function'){ alert('PDF-Export ist noch nicht geladen. Bitte die App einmal mit Internet öffnen und erneut versuchen.'); return; } const { jsPDF } = window.jspdf; const doc=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'}); if(typeof doc.autoTable!=='function'){ alert('PDF-Tabellenmodul konnte nicht geladen werden.'); return; } doc.setFontSize(16); doc.text(`Kollektive Statistik vs ${state.meta.opponent}`,14,14); doc.setFontSize(10); doc.text(`Datum: ${fmtDate(state.meta.matchDate)}`,14,21); const mapRows=domain=>sortEntries(domain).map((row,idx)=>[idx+1,row.trigger||'',(row.follows||[]).join(' | '),row.resultDisplay||displayResult(row.result||'')]); const offenseRows=mapRows('offense'),defenseRows=mapRows('defense'); doc.setFontSize(12); doc.text('Offensive Rohdaten',14,30); doc.autoTable({head:[['#','Auslösehandlung','Folgehandlung','Ergebnis']],body:offenseRows.length?offenseRows:[['','Keine Einträge','','']],startY:33,theme:'grid',styles:{fontSize:7.5,cellPadding:2,lineWidth:.2,lineColor:[140,140,140]},headStyles:{fillColor:[230,242,241],textColor:20},didParseCell:applyResultColor}); let y=doc.lastAutoTable.finalY+10; if(y>170){doc.addPage();y=18} doc.setFontSize(12); doc.text('Defensive Rohdaten',14,y); doc.autoTable({head:[['#','Auslösehandlung','Folgehandlung','Ergebnis']],body:defenseRows.length?defenseRows:[['','Keine Einträge','','']],startY:y+3,theme:'grid',styles:{fontSize:7.5,cellPadding:2,lineWidth:.2,lineColor:[140,140,140]},headStyles:{fillColor:[248,232,233],textColor:20},didParseCell:applyResultColor}); const noteText=els.notes.value.trim(); if(noteText){ let noteY=doc.lastAutoTable.finalY+10; if(noteY>180){doc.addPage();noteY=20} doc.setFontSize(11); doc.text('Notizen:',14,noteY); doc.setFontSize(10); doc.splitTextToSize(noteText,255).forEach((line,i)=>doc.text(line,14,noteY+6+i*5)); } doc.save(`Kollektive_Statistik_vs_${state.meta.opponent.replace(/\\s+/g,'_')}.pdf`); }
+  function sortValue(row, key) {
+    if (key === 'index') return row.createdOrder;
+    if (key === 'trigger') return row.trigger || '';
+    if (key === 'follow') return joinList(row.follows || []);
+    if (key === 'result') return row.resultDisplay || displayResult(row.result || '');
+    return '';
+  }
 
-  function startApp(){ const opponent=els.opponent.value.trim(), matchDate=els.matchDate.value; if(!opponent||!matchDate){ alert('Bitte Gegner und Datum eintragen.'); return; } state.meta={ opponent, matchDate }; els.headline.textContent=`Statistik vs ${opponent}`; els.topMeta.textContent=fmtDate(matchDate); els.setup.classList.add('hidden'); els.workspace.classList.remove('hidden'); loadMatchActionsForCurrentGame().then(()=>{ renderTable('offense'); renderTable('defense'); renderStats(); }); }
+  function sortEntries(domain) {
+    const store = currentStore(domain);
+    const rows = [...store.entries];
+    const { key, dir } = store.sort;
+    const f = dir === 'asc' ? 1 : -1;
+    rows.sort((a, b) => {
+      const av = sortValue(a, key);
+      const bv = sortValue(b, key);
+      let v = typeof av === 'number' && typeof bv === 'number' ? av - bv : String(av).localeCompare(String(bv), 'de');
+      if (v === 0) v = a.createdOrder - b.createdOrder;
+      return v * f;
+    });
+    return rows;
+  }
 
-  const brandLogo=document.getElementById('brandLogo'); if(brandLogo){ brandLogo.onerror=()=>{ brandLogo.src='data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><rect width="512" height="512" rx="72" fill="#0d5b1f"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="132" font-weight="700" fill="#ffffff">FÜCHSE</text></svg>`); }; }
+  function setSort(domain, key) {
+    const store = currentStore(domain);
+    if (store.sort.key === key) store.sort.dir = store.sort.dir === 'asc' ? 'desc' : 'asc';
+    else {
+      store.sort.key = key;
+      store.sort.dir = key === 'index' ? 'desc' : 'asc';
+    }
+    renderTable(domain);
+  }
 
-  document.querySelectorAll('th button[data-table]').forEach(btn=>btn.addEventListener('click',()=>setSort(btn.dataset.table,btn.dataset.sort)));
-  els.startBtn.addEventListener('click',startApp); els.undoBtn.addEventListener('click',undoLast); els.pdfBtn.addEventListener('click',exportPdf); els.offenseSaveBtn.addEventListener('click',()=>saveEntry('offense')); els.defenseSaveBtn.addEventListener('click',()=>saveEntry('defense')); els.offenseResetBtn.addEventListener('click',()=>clearSelection('offense')); els.defenseResetBtn.addEventListener('click',()=>clearSelection('defense'));
-  renderButtons(els.offenseTriggerButtons,triggerOptions,'trigger','offense'); renderButtons(els.offenseFollowButtons,followOptions,'follows','offense'); renderButtons(els.offenseResultButtons,offenseResults,'result','offense'); renderButtons(els.defenseTriggerButtons,triggerOptions,'trigger','defense'); renderButtons(els.defenseFollowButtons,followOptions,'follows','defense'); renderButtons(els.defenseResultButtons,defenseResults,'result','defense');
+  const startLongPress = (domain, id) => {
+    stopLongPress();
+    longPressFired = false;
+    pressTimer = setTimeout(() => {
+      longPressFired = true;
+      loadForEdit(domain, id);
+    }, 550);
+  };
+
+  const stopLongPress = () => clearTimeout(pressTimer);
+
+  function loadForEdit(domain, id) {
+    const store = currentStore(domain);
+    const entry = store.entries.find(r => r.id === id);
+    if (!entry) return;
+    store.editingId = id;
+    store.selection = {
+      trigger: entry.trigger,
+      follows: [...(entry.follows || [])],
+      result: entry.result,
+      resultDisplay: entry.resultDisplay || displayResult(entry.result),
+      group: entry.group
+    };
+    updateSelectedButtons(domain);
+    renderTable(domain);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function pills(arr, cls) {
+    if (!arr || !arr.length) return '—';
+    return `<div class="pill-list">${arr.map(v => `<span class="pill ${cls}">${h(v)}</span>`).join('')}</div>`;
+  }
+
+  function renderTable(domain) {
+    const store = currentStore(domain);
+    const body = els[`${domain}TableBody`];
+    const countEl = els[`${domain}Count`];
+    const sortInfoEl = els[`${domain}SortInfo`];
+    const rows = sortEntries(domain);
+
+    countEl.textContent = `${store.entries.length} Einträge`;
+    const labels = { index: '#', trigger: 'Auslösehandlung', follow: 'Folgehandlung', result: 'Ergebnis' };
+    sortInfoEl.textContent = `${labels[store.sort.key]} ${store.sort.dir === 'asc' ? '↑' : '↓'}`;
+
+    if (!rows.length) {
+      body.innerHTML = `<tr><td colspan="4" class="empty">Noch keine ${domain === 'offense' ? 'offensiven' : 'defensiven'} Einträge.</td></tr>`;
+      return;
+    }
+
+    body.innerHTML = rows.map((row, idx) =>
+      `<tr data-domain="${domain}" data-id="${row.id}" class="${store.editingId === row.id ? 'editing' : ''}">
+        <td>${idx + 1}</td>
+        <td>${h(row.trigger || '')}</td>
+        <td>${pills(row.follows || [], 'follow')}</td>
+        <td class="result-cell ${row.group || ''}">${h(row.resultDisplay || displayResult(row.result || ''))}</td>
+      </tr>`
+    ).join('');
+
+    body.querySelectorAll('tr[data-id]').forEach(tr => {
+      const id = Number(tr.dataset.id);
+      tr.addEventListener('mousedown', () => startLongPress(domain, id));
+      tr.addEventListener('mouseup', () => { if (!longPressFired) stopLongPress(); });
+      tr.addEventListener('mouseleave', stopLongPress);
+      tr.addEventListener('touchstart', e => { startLongPress(domain, id); e.preventDefault(); }, { passive: false });
+      tr.addEventListener('touchend', e => { stopLongPress(); e.preventDefault(); }, { passive: false });
+      tr.addEventListener('touchcancel', stopLongPress);
+    });
+  }
+
+  function resultIsPositive(value) {
+    return String(value || '').endsWith('_pos');
+  }
+
+  function comboStats(domain) {
+    const rows = currentStore(domain).entries;
+    const map = new Map();
+    rows.forEach(row => {
+      const key = `${row.trigger || ''} + ${(row.follows || []).join(' / ') || '—'}`;
+      const item = map.get(key) || { key, wins: 0, total: 0 };
+      item.total += 1;
+      if (resultIsPositive(row.result)) item.wins += 1;
+      map.set(key, item);
+    });
+    return [...map.values()].sort((a, b) => (b.wins / b.total) - (a.wins / a.total) || b.total - a.total || a.key.localeCompare(b.key, 'de'));
+  }
+
+  function hotTakes(domain) {
+    const rows = currentStore(domain).entries.slice(-10).filter(r => resultIsPositive(r.result));
+    const comboMap = new Map(), triggerMap = new Map(), followMap = new Map();
+    rows.forEach(row => {
+      const combo = `${row.trigger || ''} + ${(row.follows || []).join(' / ') || '—'}`;
+      comboMap.set(combo, (comboMap.get(combo) || 0) + 1);
+      triggerMap.set(row.trigger || '—', (triggerMap.get(row.trigger || '—') || 0) + 1);
+      (row.follows || []).forEach(f => followMap.set(f, (followMap.get(f) || 0) + 1));
+    });
+    return {
+      combos: [...comboMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3),
+      triggers: [...triggerMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3),
+      follows: [...followMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3)
+    };
+  }
+
+  function renderStats() {
+    [['offense', 'offenseStats', 'offenseHotTakes', 'offenseHotSingles'],
+     ['defense', 'defenseStats', 'defenseHotTakes', 'defenseHotSingles']].forEach(([domain, statsId, hotId, singleId]) => {
+      const statsEl = document.getElementById(statsId);
+      const hotEl = document.getElementById(hotId);
+      const singleEl = document.getElementById(singleId);
+
+      const rows = comboStats(domain).filter(x => x.total >= 2).slice(0, 8);
+      statsEl.innerHTML = rows.length
+        ? rows.map(r => {
+            const pct = Math.round(r.wins / r.total * 100);
+            return `<div class="stats-item"><span>${h(r.key)}</span><strong>${pct}% (${r.wins} aus ${r.total})</strong></div>`;
+          }).join('')
+        : '<div class="empty">Noch keine belastbaren Kombinationen.</div>';
+
+      const hot = hotTakes(domain);
+      hotEl.innerHTML = hot.combos.length
+        ? hot.combos.map(([key, count]) => `<div class="stats-item"><span>${h(key)}</span><strong>${count}x</strong></div>`).join('')
+        : '<div class="empty">Noch keine Hot takes.</div>';
+
+      singleEl.innerHTML =
+        [...hot.triggers.map(([key, count]) => `<div class="stats-item"><span>Trigger: ${h(key)}</span><strong>${count}x</strong></div>`),
+         ...hot.follows.map(([key, count]) => `<div class="stats-item"><span>Follow: ${h(key)}</span><strong>${count}x</strong></div>`)].join('')
+        || '<div class="empty">Noch keine Einzelwerte.</div>';
+    });
+  }
+
+  function applyResultColor(data) {
+    if (data.section !== 'body' || data.column.index !== 3) return;
+    const v = String(data.cell.raw || '');
+    if (v === 'Freiwurf') data.cell.styles.fillColor = [247, 237, 198];
+    else if (v === 'TF') data.cell.styles.fillColor = [247, 219, 219];
+    else if (v === 'DBR' || v === 'SLW' || v === 'SPW' || v === 'Kreis' || v === 'Außen' || v === 'TGS' || v === '7m' || v === 'leeres Tor') {
+      data.cell.styles.fillColor = [220, 239, 214];
+    }
+  }
+
+  function exportPdf() {
+    if (!window.jspdf || !window.jspdf.jsPDF || typeof window.jspdf.jsPDF !== 'function') {
+      alert('PDF-Export ist noch nicht geladen. Bitte die App einmal mit Internet öffnen und erneut versuchen.');
+      return;
+    }
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+    if (typeof doc.autoTable !== 'function') {
+      alert('PDF-Tabellenmodul konnte nicht geladen werden.');
+      return;
+    }
+
+    doc.setFontSize(16);
+    doc.text(`Kollektive Statistik vs ${state.meta.opponent}`, 14, 14);
+    doc.setFontSize(10);
+    doc.text(`Datum: ${fmtDate(state.meta.matchDate)}`, 14, 21);
+
+    const mapRows = domain => sortEntries(domain).map((row, idx) => [
+      idx + 1,
+      row.trigger || '',
+      (row.follows || []).join(' | '),
+      row.resultDisplay || displayResult(row.result || '')
+    ]);
+
+    const offenseRows = mapRows('offense');
+    const defenseRows = mapRows('defense');
+
+    doc.setFontSize(12);
+    doc.text('Offensive Rohdaten', 14, 30);
+    doc.autoTable({
+      head: [['#', 'Auslösehandlung', 'Folgehandlung', 'Ergebnis']],
+      body: offenseRows.length ? offenseRows : [['', 'Keine Einträge', '', '']],
+      startY: 33,
+      theme: 'grid',
+      styles: { fontSize: 7.5, cellPadding: 2, lineWidth: 0.2, lineColor: [140, 140, 140] },
+      headStyles: { fillColor: [230, 242, 241], textColor: 20 },
+      didParseCell: applyResultColor
+    });
+
+    let y = doc.lastAutoTable.finalY + 10;
+    if (y > 170) { doc.addPage(); y = 18; }
+
+    doc.setFontSize(12);
+    doc.text('Defensive Rohdaten', 14, y);
+    doc.autoTable({
+      head: [['#', 'Auslösehandlung', 'Folgehandlung', 'Ergebnis']],
+      body: defenseRows.length ? defenseRows : [['', 'Keine Einträge', '', '']],
+      startY: y + 3,
+      theme: 'grid',
+      styles: { fontSize: 7.5, cellPadding: 2, lineWidth: 0.2, lineColor: [140, 140, 140] },
+      headStyles: { fillColor: [248, 232, 233], textColor: 20 },
+      didParseCell: applyResultColor
+    });
+
+    const noteText = els.notes.value.trim();
+    if (noteText) {
+      let noteY = doc.lastAutoTable.finalY + 10;
+      if (noteY > 180) { doc.addPage(); noteY = 20; }
+      doc.setFontSize(11);
+      doc.text('Notizen:', 14, noteY);
+      doc.setFontSize(10);
+      const split = doc.splitTextToSize(noteText, 255);
+      doc.text(split, 14, noteY + 6);
+    }
+
+    doc.save(`Kollektive_Statistik_vs_${state.meta.opponent.replace(/\s+/g, '_')}.pdf`);
+  }
+
+  function startApp() {
+    const opponent = els.opponent.value.trim();
+    const matchDate = els.matchDate.value;
+    if (!opponent || !matchDate) {
+      alert('Bitte Gegner und Datum eintragen.');
+      return;
+    }
+
+    state.meta = { opponent, matchDate };
+    els.headline.textContent = `Statistik vs ${opponent}`;
+    els.topMeta.textContent = fmtDate(matchDate);
+    els.setup.classList.add('hidden');
+    els.workspace.classList.remove('hidden');
+
+    loadMatchActionsForCurrentGame().then(() => {
+      renderTable('offense');
+      renderTable('defense');
+      renderStats();
+    });
+  }
+
+  const brandLogo = document.getElementById('brandLogo');
+  if (brandLogo) {
+    brandLogo.onerror = () => {
+      brandLogo.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+        `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><rect width="512" height="512" rx="72" fill="#0d5b1f"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="132" font-weight="700" fill="#ffffff">FÜCHSE</text></svg>`
+      );
+    };
+  }
+
+  document.querySelectorAll('th button[data-table]').forEach(btn =>
+    btn.addEventListener('click', () => setSort(btn.dataset.table, btn.dataset.sort))
+  );
+  els.startBtn.addEventListener('click', startApp);
+  els.undoBtn.addEventListener('click', undoLast);
+  els.pdfBtn.addEventListener('click', exportPdf);
+  els.offenseSaveBtn.addEventListener('click', () => saveEntry('offense'));
+  els.defenseSaveBtn.addEventListener('click', () => saveEntry('defense'));
+  els.offenseResetBtn.addEventListener('click', () => clearSelection('offense'));
+  els.defenseResetBtn.addEventListener('click', () => clearSelection('defense'));
+
+  renderButtons(els.offenseTriggerButtons, triggerOptions, 'trigger', 'offense');
+  renderButtons(els.offenseFollowButtons, followOptions, 'follows', 'offense');
+  renderButtons(els.offenseResultButtons, offenseResults, 'result', 'offense');
+  renderButtons(els.defenseTriggerButtons, triggerOptions, 'trigger', 'defense');
+  renderButtons(els.defenseFollowButtons, followOptions, 'follows', 'defense');
+  renderButtons(els.defenseResultButtons, defenseResults, 'result', 'defense');
+
   setToday();
 })();
 </script>
