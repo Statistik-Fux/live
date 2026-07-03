@@ -24,65 +24,44 @@
 
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script>
-    const msg = document.getElementById("msg");
-
     const supabaseUrl = "https://tmadmhayyudwbbzxfqnl.supabase.co";
-    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtYWRtaGF5eXVkd2JienhmcW5sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMTA3ODIsImV4cCI6MjA5ODU4Njc4Mn0.cu70uZwFw_eKOAuzHQijgokrDrpDN4C4kCRgfQfwUxY";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtYWRtaGF5eXVkd2JienhmcW5sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMTA3ODIsImV4cPI6MjA5ODU4Njc4Mn0.cu70uZwFw_eKOAuzHQijgokrDrpDN4C4kCRgfQfwUxY";
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    const msg = document.getElementById("msg");
 
     function loadMatch() {
       const code = document.getElementById("matchCode").value.trim();
       msg.className = "msg";
-      msg.textContent = "loadMatch() ausgeführt! Code: " + code;
+      msg.textContent = "Suche Match: " + code;
 
-      if (!window.supabase) {
-        msg.className = "msg error";
-        msg.textContent += " | window.supabase nicht vorhanden.";
-        return;
-      }
+      supabase
+        .from("matches")
+        .select("*")
+        .eq("code", code)
+        .single()
+        .then(({ data, error }) => {
+          if (error) {
+            msg.className = "msg error";
+            msg.textContent = "Supabase-Fehler: " + error.message;
+            return;
+          }
 
-      msg.textContent += " | window.supabase vorhanden.";
+          if (!data) {
+            msg.className = "msg error";
+            msg.textContent = "Kein Match mit Code '" + code + "' gefunden.";
+            return;
+          }
 
-      try {
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-
-        msg.textContent += " | supabase erstellt.";
-
-        const query = supabase
-          .from("matches")
-          .select("*")
-          .eq("code", code);
-
-        msg.textContent += " | query gebaut.";
-
-        query
-          .single()
-          .then(({ data, error }) => {
-            if (error) {
-              msg.className = "msg error";
-              msg.textContent = "Supabase-Fehler: " + error.message;
-              return;
-            }
-
-            if (!data) {
-              msg.className = "msg error";
-              msg.textContent = "Kein Match mit Code '" + code + "' gefunden.";
-              return;
-            }
-
-            msg.className = "msg success";
-            msg.textContent =
-              "Match gefunden: " +
-              data.code +
-              " | id: " +
-              data.id +
-              " | reihe1: " +
-              JSON.stringify(data.reihe1);
-          });
-
-      } catch (e) {
-        msg.className = "msg error";
-        msg.textContent += " | Fehler: " + e.message;
-      }
+          msg.className = "msg success";
+          msg.textContent =
+            "Match gefunden: " +
+            data.code +
+            " | id: " +
+            data.id +
+            " | reihe1: " +
+            JSON.stringify(data.reihe1);
+        });
     }
   </script>
 </body>
