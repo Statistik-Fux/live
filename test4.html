@@ -1,42 +1,355 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <title>Fetch Test</title>
-  <style>
-    body { font-family: system-ui, sans-serif; padding: 20px; }
-    .msg { margin-top: 10px; font-weight: bold; }
-    .error { color: #cc0000; }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Handball Kollektiv - Anzeige</title>
+<meta name="theme-color" content="#0b4f16" />
+<style>
+:root{--text-sm:clamp(.9rem,.82rem + .25vw,1rem);--text-base:clamp(1rem,.95rem + .25vw,1.08rem);--text-lg:clamp(1.12rem,1.02rem + .45vw,1.35rem);--text-xl:clamp(1.35rem,1.2rem + .6vw,1.7rem);--space-2:.5rem;--space-3:.75rem;--space-4:1rem;--space-5:1.25rem;--space-6:1.5rem;--space-8:2rem;--radius-md:.8rem;--radius-lg:1rem;--radius-xl:1.25rem;--shadow-md:0 12px 28px rgba(9,27,12,.08);--shadow-sm:0 2px 6px rgba(9,27,12,.06);--bg:#f3f5f0;--surface:rgba(255,255,255,.93);--surface-2:#eef2ea;--border:rgba(18,35,20,.12);--text:#1f261f;--muted:#647064;--primary:#0d5b1f;--primary-2:#1e7a31;--fox-red:#d91f26;--fox-red-dark:#b8171d;--green-strong:#3f7d32;--red-strong:#b13a3a;--yellow-strong:#a97900}
+*{box-sizing:border-box}html,body{margin:0;padding:0}html{scroll-behavior:smooth}
+body{min-height:100vh;font-family:Arial,sans-serif;font-size:var(--text-base);color:#111;background:radial-gradient(circle at top left,rgba(13,91,31,.12),transparent 30%),linear-gradient(180deg,rgba(13,91,31,.04),rgba(243,245,240,1) 26%),var(--bg)}
+button,input,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+.app{max-width:1360px;margin:0 auto;padding:var(--space-5)}
+.panel{width:100%;border:1px solid var(--border);border-radius:var(--radius-xl);background:var(--surface);box-shadow:var(--shadow-md);backdrop-filter:blur(10px)}
+.setup{max-width:760px;margin:6vh auto 0;padding:clamp(4.5rem,8vw,6rem) var(--space-8) var(--space-8);position:relative;overflow:hidden;box-shadow:0 24px 60px rgba(9,27,12,.08)}
+.setup::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at center,rgba(255,255,255,.72),rgba(255,255,255,.93) 38%,rgba(255,255,255,.99) 100%),radial-gradient(circle at top right,rgba(13,91,31,.05),transparent 38%),linear-gradient(135deg,rgba(13,91,31,.03),rgba(217,31,38,.02));pointer-events:none;z-index:0}
+.setup-grid{display:grid;gap:var(--space-5);justify-items:center;align-content:center;min-height:520px;position:relative;z-index:1}
+.logo-setup{display:flex;justify-content:center;position:relative;width:100%;min-height:320px;align-items:center;margin-bottom:var(--space-2)}
+.logo-setup::before{content:"";position:absolute;inset:-2rem -1rem -2rem;background:url('logo.png.JPG') center/contain no-repeat;opacity:.14;transform:scale(2.15) translateY(6px);pointer-events:none}
+.setup-logo{width:min(260px,58vw);height:auto;display:block;filter:drop-shadow(0 14px 24px rgba(9,27,12,.12));border-radius:24px;background:rgba(255,255,255,.94);padding:12px;border:1px solid rgba(18,35,20,.08);position:relative;z-index:1}.setup-logo{display:none !important}
+.field{text-align:center}.field label{display:block;font-weight:700;margin-bottom:var(--space-2)}
+.field input{width:min(100%,360px);border:1px solid var(--border);border-radius:var(--radius-md);padding:1rem;background:#fff;color:var(--text)}
+.field input:focus{outline:2px solid rgba(13,91,31,.15);border-color:var(--primary)}
+.start-btn{min-height:52px;border-radius:var(--radius-md);border:1px solid transparent;font-weight:700;background:linear-gradient(90deg,var(--primary),var(--primary-2));color:#fff;min-width:160px}
+.workspace{margin-top:var(--space-5)}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:var(--space-4);padding:var(--space-5) var(--space-6);margin-bottom:var(--space-5);background:linear-gradient(90deg,rgba(255,255,255,.98),rgba(245,247,243,.98));overflow:hidden;position:relative}
+.topbar::after{content:"";position:absolute;inset:auto 1rem 1rem auto;width:160px;height:160px;background:none;opacity:0;pointer-events:none}
+.brand-stack{display:flex;align-items:center;gap:var(--space-4);min-width:0}
+.brand-logo{width:92px;height:92px;border-radius:22px;object-fit:contain;background:#fff;padding:8px;border:1px solid rgba(18,35,20,.08);box-shadow:var(--shadow-sm);display:none}
+.topbar h1{margin:0;font-size:var(--text-xl)}.topbar-meta{color:var(--muted);font-size:var(--text-sm);margin-top:var(--space-2)}
+.dual-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5)}
+.section-card{padding:var(--space-5);position:relative;overflow:hidden}
+.section-card.offense{background:linear-gradient(180deg,rgba(13,91,31,.07),rgba(255,255,255,.95) 26%)}
+.section-card.defense{background:linear-gradient(180deg,rgba(217,31,38,.07),rgba(255,255,255,.95) 26%)}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4)}.section-head h2{margin:0;font-size:var(--text-lg)}
+.entry-count{border-radius:999px;padding:.35rem .75rem;font-size:var(--text-sm);font-weight:700}.offense .entry-count{background:rgba(13,91,31,.12);color:var(--primary)}.defense .entry-count{background:rgba(217,31,38,.12);color:var(--fox-red-dark)}
+.tables{display:grid;gap:var(--space-5);margin-top:var(--space-5)}.table-card{padding:var(--space-5);position:relative;overflow:hidden}.table-card::before{content:"";position:fixed;left:50%;top:50%;width:min(260px,58vw);height:min(260px,58vw);background:url('logo.png.JPG') center/contain no-repeat;opacity:.14;pointer-events:none;filter:grayscale(1) contrast(.95);transform:translate(-50%,-50%) scale(2.15) translateY(6px);transform-origin:center center;z-index:0}.table-card > *{position:relative;z-index:1}.table-card.offense{border-top:8px solid var(--primary)}.table-card.defense{border-top:8px solid var(--fox-red)}
+.table-tools{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4);flex-wrap:wrap}.table-wrap{overflow:auto;border:1px solid var(--border);border-radius:var(--radius-lg);background:#fff;max-width:100%}
+table{width:100%;table-layout:fixed;border-collapse:collapse}th,td{padding:.82rem .72rem;border-bottom:1px solid rgba(40,37,29,.09);text-align:left;vertical-align:top;word-break:break-word}th{position:sticky;top:0;background:var(--surface-2);z-index:1;color:#111}
+tbody tr:hover{background:#faf8f3}
+.result-cell.green{background:rgba(220,239,214,.82)}.result-cell.red{background:rgba(247,219,219,.82)}.result-cell.yellow{background:rgba(247,237,198,.88)}
+.pill-list{display:flex;flex-wrap:wrap;gap:.35rem}.pill{display:inline-flex;align-items:center;border-radius:999px;padding:.2rem .55rem;background:#eee;font-size:var(--text-sm);font-weight:700}.pill.follow{background:#edf4f4;color:#14575c}.defense .pill.follow{background:#fbeaea;color:#8c2328}
+.stats-card{padding:var(--space-5);margin-top:var(--space-5)}.stats-wrap{display:grid;gap:var(--space-5)}.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)}.stats-block{border:1px solid var(--border);border-radius:var(--radius-lg);background:#fff;padding:var(--space-4)}.stats-block h3{margin:0 0 var(--space-3)}.stats-list{display:grid;gap:.45rem}.stats-item{display:flex;justify-content:space-between;gap:1rem;padding:.55rem .7rem;border-radius:.7rem;background:#f7f8f5;border:1px solid rgba(18,35,20,.08)}.stats-item strong{font-weight:700}.empty{padding:var(--space-8);text-align:center;color:var(--muted)}
+@media (max-width:1100px){.dual-grid{grid-template-columns:1fr}}@media (max-width:760px){.app{padding:var(--space-4)}.setup,.section-card,.table-card,.topbar,.stats-card{padding:var(--space-4)}.topbar{flex-direction:column;align-items:stretch}.brand-stack{align-items:flex-start}}
+</style>
 </head>
 <body>
-  <h1>Fetch Test</h1>
-  <div id="msg" class="msg">Lade...</div>
+<div class="app">
+  <section id="setup" class="panel setup">
+    <div class="setup-grid">
+      <div class="logo-setup"></div>
+      <div class="field"><label for="opponent">Gegner</label><input id="opponent" type="text" placeholder="Gegner eingeben" /></div>
+      <div class="field"><label for="matchDate">Datum</label><input id="matchDate" type="date" /></div>
+      <button id="startBtn" class="start-btn" type="button">Statistik anzeigen</button>
+    </div>
+  </section>
 
-  <script>
-    const msgEl = document.getElementById("msg");
+  <section id="workspace" class="workspace hidden">
+    <div class="panel topbar">
+      <div class="brand-stack"><img id="brandLogo" src="./logo.png.JPG" alt="Logo" class="brand-logo" width="72" height="72" /><div><h1 id="headline">Statistik</h1><div class="topbar-meta" id="topMeta"></div></div></div>
+    </div>
 
-    const url = "https://tmadmhayyudwbbzxfqnl.supabase.co/rest/v1/matches";
+    <div class="tables">
+      <section class="panel table-card offense">
+        <div class="table-tools"><h2>Angriff</h2><div id="offenseSortInfo"></div></div>
+        <div class="table-wrap"><table><thead><tr><th style="width:7%">#</th><th style="width:18%">Auslösehandlung</th><th style="width:39%">Folgehandlung</th><th style="width:20%">Ergebnis</th></tr></thead><tbody id="offenseTableBody"><tr><td colspan="4" class="empty">Noch keine offensiven Einträge.</td></tr></tbody></table></div>
+      </section>
+      <section class="panel table-card defense">
+        <div class="table-tools"><h2>Abwehr</h2><div id="defenseSortInfo"></div></div>
+        <div class="table-wrap"><table><thead><tr><th style="width:7%">#</th><th style="width:18%">Auslösehandlung</th><th style="width:39%">Folgehandlung</th><th style="width:20%">Ergebnis</th></tr></thead><tbody id="defenseTableBody"><tr><td colspan="4" class="empty">Noch keine defensiven Einträge.</td></tr></tbody></table></div>
+      </section>
+    </div>
 
-    msgEl.textContent = "Start fetch...";
+    <section class="panel stats-card" id="statsSection">
+      <div class="stats-wrap">
+        <div><h2>Statistik</h2><div class="stats-grid"><div class="stats-block"><h3>Angriff</h3><div id="offenseStats" class="stats-list"></div></div><div class="stats-block"><h3>Abwehr</h3><div id="defenseStats" class="stats-list"></div></div></div></div>
+        <div class="stats-block hot-takes"><h3>Hot takes</h3><div class="stats-grid hot-grid"><div><h4>Angriff</h4><div id="offenseHotTakes" class="stats-list"></div><div id="offenseHotSingles" class="stats-list"></div></div><div><h4>Abwehr</h4><div id="defenseHotTakes" class="stats-list"></div><div id="defenseHotSingles" class="stats-list"></div></div></div></div>
+      </div>
+    </section>
+  </section>
+</div>
 
-    fetch(url, {
-      headers: {
-        "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtYWRtaGF5eXVkd2JienhmcW5sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMTA3ODIsImV4cCI6MjA5ODU4Njc4Mn0.cu70uZwFw_eKOAuzHQijgokrDrpDN4C4kCRgfQfwUxY",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtYWRtaGF5eXVkd2JienhmcW5sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMTA3ODIsImV4cCI6MjA5ODU4Njc4Mn0.cu70uZwFw_eKOAuzHQijgokrDrpDN4C4kCRgfQfwUxY"
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+(() => {
+  const SUPABASE_URL = "https://tmadmhayyudwbbzxfqnl.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtYWRtaGF5eXVkd2JiezhmcW5sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMTA3ODIsImV4cCI6MjA5ODU4Njc4Mn0.cu70uZwFw_eKOAuzHQijgokrDrpDN4C4kCRgfQfwUxY";
+
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const els = {
+    setup: document.getElementById('setup'),
+    workspace: document.getElementById('workspace'),
+    opponent: document.getElementById('opponent'),
+    matchDate: document.getElementById('matchDate'),
+    startBtn: document.getElementById('startBtn'),
+    headline: document.getElementById('headline'),
+    topMeta: document.getElementById('topMeta'),
+    offenseTableBody: document.getElementById('offenseTableBody'),
+    defenseTableBody: document.getElementById('defenseTableBody'),
+    offenseSortInfo: document.getElementById('offenseSortInfo'),
+    defenseSortInfo: document.getElementById('defenseSortInfo'),
+    offenseStats: document.getElementById('offenseStats'),
+    defenseStats: document.getElementById('defenseStats'),
+    offenseHotTakes: document.getElementById('offenseHotTakes'),
+    defenseHotTakes: document.getElementById('defenseHotTakes'),
+    offenseHotSingles: document.getElementById('offenseHotSingles'),
+    defenseHotSingles: document.getElementById('defenseHotSingles')
+  };
+
+  const state = {
+    meta: { opponent: '', matchDate: '' },
+    offense: { entries: [], sort: { key: 'index', dir: 'asc' } },
+    defense: { entries: [], sort: { key: 'index', dir: 'asc' } }
+  };
+
+  const setToday = () => els.matchDate.value = new Date().toISOString().split('T')[0];
+  const fmtDate = v => new Date(v + 'T00:00:00').toLocaleDateString('de-DE');
+  const h = s => String(s ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>', '&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
+  const joinList = a => a.length ? a.join(' | ') : '—';
+  const displayResult = v => v && (v.endsWith('_pos') || v.endsWith('_neg')) ? v.replace(/_(pos|neg)$/,'') : (v || '');
+
+  async function loadMatchActionsForCurrentGame() {
+    const opponent = state.meta.opponent;
+    const matchDate = state.meta.matchDate;
+    if (!opponent || !matchDate) {
+      state.offense.entries = [];
+      state.defense.entries = [];
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from('match_actions')
+      .select('*')
+      .eq('match_opponent', opponent)
+      .eq('match_date', matchDate)
+      .order('created_order', { ascending: true });
+
+    if (error) {
+      console.error('Fehler beim Laden der Spiel-Einträge:', error);
+      state.offense.entries = [];
+      state.defense.entries = [];
+      return;
+    }
+
+    state.offense.entries = data
+      .filter(r => r.side === 'offense')
+      .map(r => ({
+        ...r,
+        id: r.id,
+        createdOrder: r.created_order ?? r.createdOrder,
+        follows: r.follows ? r.follows.split(' | ') : [],
+        group: r.result_group
+      }));
+
+    state.defense.entries = data
+      .filter(r => r.side === 'defense')
+      .map(r => ({
+        ...r,
+        id: r.id,
+        createdOrder: r.created_order ?? r.createdOrder,
+        follows: r.follows ? r.follows.split(' | ') : [],
+        group: r.result_group
+      }));
+  }
+
+  function resultIsPositive(value) {
+    return String(value || '').endsWith('_pos');
+  }
+
+  function comboStats(entries) {
+    const map = new Map();
+    entries.forEach(row => {
+      const key = `${row.trigger || ''} + ${(row.follows || []).join(' / ') || '—'}`;
+      const item = map.get(key) || { key, wins: 0, total: 0 };
+      item.total += 1;
+      if (resultIsPositive(row.result)) item.wins += 1;
+      map.set(key, item);
+    });
+    return [...map.values()].sort((a, b) => (b.wins / b.total) - (a.wins / a.total) || b.total - a.total || a.key.localeCompare(b.key, 'de'));
+  }
+
+  function hotTakes(entries) {
+    const rows = entries.slice(-10).filter(r => resultIsPositive(r.result));
+    const comboMap = new Map(), triggerMap = new Map(), followMap = new Map();
+    rows.forEach(row => {
+      const combo = `${row.trigger || ''} + ${(row.follows || []).join(' / ') || '—'}`;
+      comboMap.set(combo, (comboMap.get(combo) || 0) + 1);
+      triggerMap.set(row.trigger || '—', (triggerMap.get(row.trigger || '—') || 0) + 1);
+      (row.follows || []).forEach(f => followMap.set(f, (followMap.get(f) || 0) + 1));
+    });
+    return {
+      combos: [...comboMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3),
+      triggers: [...triggerMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3),
+      follows: [...followMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3)
+    };
+  }
+
+  function sortValue(row, key) {
+    if (key === 'index') return row.createdOrder;
+    if (key === 'trigger') return row.trigger || '';
+    if (key === 'follow') return joinList(row.follows || []);
+    if (key === 'result') return row.resultDisplay || displayResult(row.result || '');
+    return '';
+  }
+
+  function sortEntries(entries, sort) {
+    const rows = [...entries];
+    const { key, dir } = sort;
+    const f = dir === 'asc' ? 1 : -1;
+    rows.sort((a, b) => {
+      const av = sortValue(a, key);
+      const bv = sortValue(b, key);
+      let v = typeof av === 'number' && typeof bv === 'number' ? av - bv : String(av).localeCompare(String(bv), 'de');
+      if (v === 0) {
+        const ao = a.createdOrder ?? 0;
+        const bo = b.createdOrder ?? 0;
+        v = ao - bo;
       }
-    })
-      .then(res => {
-        msgEl.textContent = "Status: " + res.status;
-        return res.text();
-      })
-      .then(body => {
-        msgEl.textContent = "Body: " + body;
-      })
-      .catch(err => {
-        msgEl.className = "msg error";
-        msgEl.textContent = "Fetch-Fehler: " + err.message;
-      });
-  </script>
+      return v * f;
+    });
+    return rows;
+  }
+
+  function pills(arr, cls) {
+    if (!arr || !arr.length) return '—';
+    return `<div class="pill-list">${arr.map(v => `<span class="pill ${cls}">${h(v)}</span>`).join('')}</div>`;
+  }
+
+  function renderTable(domain) {
+    const entries = state[domain].entries;
+    const sort = state[domain].sort;
+    const body = els[`${domain}TableBody`];
+    const sortInfoEl = els[`${domain}SortInfo`];
+    const rows = sortEntries(entries, sort);
+
+    const labels = { index: '#', trigger: 'Auslösehandlung', follow: 'Folgehandlung', result: 'Ergebnis' };
+    sortInfoEl.textContent = `${labels[sort.key]} ${sort.dir === 'asc' ? '↑' : '↓'}`;
+
+    if (!rows.length) {
+      body.innerHTML = `<tr><td colspan="4" class="empty">Noch keine ${domain === 'offense' ? 'offensiven' : 'defensiven'} Einträge.</td></tr>`;
+      return;
+    }
+
+    body.innerHTML = rows.map((row, idx) =>
+      `<tr>
+        <td>${idx + 1}</td>
+        <td>${h(row.trigger || '')}</td>
+        <td>${pills(row.follows || [], 'follow')}</td>
+        <td class="result-cell ${row.group || ''}">${h(row.resultDisplay || displayResult(row.result || ''))}</td>
+      </tr>`
+    ).join('');
+  }
+
+  function renderStats() {
+    const offense = comboStats(state.offense.entries);
+    const defense = comboStats(state.defense.entries);
+
+    const renderStatsBlock = (selector, entries) => {
+      const el = document.getElementById(selector);
+      const rows = entries.filter(x => x.total >= 2).slice(0, 8);
+      el.innerHTML = rows.length
+        ? rows.map(r => {
+            const pct = Math.round(r.wins / r.total * 100);
+            return `<div class="stats-item"><span>${h(r.key)}</span><strong>${pct}% (${r.wins} aus ${r.total})</strong></div>`;
+          }).join('')
+        : '<div class="empty">Noch keine belastbaren Kombinationen.</div>';
+    };
+
+    renderStatsBlock('offenseStats', offense);
+    renderStatsBlock('defenseStats', defense);
+
+    const renderHot = (selector, entries) => {
+      const el = document.getElementById(selector);
+      const hot = hotTakes(entries);
+      el.innerHTML = hot.combos.length
+        ? hot.combos.map(([key, count]) => `<div class="stats-item"><span>${h(key)}</span><strong>${count}x</strong></div>`).join('')
+        : '<div class="empty">Noch keine Hot takes.</div>';
+    };
+
+    const renderSingles = (selector, entries) => {
+      const el = document.getElementById(selector);
+      const hot = hotTakes(entries);
+      const items = [
+        ...hot.triggers.map(([key, count]) => `<div class="stats-item"><span>Trigger: ${h(key)}</span><strong>${count}x</strong></div>`),
+        ...hot.follows.map(([key, count]) => `<div class="stats-item"><span>Follow: ${h(key)}</span><strong>${count}x</strong></div>`)
+      ];
+      el.innerHTML = items.length ? items.join('') : '<div class="empty">Noch keine Einzelwerte.</div>';
+    };
+
+    renderHot('offenseHotTakes', state.offense.entries);
+    renderHot('defenseHotTakes', state.defense.entries);
+    renderSingles('offenseHotSingles', state.offense.entries);
+    renderSingles('defenseHotSingles', state.defense.entries);
+  }
+
+  function refreshUI() {
+    renderTable('offense');
+    renderTable('defense');
+    renderStats();
+  }
+
+  async function startViewer() {
+    const opponent = els.opponent.value.trim();
+    const matchDate = els.matchDate.value;
+    if (!opponent || !matchDate) {
+      alert('Bitte Gegner und Datum eintragen.');
+      return;
+    }
+
+    state.meta = { opponent, matchDate };
+    els.headline.textContent = `Statistik vs ${opponent}`;
+    els.topMeta.textContent = fmtDate(matchDate);
+    els.setup.classList.add('hidden');
+    els.workspace.classList.remove('hidden');
+
+    await loadMatchActionsForCurrentGame();
+    refreshUI();
+
+    supabase
+      .channel('match_actions_channel')
+      .on('postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'match_actions',
+          filter: `match_opponent=${encodeURIComponent(opponent)}&match_date=${encodeURIComponent(matchDate)}`
+        },
+        () => {
+          loadMatchActionsForCurrentGame().then(refreshUI);
+        }
+      )
+      .subscribe();
+  }
+
+  const brandLogo = document.getElementById('brandLogo');
+  if (brandLogo) {
+    brandLogo.onerror = () => {
+      brandLogo.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+        `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+           <rect width="512" height="512" rx="72" fill="#0d5b1f"/>
+           <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
+                 font-family="Arial, sans-serif" font-size="132" font-weight="700" fill="#ffffff">FÜCHSE</text>
+         </svg>`
+      );
+    };
+  }
+
+  setToday();
+  els.startBtn.addEventListener('click', startViewer);
+})();
+</script>
 </body>
 </html>
