@@ -33,9 +33,19 @@ button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 .section-head{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4)}.section-head h2{margin:0;font-size:var(--text-lg)}
 .entry-count{border-radius:999px;padding:.35rem .75rem;font-size:var(--text-sm);font-weight:700}.offense .entry-count{background:rgba(13,91,31,.12);color:var(--primary)}.defense .entry-count{background:rgba(217,31,38,.12);color:var(--fox-red-dark)}
 .table-wrap{overflow:auto;border:1px solid var(--border);border-radius:var(--radius-lg);background:#fff;max-width:100%}
-table{width:100%;table-layout:fixed;border-collapse:collapse}th,td{padding:.82rem .72rem;border-bottom:1px solid rgba(40,37,29,.09);text-align:left;vertical-align:top;word-break:break-word}th{position:sticky;top:0;background:var(--surface-2);z-index:1;color:#111}
-.result-cell.green{background:rgba(220,239,214,.82)}.result-cell.red{background:rgba(247,219,219,.82)}.result-cell.yellow{background:rgba(247,237,198,.88)}
-.pill-list{display:flex;flex-wrap:wrap;gap:.35rem}.pill{display:inline-flex;align-items:center;border-radius:999px;padding:.2rem .55rem;background:#eee;font-size:var(--text-sm);font-weight:700}.pill.follow{background:#edf4f4;color:#14575c}.defense .pill.follow{background:#fbeaea;color:#8c2328}
+table{width:100%;table-layout:fixed;border-collapse:collapse}
+th,td{padding:.82rem .72rem;border-bottom:1px solid rgba(40,37,29,.09);text-align:left;vertical-align:top;word-break:break-word}
+th{position:sticky;top:0;background:var(--surface-2);z-index:1;color:#111}
+.result-cell.green{background:rgba(220,239,214,.82)}
+.result-cell.red{background:rgba(247,219,219,.82)}
+.result-cell.yellow{background:rgba(247,237,198,.88)}
+.result-cell.split-green-red{background:linear-gradient(90deg,rgba(220,239,214,.82) 0 50%,rgba(247,219,219,.82) 50% 100%)}
+.result-cell.split-red-green{background:linear-gradient(90deg,rgba(247,219,219,.82) 0 50%,rgba(220,239,214,.82) 50% 100%)}
+.pill-list{display:flex;flex-wrap:wrap;gap:.35rem}
+.pill{display:inline-flex;align-items:center;border-radius:999px;padding:.2rem .55rem;background:#eee;font-size:var(--text-sm);font-weight:700}
+.pill.follow{background:#edf4f4;color:#14575c}
+.defense .pill.follow{background:#fbeaea;color:#8c2328}
+.pill.position{background:#eef0f7;color:#33406b}
 .stats-card{padding:var(--space-5);margin-top:var(--space-5)}.stats-wrap{display:grid;gap:var(--space-5)}.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)}.stats-block{border:1px solid var(--border);border-radius:var(--radius-lg);background:#fff;padding:var(--space-4)}.stats-block h3,.stats-block h4{margin:0 0 var(--space-3)}.stats-list{display:grid;gap:.45rem}.stats-item{display:flex;justify-content:space-between;gap:1rem;padding:.55rem .7rem;border-radius:.7rem;background:#f7f8f5;border:1px solid rgba(18,35,20,.08)}.stats-item strong{font-weight:700}.empty{padding:var(--space-8);text-align:center;color:var(--muted)}
 @media (max-width:1100px){.dual-grid{grid-template-columns:1fr}}@media (max-width:760px){.app{padding:var(--space-4)}.setup,.section-card,.stats-card,.topbar{padding:var(--space-4)}.topbar{flex-direction:column;align-items:stretch}.brand-stack{align-items:flex-start}.stats-grid{grid-template-columns:1fr}}
 </style>
@@ -62,19 +72,65 @@ table{width:100%;table-layout:fixed;border-collapse:collapse}th,td{padding:.82re
     <div class="dual-grid">
       <section class="panel section-card offense">
         <div class="section-head"><h2>Offensive Aktionen</h2><div class="entry-count" id="offenseCount">0 Einträge</div></div>
-        <div class="table-wrap"><table><thead><tr><th style="width:7%">#</th><th style="width:18%">Auslösehandlung</th><th style="width:39%">Folgehandlung</th><th style="width:20%">Ergebnis</th></tr></thead><tbody id="offenseTableBody"><tr><td colspan="4" class="empty">Noch keine offensiven Einträge.</td></tr></tbody></table></div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:7%">#</th>
+                <th style="width:18%">Auslösehandlung</th>
+                <th style="width:12%">Position</th>
+                <th style="width:33%">Folgehandlung</th>
+                <th style="width:20%">Ergebnis</th>
+              </tr>
+            </thead>
+            <tbody id="offenseTableBody"><tr><td colspan="5" class="empty">Noch keine offensiven Einträge.</td></tr></tbody>
+          </table>
+        </div>
       </section>
 
       <section class="panel section-card defense">
         <div class="section-head"><h2>Defensive Aktionen</h2><div class="entry-count" id="defenseCount">0 Einträge</div></div>
-        <div class="table-wrap"><table><thead><tr><th style="width:7%">#</th><th style="width:18%">Auslösehandlung</th><th style="width:39%">Folgehandlung</th><th style="width:20%">Ergebnis</th></tr></thead><tbody id="defenseTableBody"><tr><td colspan="4" class="empty">Noch keine defensiven Einträge.</td></tr></tbody></table></div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:7%">#</th>
+                <th style="width:18%">Auslösehandlung</th>
+                <th style="width:12%">Position</th>
+                <th style="width:33%">Folgehandlung</th>
+                <th style="width:20%">Ergebnis</th>
+              </tr>
+            </thead>
+            <tbody id="defenseTableBody"><tr><td colspan="5" class="empty">Noch keine defensiven Einträge.</td></tr></tbody>
+          </table>
+        </div>
       </section>
     </div>
 
     <section class="panel stats-card">
       <div class="stats-wrap">
-        <div><h2>Statistik</h2><div class="stats-grid"><div class="stats-block"><h3>Angriff</h3><div id="offenseStats" class="stats-list"></div></div><div class="stats-block"><h3>Abwehr</h3><div id="defenseStats" class="stats-list"></div></div></div></div>
-        <div class="stats-block"><h3>Hot takes</h3><div class="stats-grid"><div><h4>Angriff</h4><div id="offenseHotTakes" class="stats-list"></div><div id="offenseHotSingles" class="stats-list" style="margin-top:12px;"></div></div><div><h4>Abwehr</h4><div id="defenseHotTakes" class="stats-list"></div><div id="defenseHotSingles" class="stats-list" style="margin-top:12px;"></div></div></div></div>
+        <div>
+          <h2>Statistik</h2>
+          <div class="stats-grid">
+            <div class="stats-block"><h3>Angriff</h3><div id="offenseStats" class="stats-list"></div></div>
+            <div class="stats-block"><h3>Abwehr</h3><div id="defenseStats" class="stats-list"></div></div>
+          </div>
+        </div>
+        <div class="stats-block">
+          <h3>Hot takes</h3>
+          <div class="stats-grid">
+            <div>
+              <h4>Angriff</h4>
+              <div id="offenseHotTakes" class="stats-list"></div>
+              <div id="offenseHotSingles" class="stats-list" style="margin-top:12px;"></div>
+            </div>
+            <div>
+              <h4>Abwehr</h4>
+              <div id="defenseHotTakes" class="stats-list"></div>
+              <div id="defenseHotSingles" class="stats-list" style="margin-top:12px;"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </section>
@@ -88,6 +144,7 @@ table{width:100%;table-layout:fixed;border-collapse:collapse}th,td{padding:.82re
   const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   const state = { meta:{ opponent:'', matchDate:'' }, offense:{ entries:[] }, defense:{ entries:[] } };
+
   const els = {
     setup:document.getElementById('setup'),
     workspace:document.getElementById('workspace'),
@@ -111,8 +168,10 @@ table{width:100%;table-layout:fixed;border-collapse:collapse}th,td{padding:.82re
   const fmtDate = v => new Date(v + 'T00:00:00').toLocaleDateString('de-DE');
   const h = s => String(s ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
   const joinList = a => a.length ? a.join(' | ') : '—';
-  const displayResult = v => v && (v.endsWith('_pos') || v.endsWith('_neg')) ? v.replace(/_(pos|neg)$/, '') : (v || '');
-  const resultIsPositive = v => String(v || '').endsWith('_pos');
+
+  function resultIsPositive(v) {
+    return v === 'gute_chance_tor' || v === 'schlechte_chance_tor';
+  }
 
   async function loadMatchActions() {
     const { data, error } = await supabase
@@ -131,16 +190,18 @@ table{width:100%;table-layout:fixed;border-collapse:collapse}th,td{padding:.82re
 
     state.offense.entries = data.filter(r => r.side === 'offense').map(r => ({
       ...r,
+      position: r.attack_position ?? '',
       follows: r.follows ? r.follows.split(' | ') : [],
       group: r.result_group,
-      resultDisplay: r.result_display || displayResult(r.result)
+      resultDisplay: r.result_display || r.result || ''
     }));
 
     state.defense.entries = data.filter(r => r.side === 'defense').map(r => ({
       ...r,
+      position: r.attack_position ?? '',
       follows: r.follows ? r.follows.split(' | ') : [],
       group: r.result_group,
-      resultDisplay: r.result_display || displayResult(r.result)
+      resultDisplay: r.result_display || r.result || ''
     }));
   }
 
@@ -148,17 +209,21 @@ table{width:100%;table-layout:fixed;border-collapse:collapse}th,td{padding:.82re
     const store = state[domain];
     const body = els[`${domain}TableBody`];
     const countEl = els[`${domain}Count`];
+
     countEl.textContent = `${store.entries.length} Einträge`;
+
     if (!store.entries.length) {
-      body.innerHTML = `<tr><td colspan="4" class="empty">Noch keine ${domain === 'offense' ? 'offensiven' : 'defensiven'} Einträge.</td></tr>`;
+      body.innerHTML = `<tr><td colspan="5" class="empty">Noch keine ${domain === 'offense' ? 'offensiven' : 'defensiven'} Einträge.</td></tr>`;
       return;
     }
+
     body.innerHTML = store.entries.map((row, idx) => `
       <tr>
         <td>${idx + 1}</td>
         <td>${h(row.trigger || '')}</td>
+        <td>${row.position ? `<span class="pill position">${h(row.position)}</span>` : '—'}</td>
         <td>${joinList(row.follows || [])}</td>
-        <td class="result-cell ${row.group || ''}">${h(row.resultDisplay || displayResult(row.result || ''))}</td>
+        <td class="result-cell ${row.group || ''}">${h(row.resultDisplay || row.result || '')}</td>
       </tr>
     `).join('');
   }
@@ -166,28 +231,34 @@ table{width:100%;table-layout:fixed;border-collapse:collapse}th,td{padding:.82re
   function comboStats(domain) {
     const rows = state[domain].entries;
     const map = new Map();
+
     rows.forEach(row => {
-      const key = `${row.trigger || ''} + ${(row.follows || []).join(' / ') || '—'}`;
+      const key = `${row.trigger || ''} | Pos ${row.position || '—'} | ${(row.follows || []).join(' / ') || '—'}`;
       const item = map.get(key) || { key, wins: 0, total: 0 };
       item.total += 1;
       if (resultIsPositive(row.result)) item.wins += 1;
       map.set(key, item);
     });
+
     return [...map.values()].sort((a, b) => (b.wins / b.total) - (a.wins / a.total) || b.total - a.total || a.key.localeCompare(b.key, 'de'));
   }
 
   function hotTakes(domain) {
     const rows = state[domain].entries.filter(r => resultIsPositive(r.result));
-    const comboMap = new Map(), triggerMap = new Map(), followMap = new Map();
+    const comboMap = new Map(), triggerMap = new Map(), positionMap = new Map(), followMap = new Map();
+
     rows.forEach(row => {
-      const combo = `${row.trigger || ''} + ${(row.follows || []).join(' / ') || '—'}`;
+      const combo = `${row.trigger || ''} | Pos ${row.position || '—'} | ${(row.follows || []).join(' / ') || '—'}`;
       comboMap.set(combo, (comboMap.get(combo) || 0) + 1);
       triggerMap.set(row.trigger || '—', (triggerMap.get(row.trigger || '—') || 0) + 1);
+      positionMap.set(row.position || '—', (positionMap.get(row.position || '—') || 0) + 1);
       (row.follows || []).forEach(f => followMap.set(f, (followMap.get(f) || 0) + 1));
     });
+
     return {
       combos: [...comboMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3),
       triggers: [...triggerMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3),
+      positions: [...positionMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3),
       follows: [...followMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3)
     };
   }
@@ -208,7 +279,12 @@ table{width:100%;table-layout:fixed;border-collapse:collapse}th,td{padding:.82re
         ? hot.combos.map(([key, count]) => `<div class="stats-item"><span>${h(key)}</span><strong>${count}x</strong></div>`).join('')
         : '<div class="empty">Noch keine Hot takes.</div>';
 
-      singleEl.innerHTML = [...hot.triggers.map(([key, count]) => `<div class="stats-item"><span>Trigger: ${h(key)}</span><strong>${count}x</strong></div>`), ...hot.follows.map(([key, count]) => `<div class="stats-item"><span>Follow: ${h(key)}</span><strong>${count}x</strong></div>`)].join('') || '<div class="empty">Noch keine Einzelwerte.</div>';
+      singleEl.innerHTML =
+        [
+          ...hot.triggers.map(([key, count]) => `<div class="stats-item"><span>Trigger: ${h(key)}</span><strong>${count}x</strong></div>`),
+          ...hot.positions.map(([key, count]) => `<div class="stats-item"><span>Position: ${h(key)}</span><strong>${count}x</strong></div>`),
+          ...hot.follows.map(([key, count]) => `<div class="stats-item"><span>Follow: ${h(key)}</span><strong>${count}x</strong></div>`)
+        ].join('') || '<div class="empty">Noch keine Einzelwerte.</div>';
     });
   }
 
@@ -223,10 +299,12 @@ table{width:100%;table-layout:fixed;border-collapse:collapse}th,td{padding:.82re
   function startApp() {
     const opponent = els.opponent.value.trim();
     const matchDate = els.matchDate.value;
+
     if (!opponent || !matchDate) {
       alert('Bitte Gegner und Datum eintragen.');
       return;
     }
+
     state.meta = { opponent, matchDate };
     els.headline.textContent = `Anzeige vs ${opponent}`;
     els.topMeta.textContent = fmtDate(matchDate);
