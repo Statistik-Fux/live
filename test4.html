@@ -36,12 +36,20 @@ button,input,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!im
 .entry-count{border-radius:999px;padding:.35rem .75rem;font-size:var(--text-sm);font-weight:700}.offense .entry-count{background:rgba(13,91,31,.12);color:var(--primary)}.defense .entry-count{background:rgba(217,31,38,.12);color:var(--fox-red-dark)}
 .controls{display:grid;gap:var(--space-4)}.group{border:1px solid var(--border);border-radius:var(--radius-lg);background:rgba(255,255,255,.94);padding:var(--space-4);box-shadow:0 1px 0 rgba(255,255,255,.7) inset}.group h3{margin:0 0 var(--space-3);font-size:var(--text-base)}
 .button-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:var(--space-3)}
-.result-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--space-2);align-items:start}.result-column{display:grid;gap:var(--space-2)}
+.result-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--space-2);align-items:stretch}
 .choice-btn,.result-btn{min-height:46px;border-radius:var(--radius-md);border:1px solid var(--border);background:#fff;font-weight:700;padding:.5rem .45rem;font-size:.94rem;color:#111;transition:transform .14s ease,border-color .14s ease,background-color .14s ease,box-shadow .14s ease}
 .choice-btn:active,.result-btn:active,.save-btn:active,.utility-btn:active,.start-btn:active{transform:scale(.985)}
 .choice-btn.selected{background:rgba(13,91,31,.12);border-color:var(--primary);box-shadow:0 0 0 2px rgba(13,91,31,.08) inset}.defense .choice-btn.selected{background:rgba(217,31,38,.1);border-color:var(--fox-red);box-shadow:0 0 0 2px rgba(217,31,38,.08) inset}
-.result-btn.green{background:linear-gradient(180deg,#dff0d9,#d2e9cb);border-color:rgba(63,125,50,.3)}.result-btn.red{background:linear-gradient(180deg,#f9dfdf,#f4caca);border-color:rgba(177,58,58,.3)}.result-btn.yellow{background:linear-gradient(180deg,#f7edc6,#f1e2a4);border-color:rgba(169,121,0,.35)}
-.result-btn.selected.green{background:rgba(63,125,50,.28);border-color:var(--green-strong)}.result-btn.selected.red{background:rgba(177,58,58,.28);border-color:var(--red-strong)}.result-btn.selected.yellow{background:rgba(169,121,0,.28);border-color:var(--yellow-strong)}
+.result-btn.green{background:linear-gradient(180deg,#dff0d9,#d2e9cb);border-color:rgba(63,125,50,.3)}
+.result-btn.red{background:linear-gradient(180deg,#f9dfdf,#f4caca);border-color:rgba(177,58,58,.3)}
+.result-btn.yellow{background:linear-gradient(180deg,#f7edc6,#f1e2a4);border-color:rgba(169,121,0,.35)}
+.result-btn.split-green-red{background:linear-gradient(90deg,#dff0d9 0 50%,#f9dfdf 50% 100%);border-color:rgba(110,95,95,.35)}
+.result-btn.split-red-green{background:linear-gradient(90deg,#f9dfdf 0 50%,#dff0d9 50% 100%);border-color:rgba(110,95,95,.35)}
+.result-btn.selected.green{background:rgba(63,125,50,.28);border-color:var(--green-strong)}
+.result-btn.selected.red{background:rgba(177,58,58,.28);border-color:var(--red-strong)}
+.result-btn.selected.yellow{background:rgba(169,121,0,.28);border-color:var(--yellow-strong)}
+.result-btn.selected.split-green-red{background:linear-gradient(90deg,rgba(63,125,50,.38) 0 50%,rgba(177,58,58,.34) 50% 100%);border-color:#6f6b60;box-shadow:0 0 0 2px rgba(18,35,20,.08) inset}
+.result-btn.selected.split-red-green{background:linear-gradient(90deg,rgba(177,58,58,.34) 0 50%,rgba(63,125,50,.38) 50% 100%);border-color:#6f6b60;box-shadow:0 0 0 2px rgba(18,35,20,.08) inset}
 .multi-caption{font-size:var(--text-sm);color:var(--muted);margin:-.25rem 0 .35rem}
 .action-row{display:flex;gap:var(--space-3);flex-wrap:wrap}.save-btn{flex:1;min-width:180px;background:#fff;border-color:var(--border)}.save-btn.primary{background:var(--primary);color:#fff;border-color:var(--primary)}.defense .save-btn.primary{background:var(--fox-red);border-color:var(--fox-red)}
 .tables{display:grid;gap:var(--space-5);margin-top:var(--space-5)}.table-card{padding:var(--space-5);position:relative;overflow:hidden}.table-card::before{content:"";position:fixed;left:50%;top:50%;width:min(260px,58vw);height:min(260px,58vw);background:url('logo.png.JPG') center/contain no-repeat;opacity:.14;pointer-events:none;filter:grayscale(1) contrast(.95);transform:translate(-50%,-50%) scale(2.15) translateY(6px);transform-origin:center center;z-index:0}.table-card > *{position:relative;z-index:1}.table-card.offense{border-top:8px solid var(--primary)}.table-card.defense{border-top:8px solid var(--fox-red)}
@@ -49,9 +57,12 @@ button,input,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!im
 table{width:100%;table-layout:fixed;border-collapse:collapse}th,td{padding:.82rem .72rem;border-bottom:1px solid rgba(40,37,29,.09);text-align:left;vertical-align:top;word-break:break-word}th{position:sticky;top:0;background:var(--surface-2);z-index:1;color:#111}th button{background:transparent;border:0;padding:0;font:inherit;font-weight:700;color:#111}
 tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
 .result-cell.green{background:rgba(220,239,214,.82)}.result-cell.red{background:rgba(247,219,219,.82)}.result-cell.yellow{background:rgba(247,237,198,.88)}
-.pill-list{display:flex;flex-wrap:wrap;gap:.35rem}.pill{display:inline-flex;align-items:center;border-radius:999px;padding:.2rem .55rem;background:#eee;font-size:var(--text-sm);font-weight:700}.pill.follow{background:#edf4f4;color:#14575c}.defense .pill.follow{background:#fbeaea;color:#8c2328}.pill.kreis{background:#f3efe6;color:#7a5c19}tbody tr:nth-child(even){background:#fafafa}
+.result-cell.split-green-red{background:linear-gradient(90deg,rgba(220,239,214,.82) 0 50%,rgba(247,219,219,.82) 50% 100%)}
+.result-cell.split-red-green{background:linear-gradient(90deg,rgba(247,219,219,.82) 0 50%,rgba(220,239,214,.82) 50% 100%)}
+.pill-list{display:flex;flex-wrap:wrap;gap:.35rem}.pill{display:inline-flex;align-items:center;border-radius:999px;padding:.2rem .55rem;background:#eee;font-size:var(--text-sm);font-weight:700}.pill.follow{background:#edf4f4;color:#14575c}.defense .pill.follow{background:#fbeaea;color:#8c2328}.pill.position{background:#eef0f7;color:#33406b}tbody tr:nth-child(even){background:#fafafa}
 .stats-card{padding:var(--space-5);margin-top:var(--space-5)}.stats-wrap{display:grid;gap:var(--space-5)}.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)}.stats-block{border:1px solid var(--border);border-radius:var(--radius-lg);background:#fff;padding:var(--space-4)}.hot-singles{margin-top:var(--space-3)}.stats-block h3,.stats-block h4{margin:0 0 var(--space-3)}.stats-list{display:grid;gap:.45rem}.stats-item{display:flex;justify-content:space-between;gap:1rem;padding:.55rem .7rem;border-radius:.7rem;background:#f7f8f5;border:1px solid rgba(18,35,20,.08)}.stats-item strong{font-weight:700}.notes{padding:var(--space-5);margin-top:var(--space-5)}.notes textarea{min-height:110px;resize:vertical}.install-note{font-size:var(--text-sm);color:var(--muted)}.empty{padding:var(--space-8);text-align:center;color:var(--muted)}
-@media (max-width:1100px){.dual-grid{grid-template-columns:1fr}.topbar::after{opacity:.08}}@media (max-width:760px){.app{padding:var(--space-4)}.setup,.section-card,.table-card,.notes,.topbar,.stats-card{padding:var(--space-4)}.topbar{flex-direction:column;align-items:stretch}.brand-stack{align-items:flex-start}.button-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.result-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats-grid{grid-template-columns:1fr}}
+@media (max-width:1100px){.dual-grid{grid-template-columns:1fr}.topbar::after{opacity:.08}}
+@media (max-width:760px){.app{padding:var(--space-4)}.setup,.section-card,.table-card,.notes,.topbar,.stats-card{padding:var(--space-4)}.topbar{flex-direction:column;align-items:stretch}.brand-stack{align-items:flex-start}.button-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.result-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -82,6 +93,7 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
         <div class="section-head"><h2>Offensive Aktionen</h2><div class="entry-count" id="offenseCount">0 Einträge</div></div>
         <div class="controls">
           <div class="group"><h3>Auslösehandlung</h3><div id="offenseTriggerButtons" class="button-grid"></div></div>
+          <div class="group"><h3>Angegriffene Position</h3><div id="offensePositionButtons" class="button-grid"></div></div>
           <div class="group"><h3>Folgehandlung</h3><div class="multi-caption">0 bis 3 Werte</div><div id="offenseFollowButtons" class="button-grid"></div></div>
           <div class="group"><h3>Ergebnis</h3><div id="offenseResultButtons" class="result-grid"></div></div>
           <div class="action-row"><button id="offenseResetBtn" class="save-btn" type="button">Auswahl leeren</button><button id="offenseSaveBtn" class="save-btn primary" type="button">Offensive Aktion speichern</button></div>
@@ -92,6 +104,7 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
         <div class="section-head"><h2>Defensive Aktionen</h2><div class="entry-count" id="defenseCount">0 Einträge</div></div>
         <div class="controls">
           <div class="group"><h3>Auslösehandlung</h3><div id="defenseTriggerButtons" class="button-grid"></div></div>
+          <div class="group"><h3>Angegriffene Position</h3><div id="defensePositionButtons" class="button-grid"></div></div>
           <div class="group"><h3>Folgehandlung</h3><div class="multi-caption">0 bis 3 Werte</div><div id="defenseFollowButtons" class="button-grid"></div></div>
           <div class="group"><h3>Ergebnis</h3><div id="defenseResultButtons" class="result-grid"></div></div>
           <div class="action-row"><button id="defenseResetBtn" class="save-btn" type="button">Auswahl leeren</button><button id="defenseSaveBtn" class="save-btn primary" type="button">Defensive Aktion speichern</button></div>
@@ -102,12 +115,12 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
     <div class="tables">
       <section class="panel table-card offense">
         <div class="table-tools"><h2>Angriff</h2><div id="offenseSortInfo"></div></div>
-        <div class="table-wrap"><table><thead><tr><th style="width:7%"><button type="button" data-table="offense" data-sort="index">#</button></th><th style="width:18%"><button type="button" data-table="offense" data-sort="trigger">Auslösehandlung</button></th><th style="width:39%"><button type="button" data-table="offense" data-sort="follow">Folgehandlung</button></th><th style="width:20%"><button type="button" data-table="offense" data-sort="result">Ergebnis</button></th></tr></thead><tbody id="offenseTableBody"><tr><td colspan="4" class="empty">Noch keine offensiven Einträge.</td></tr></tbody></table></div>
+        <div class="table-wrap"><table><thead><tr><th style="width:7%"><button type="button" data-table="offense" data-sort="index">#</button></th><th style="width:18%"><button type="button" data-table="offense" data-sort="trigger">Auslösehandlung</button></th><th style="width:12%"><button type="button" data-table="offense" data-sort="position">Position</button></th><th style="width:33%"><button type="button" data-table="offense" data-sort="follow">Folgehandlung</button></th><th style="width:20%"><button type="button" data-table="offense" data-sort="result">Ergebnis</button></th></tr></thead><tbody id="offenseTableBody"><tr><td colspan="5" class="empty">Noch keine offensiven Einträge.</td></tr></tbody></table></div>
       </section>
 
       <section class="panel table-card defense">
         <div class="table-tools"><h2>Abwehr</h2><div id="defenseSortInfo"></div></div>
-        <div class="table-wrap"><table><thead><tr><th style="width:7%"><button type="button" data-table="defense" data-sort="index">#</button></th><th style="width:18%"><button type="button" data-table="defense" data-sort="trigger">Auslösehandlung</button></th><th style="width:39%"><button type="button" data-table="defense" data-sort="follow">Folgehandlung</button></th><th style="width:20%"><button type="button" data-table="defense" data-sort="result">Ergebnis</button></th></tr></thead><tbody id="defenseTableBody"><tr><td colspan="4" class="empty">Noch keine defensiven Einträge.</td></tr></tbody></table></div>
+        <div class="table-wrap"><table><thead><tr><th style="width:7%"><button type="button" data-table="defense" data-sort="index">#</button></th><th style="width:18%"><button type="button" data-table="defense" data-sort="trigger">Auslösehandlung</button></th><th style="width:12%"><button type="button" data-table="defense" data-sort="position">Position</button></th><th style="width:33%"><button type="button" data-table="defense" data-sort="follow">Folgehandlung</button></th><th style="width:20%"><button type="button" data-table="defense" data-sort="result">Ergebnis</button></th></tr></thead><tbody id="defenseTableBody"><tr><td colspan="5" class="empty">Noch keine defensiven Einträge.</td></tr></tbody></table></div>
       </section>
     </div>
 
@@ -137,17 +150,19 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
   const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   const triggerOptions = ['Öffnen','Freiwurf','1','1 hoch','2','3','4','4 breit','4 zentral','4+','5','5 kurz','6','6B','7vs6','1. Welle','2. Welle','3. Welle'];
+  const positionOptions = ['2','3','4','5'];
   const followOptions = ['Brustsperre','Außensperre','Stoßen','Gisli-Sperre','weg','weg fake','Nantes','6','6+6','Check','zurück'];
-  const shotLabels = ['DBR','SLW','SPW','Kreis','Außen','TGS','7m','leeres Tor'];
 
-  function makeResults() {
-    const positives = shotLabels.map(label => ({ key: `${label}_pos`, display: label, group: 'green' }));
-    const negatives = shotLabels.map(label => ({ key: `${label}_neg`, display: label, group: 'red' }));
-    return [...positives, ...negatives, { key: 'TF', display: 'TF', group: 'red' }, { key: 'Freiwurf', display: 'Freiwurf', group: 'yellow' }];
-  }
+  const resultOptions = [
+    { key: 'gute_chance_tor', display: 'gute Chance - Tor', group: 'green' },
+    { key: 'gute_chance_kein_tor', display: 'gute Chance - kein Tor', group: 'split-green-red' },
+    { key: 'freiwurf', display: 'Freiwurf', group: 'yellow' },
+    { key: 'schlechte_chance_kein_tor', display: 'schlechte Chance - kein Tor', group: 'red' },
+    { key: 'schlechte_chance_tor', display: 'schlechte Chance - Tor', group: 'split-red-green' }
+  ];
 
-  const offenseResults = makeResults();
-  const defenseResults = makeResults();
+  const offenseResults = resultOptions;
+  const defenseResults = resultOptions;
 
   const state = {
     meta: { opponent: '', matchDate: '' },
@@ -155,13 +170,13 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
     offense: {
       entries: [],
       editingId: null,
-      selection: { trigger: '', follows: [], result: '', resultDisplay: '', group: '' },
+      selection: { trigger: '', position: '', follows: [], result: '', resultDisplay: '', group: '' },
       sort: { key: 'index', dir: 'desc' }
     },
     defense: {
       entries: [],
       editingId: null,
-      selection: { trigger: '', follows: [], result: '', resultDisplay: '', group: '' },
+      selection: { trigger: '', position: '', follows: [], result: '', resultDisplay: '', group: '' },
       sort: { key: 'index', dir: 'desc' }
     }
   };
@@ -184,9 +199,11 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
     offenseTableBody: document.getElementById('offenseTableBody'),
     defenseTableBody: document.getElementById('defenseTableBody'),
     offenseTriggerButtons: document.getElementById('offenseTriggerButtons'),
+    offensePositionButtons: document.getElementById('offensePositionButtons'),
     offenseFollowButtons: document.getElementById('offenseFollowButtons'),
     offenseResultButtons: document.getElementById('offenseResultButtons'),
     defenseTriggerButtons: document.getElementById('defenseTriggerButtons'),
+    defensePositionButtons: document.getElementById('defensePositionButtons'),
     defenseFollowButtons: document.getElementById('defenseFollowButtons'),
     defenseResultButtons: document.getElementById('defenseResultButtons'),
     offenseSaveBtn: document.getElementById('offenseSaveBtn'),
@@ -203,9 +220,12 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
   const h = s => String(s ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
   const currentStore = t => state[t];
   const joinList = a => a.length ? a.join(' | ') : '—';
-  const displayResult = v => v && (v.endsWith('_pos') || v.endsWith('_neg')) ? v.replace(/_(pos|neg)$/, '') : (v || '');
   const cloneEntry = e => JSON.parse(JSON.stringify(e));
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  function resultIsPositive(value) {
+    return value === 'gute_chance_tor' || value === 'schlechte_chance_tor';
+  }
 
   async function loadMatchActionsForCurrentGame() {
     const opponent = state.meta.opponent;
@@ -237,6 +257,7 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
         ...r,
         id: r.id,
         createdOrder: r.created_order ?? r.createdOrder,
+        position: r.attack_position ?? r.position ?? '',
         follows: r.follows ? r.follows.split(' | ') : [],
         group: r.result_group,
         resultDisplay: r.result_display ?? r.resultDisplay
@@ -248,6 +269,7 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
         ...r,
         id: r.id,
         createdOrder: r.created_order ?? r.createdOrder,
+        position: r.attack_position ?? r.position ?? '',
         follows: r.follows ? r.follows.split(' | ') : [],
         group: r.result_group,
         resultDisplay: r.result_display ?? r.resultDisplay
@@ -260,6 +282,7 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
       match_date: state.meta.matchDate,
       side: domain,
       trigger: payload.trigger,
+      attack_position: payload.position,
       follows: payload.follows.join(' | '),
       result: payload.result,
       result_display: payload.resultDisplay,
@@ -282,6 +305,7 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
       ...data,
       id: data.id,
       createdOrder: data.created_order ?? payload.createdOrder,
+      position: data.attack_position ?? payload.position,
       follows: data.follows ? data.follows.split(' | ') : [],
       group: data.result_group,
       resultDisplay: data.result_display ?? payload.resultDisplay
@@ -303,6 +327,7 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
       ...data,
       id: data.id,
       createdOrder: data.created_order ?? payload.createdOrder,
+      position: data.attack_position ?? payload.position,
       follows: data.follows ? data.follows.split(' | ') : [],
       group: data.result_group,
       resultDisplay: data.result_display ?? payload.resultDisplay
@@ -319,66 +344,31 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
   }
 
   function renderButtons(mount, items, type, domain) {
-    if (type !== 'result') {
-      mount.innerHTML = '';
-      items.forEach(item => {
-        const b = document.createElement('button');
-        b.type = 'button';
-        b.dataset.value = item;
-        b.dataset.domain = domain;
-        b.dataset.type = type;
-        b.className = 'choice-btn';
-        b.textContent = item;
-        b.addEventListener('click', () => handleSelection(domain, type, item));
-        mount.appendChild(b);
-      });
-      return;
-    }
-
-    const positives = items.filter(i => i.group === 'green');
-    const negatives = items.filter(i => i.group === 'red' && i.key !== 'TF');
-    const tf = items.filter(i => i.key === 'TF');
-    const yellow = items.filter(i => i.group === 'yellow');
-
-    mount.innerHTML =
-      '<div class="result-column" data-col="c1"></div>' +
-      '<div class="result-column" data-col="c2"></div>' +
-      '<div class="result-column" data-col="c3"></div>' +
-      '<div class="result-column" data-col="c4"></div>' +
-      '<div class="result-column" data-col="c5"></div>';
-
-    const c1 = mount.querySelector('[data-col="c1"]');
-    const c2 = mount.querySelector('[data-col="c2"]');
-    const c3 = mount.querySelector('[data-col="c3"]');
-    const c4 = mount.querySelector('[data-col="c4"]');
-    const c5 = mount.querySelector('[data-col="c5"]');
-
-    positives.slice(0, 4).forEach(i => c1.appendChild(createResultButton(i, domain, type)));
-    positives.slice(4, 8).forEach(i => c2.appendChild(createResultButton(i, domain, type)));
-    negatives.slice(0, 4).forEach(i => c3.appendChild(createResultButton(i, domain, type)));
-    negatives.slice(4, 8).forEach(i => c4.appendChild(createResultButton(i, domain, type)));
-    tf.concat(yellow).forEach(i => c5.appendChild(createResultButton(i, domain, type)));
-  }
-
-  function createResultButton(item, domain, type) {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.dataset.value = item.key;
-    b.dataset.domain = domain;
-    b.dataset.type = type;
-    b.className = `result-btn ${item.group}`;
-    b.textContent = item.display;
-    b.addEventListener('click', () => handleSelection(domain, type, item.key, item.group, item.display));
-    return b;
+    mount.innerHTML = '';
+    items.forEach(item => {
+      const value = typeof item === 'string' ? item : item.key;
+      const label = typeof item === 'string' ? item : item.display;
+      const group = typeof item === 'string' ? '' : item.group;
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.dataset.value = value;
+      b.dataset.domain = domain;
+      b.dataset.type = type;
+      b.className = type === 'result' ? `result-btn ${group}` : 'choice-btn';
+      b.textContent = label;
+      b.addEventListener('click', () => handleSelection(domain, type, value, group, label));
+      mount.appendChild(b);
+    });
   }
 
   function handleSelection(domain, type, value, group = '', display = '') {
     const store = currentStore(domain);
     if (type === 'trigger') store.selection.trigger = value;
+    if (type === 'position') store.selection.position = value;
     if (type === 'result') {
       store.selection.result = value;
       store.selection.group = group;
-      store.selection.resultDisplay = display || displayResult(value);
+      store.selection.resultDisplay = display || value;
     }
     if (type === 'follows') toggleMulti(store.selection.follows, value, 3);
     updateSelectedButtons(domain);
@@ -392,12 +382,13 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
 
   function updateSelectedButtons(domain) {
     const store = currentStore(domain);
-    ['TriggerButtons', 'FollowButtons', 'ResultButtons'].forEach(s => {
+    ['TriggerButtons', 'PositionButtons', 'FollowButtons', 'ResultButtons'].forEach(s => {
       const el = els[`${domain}${s}`];
       if (!el) return;
       el.querySelectorAll('button').forEach(btn => {
         const type = btn.dataset.type;
         if (type === 'trigger') btn.classList.toggle('selected', btn.dataset.value === store.selection.trigger);
+        if (type === 'position') btn.classList.toggle('selected', btn.dataset.value === store.selection.position);
         if (type === 'result') btn.classList.toggle('selected', btn.dataset.value === store.selection.result);
         if (type === 'follows') btn.classList.toggle('selected', store.selection.follows.includes(btn.dataset.value));
       });
@@ -406,7 +397,7 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
 
   function clearSelection(domain) {
     const store = currentStore(domain);
-    store.selection = { trigger: '', follows: [], result: '', resultDisplay: '', group: '' };
+    store.selection = { trigger: '', position: '', follows: [], result: '', resultDisplay: '', group: '' };
     store.editingId = null;
     updateSelectedButtons(domain);
     renderTable(domain);
@@ -414,8 +405,8 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
 
   function validate(domain) {
     const s = currentStore(domain).selection;
-    if (!s.trigger || !s.result) {
-      alert('Bitte Auslösehandlung und Ergebnis auswählen.');
+    if (!s.trigger || !s.position || !s.result) {
+      alert('Bitte Auslösehandlung, angegriffene Position und Ergebnis auswählen.');
       return false;
     }
     return true;
@@ -432,9 +423,10 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
 
     const payload = {
       trigger: store.selection.trigger,
+      position: store.selection.position,
       follows: [...store.selection.follows],
       result: store.selection.result,
-      resultDisplay: store.selection.resultDisplay || displayResult(store.selection.result),
+      resultDisplay: store.selection.resultDisplay || store.selection.result,
       group: store.selection.group,
       createdOrder: isEditing && existingEntry ? existingEntry.createdOrder : (store.entries.length + 1)
     };
@@ -478,31 +470,33 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
       } else if (action.type === 'edit') {
         const restoredEntry = await updateEntryInSupabase(action.before.id, action.domain, {
           trigger: action.before.trigger,
+          position: action.before.position || '',
           follows: [...(action.before.follows || [])],
           result: action.before.result,
-          resultDisplay: action.before.resultDisplay || displayResult(action.before.result),
+          resultDisplay: action.before.resultDisplay || action.before.result,
           group: action.before.group,
           createdOrder: action.before.createdOrder
         });
-        const idx = store.entries.findIndex(e => e.id === action.after.id);
+        const idx = store.entries.findIndex(e => e.id === action.before.id);
         if (idx !== -1) store.entries[idx] = restoredEntry;
       }
 
       clearSelection(action.domain);
-      renderTable(action.domain);
+      renderTable('offense');
+      renderTable('defense');
       renderStats();
     } catch (error) {
       console.error(error);
       alert(error.message || JSON.stringify(error));
-      state.undoStack.push(action);
     }
   }
 
   function sortValue(row, key) {
     if (key === 'index') return row.createdOrder;
     if (key === 'trigger') return row.trigger || '';
+    if (key === 'position') return row.position || '';
     if (key === 'follow') return joinList(row.follows || []);
-    if (key === 'result') return row.resultDisplay || displayResult(row.result || '');
+    if (key === 'result') return row.resultDisplay || row.result || '';
     return '';
   }
 
@@ -549,14 +543,15 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
     store.editingId = id;
     store.selection = {
       trigger: entry.trigger,
+      position: entry.position || '',
       follows: [...(entry.follows || [])],
       result: entry.result,
-      resultDisplay: entry.resultDisplay || displayResult(entry.result),
+      resultDisplay: entry.resultDisplay || entry.result,
       group: entry.group
     };
     updateSelectedButtons(domain);
     renderTable(domain);
-    scrollToTop();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function pills(arr, cls) {
@@ -572,11 +567,11 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
     const rows = sortEntries(domain);
 
     countEl.textContent = `${store.entries.length} Einträge`;
-    const labels = { index: '#', trigger: 'Auslösehandlung', follow: 'Folgehandlung', result: 'Ergebnis' };
+    const labels = { index: '#', trigger: 'Auslösehandlung', position: 'Position', follow: 'Folgehandlung', result: 'Ergebnis' };
     sortInfoEl.textContent = `${labels[store.sort.key]} ${store.sort.dir === 'asc' ? '↑' : '↓'}`;
 
     if (!rows.length) {
-      body.innerHTML = `<tr><td colspan="4" class="empty">Noch keine ${domain === 'offense' ? 'offensiven' : 'defensiven'} Einträge.</td></tr>`;
+      body.innerHTML = `<tr><td colspan="5" class="empty">Noch keine ${domain === 'offense' ? 'offensiven' : 'defensiven'} Einträge.</td></tr>`;
       return;
     }
 
@@ -584,8 +579,9 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
       `<tr data-domain="${domain}" data-id="${row.id}" class="${store.editingId === row.id ? 'editing' : ''}">
         <td>${idx + 1}</td>
         <td>${h(row.trigger || '')}</td>
+        <td>${row.position ? `<span class="pill position">${h(row.position)}</span>` : '—'}</td>
         <td>${pills(row.follows || [], 'follow')}</td>
-        <td class="result-cell ${row.group || ''}">${h(row.resultDisplay || displayResult(row.result || ''))}</td>
+        <td class="result-cell ${row.group || ''}">${h(row.resultDisplay || row.result || '')}</td>
       </tr>`
     ).join('');
 
@@ -600,15 +596,11 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
     });
   }
 
-  function resultIsPositive(value) {
-    return String(value || '').endsWith('_pos');
-  }
-
   function comboStats(domain) {
     const rows = currentStore(domain).entries;
     const map = new Map();
     rows.forEach(row => {
-      const key = `${row.trigger || ''} + ${(row.follows || []).join(' / ') || '—'}`;
+      const key = `${row.trigger || ''} | Pos ${row.position || '—'} | ${(row.follows || []).join(' / ') || '—'}`;
       const item = map.get(key) || { key, wins: 0, total: 0 };
       item.total += 1;
       if (resultIsPositive(row.result)) item.wins += 1;
@@ -619,16 +611,18 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
 
   function hotTakes(domain) {
     const rows = currentStore(domain).entries.slice(-10).filter(r => resultIsPositive(r.result));
-    const comboMap = new Map(), triggerMap = new Map(), followMap = new Map();
+    const comboMap = new Map(), triggerMap = new Map(), positionMap = new Map(), followMap = new Map();
     rows.forEach(row => {
-      const combo = `${row.trigger || ''} + ${(row.follows || []).join(' / ') || '—'}`;
+      const combo = `${row.trigger || ''} | Pos ${row.position || '—'} | ${(row.follows || []).join(' / ') || '—'}`;
       comboMap.set(combo, (comboMap.get(combo) || 0) + 1);
       triggerMap.set(row.trigger || '—', (triggerMap.get(row.trigger || '—') || 0) + 1);
+      positionMap.set(row.position || '—', (positionMap.get(row.position || '—') || 0) + 1);
       (row.follows || []).forEach(f => followMap.set(f, (followMap.get(f) || 0) + 1));
     });
     return {
       combos: [...comboMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3),
       triggers: [...triggerMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3),
+      positions: [...positionMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3),
       follows: [...followMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3)
     };
   }
@@ -654,20 +648,23 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
         : '<div class="empty">Noch keine Hot takes.</div>';
 
       singleEl.innerHTML =
-        [...hot.triggers.map(([key, count]) => `<div class="stats-item"><span>Trigger: ${h(key)}</span><strong>${count}x</strong></div>`),
-         ...hot.follows.map(([key, count]) => `<div class="stats-item"><span>Follow: ${h(key)}</span><strong>${count}x</strong></div>`)].join('')
+        [
+          ...hot.triggers.map(([key, count]) => `<div class="stats-item"><span>Trigger: ${h(key)}</span><strong>${count}x</strong></div>`),
+          ...hot.positions.map(([key, count]) => `<div class="stats-item"><span>Position: ${h(key)}</span><strong>${count}x</strong></div>`),
+          ...hot.follows.map(([key, count]) => `<div class="stats-item"><span>Follow: ${h(key)}</span><strong>${count}x</strong></div>`)
+        ].join('')
         || '<div class="empty">Noch keine Einzelwerte.</div>';
     });
   }
 
   function applyResultColor(data) {
-    if (data.section !== 'body' || data.column.index !== 3) return;
+    if (data.section !== 'body' || data.column.index !== 4) return;
     const v = String(data.cell.raw || '');
     if (v === 'Freiwurf') data.cell.styles.fillColor = [247, 237, 198];
-    else if (v === 'TF') data.cell.styles.fillColor = [247, 219, 219];
-    else if (v === 'DBR' || v === 'SLW' || v === 'SPW' || v === 'Kreis' || v === 'Außen' || v === 'TGS' || v === '7m' || v === 'leeres Tor') {
-      data.cell.styles.fillColor = [220, 239, 214];
-    }
+    else if (v === 'gute Chance - Tor') data.cell.styles.fillColor = [220, 239, 214];
+    else if (v === 'schlechte Chance - kein Tor') data.cell.styles.fillColor = [247, 219, 219];
+    else if (v === 'gute Chance - kein Tor') data.cell.styles.fillColor = [232, 230, 214];
+    else if (v === 'schlechte Chance - Tor') data.cell.styles.fillColor = [232, 223, 214];
   }
 
   function exportPdf() {
@@ -690,8 +687,9 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
     const mapRows = domain => sortEntries(domain).map((row, idx) => [
       idx + 1,
       row.trigger || '',
+      row.position || '',
       (row.follows || []).join(' | '),
-      row.resultDisplay || displayResult(row.result || '')
+      row.resultDisplay || row.result || ''
     ]);
 
     const offenseRows = mapRows('offense');
@@ -700,8 +698,8 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
     doc.setFontSize(12);
     doc.text('Offensive Rohdaten', 14, 30);
     doc.autoTable({
-      head: [['#', 'Auslösehandlung', 'Folgehandlung', 'Ergebnis']],
-      body: offenseRows.length ? offenseRows : [['', 'Keine Einträge', '', '']],
+      head: [['#', 'Auslösehandlung', 'Position', 'Folgehandlung', 'Ergebnis']],
+      body: offenseRows.length ? offenseRows : [['', 'Keine Einträge', '', '', '']],
       startY: 33,
       theme: 'grid',
       styles: { fontSize: 7.5, cellPadding: 2, lineWidth: 0.2, lineColor: [140, 140, 140] },
@@ -715,8 +713,8 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
     doc.setFontSize(12);
     doc.text('Defensive Rohdaten', 14, y);
     doc.autoTable({
-      head: [['#', 'Auslösehandlung', 'Folgehandlung', 'Ergebnis']],
-      body: defenseRows.length ? defenseRows : [['', 'Keine Einträge', '', '']],
+      head: [['#', 'Auslösehandlung', 'Position', 'Folgehandlung', 'Ergebnis']],
+      body: defenseRows.length ? defenseRows : [['', 'Keine Einträge', '', '', '']],
       startY: y + 3,
       theme: 'grid',
       styles: { fontSize: 7.5, cellPadding: 2, lineWidth: 0.2, lineColor: [140, 140, 140] },
@@ -780,9 +778,12 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
   els.defenseResetBtn.addEventListener('click', () => clearSelection('defense'));
 
   renderButtons(els.offenseTriggerButtons, triggerOptions, 'trigger', 'offense');
+  renderButtons(els.offensePositionButtons, positionOptions, 'position', 'offense');
   renderButtons(els.offenseFollowButtons, followOptions, 'follows', 'offense');
   renderButtons(els.offenseResultButtons, offenseResults, 'result', 'offense');
+
   renderButtons(els.defenseTriggerButtons, triggerOptions, 'trigger', 'defense');
+  renderButtons(els.defensePositionButtons, positionOptions, 'position', 'defense');
   renderButtons(els.defenseFollowButtons, followOptions, 'follows', 'defense');
   renderButtons(els.defenseResultButtons, defenseResults, 'result', 'defense');
 
