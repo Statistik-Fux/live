@@ -24,18 +24,29 @@ button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 .workspace{margin-top:var(--space-5)}
 .topbar{display:flex;justify-content:space-between;align-items:center;gap:var(--space-4);padding:var(--space-5) var(--space-6);margin-bottom:var(--space-5);background:linear-gradient(90deg,rgba(255,255,255,.98),rgba(245,247,243,.98));overflow:hidden;position:relative}
 .brand-stack{display:flex;align-items:center;gap:var(--space-4);min-width:0}
-.brand-logo{width:92px;height:92px;border-radius:22px;object-fit:contain;background:#fff;padding:8px;border:1px solid rgba(18,35,20,.08);box-shadow:var(--shadow-sm);display:none}
-.topbar h1{margin:0;font-size:var(--text-xl)}.topbar-meta{color:var(--muted);font-size:var(--text-sm);margin-top:var(--space-2)}
-.dual-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5)}
-.section-card{padding:var(--space-5);position:relative;overflow:hidden}
-.section-card.offense{background:linear-gradient(180deg,rgba(13,91,31,.07),rgba(255,255,255,.95) 26%)}
-.section-card.defense{background:linear-gradient(180deg,rgba(217,31,38,.07),rgba(255,255,255,.95) 26%)}
-.section-head{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4)}.section-head h2{margin:0;font-size:var(--text-lg)}
-.entry-count{border-radius:999px;padding:.35rem .75rem;font-size:var(--text-sm);font-weight:700}.offense .entry-count{background:rgba(13,91,31,.12);color:var(--primary)}.defense .entry-count{background:rgba(217,31,38,.12);color:var(--fox-red-dark)}
+.brand-logo{width:92px;height:92px;border-radius:22px;object-fit:contain;background:#fff;padding:8px;border:1px solid rgba(18,35,20,.08);box-shadow:var(--shadow-sm)}
+.topbar h1{margin:0;font-size:var(--text-xl)}
+.topbar-meta{color:var(--muted);font-size:var(--text-sm);margin-top:var(--space-2)}
+.tables{display:grid;gap:var(--space-5);margin-top:var(--space-5)}
+.table-card{padding:var(--space-5);position:relative;overflow:hidden}
+.table-card::before{content:"";position:fixed;left:50%;top:50%;width:min(260px,58vw);height:min(260px,58vw);background:url('logo.png.JPG') center/contain no-repeat;opacity:.14;pointer-events:none;filter:grayscale(1) contrast(.95);transform:translate(-50%,-50%) scale(2.15) translateY(6px);transform-origin:center center;z-index:0}
+.table-card>*{position:relative;z-index:1}
+.table-card.offense{border-top:8px solid var(--primary);background:linear-gradient(180deg,rgba(13,91,31,.07),rgba(255,255,255,.95) 26%)}
+.table-card.defense{border-top:8px solid var(--fox-red);background:linear-gradient(180deg,rgba(217,31,38,.07),rgba(255,255,255,.95) 26%)}
+.table-tools{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4);flex-wrap:wrap}
+.table-tools h2{margin:0;font-size:var(--text-lg)}
+.entry-count{border-radius:999px;padding:.35rem .75rem;font-size:var(--text-sm);font-weight:700}
+.offense .entry-count{background:rgba(13,91,31,.12);color:var(--primary)}
+.defense .entry-count{background:rgba(217,31,38,.12);color:var(--fox-red-dark)}
+.sort-info{font-size:var(--text-sm);color:var(--muted);font-weight:700}
 .table-wrap{overflow:auto;border:1px solid var(--border);border-radius:var(--radius-lg);background:#fff;max-width:100%}
 table{width:100%;table-layout:fixed;border-collapse:collapse}
 th,td{padding:.82rem .72rem;border-bottom:1px solid rgba(40,37,29,.09);text-align:left;vertical-align:top;word-break:break-word}
 th{position:sticky;top:0;background:var(--surface-2);z-index:1;color:#111}
+th button{background:transparent;border:0;padding:0;font:inherit;font-weight:700;color:#111}
+th button:hover{text-decoration:underline}
+tbody tr:hover{background:#faf8f3}
+tbody tr:nth-child(even){background:#fafafa}
 .result-cell.green{background:rgba(220,239,214,.82)}
 .result-cell.red{background:rgba(247,219,219,.82)}
 .result-cell.yellow{background:rgba(247,237,198,.88)}
@@ -46,8 +57,16 @@ th{position:sticky;top:0;background:var(--surface-2);z-index:1;color:#111}
 .pill.follow{background:#edf4f4;color:#14575c}
 .defense .pill.follow{background:#fbeaea;color:#8c2328}
 .pill.position{background:#eef0f7;color:#33406b}
-.stats-card{padding:var(--space-5);margin-top:var(--space-5)}.stats-wrap{display:grid;gap:var(--space-5)}.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)}.stats-block{border:1px solid var(--border);border-radius:var(--radius-lg);background:#fff;padding:var(--space-4)}.stats-block h3,.stats-block h4{margin:0 0 var(--space-3)}.stats-list{display:grid;gap:.45rem}.stats-item{display:flex;justify-content:space-between;gap:1rem;padding:.55rem .7rem;border-radius:.7rem;background:#f7f8f5;border:1px solid rgba(18,35,20,.08)}.stats-item strong{font-weight:700}.empty{padding:var(--space-8);text-align:center;color:var(--muted)}
-@media (max-width:1100px){.dual-grid{grid-template-columns:1fr}}@media (max-width:760px){.app{padding:var(--space-4)}.setup,.section-card,.stats-card,.topbar{padding:var(--space-4)}.topbar{flex-direction:column;align-items:stretch}.brand-stack{align-items:flex-start}.stats-grid{grid-template-columns:1fr}}
+.stats-card{padding:var(--space-5);margin-top:var(--space-5)}
+.stats-wrap{display:grid;gap:var(--space-5)}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)}
+.stats-block{border:1px solid var(--border);border-radius:var(--radius-lg);background:#fff;padding:var(--space-4)}
+.stats-block h3,.stats-block h4{margin:0 0 var(--space-3)}
+.stats-list{display:grid;gap:.45rem}
+.stats-item{display:flex;justify-content:space-between;gap:1rem;padding:.55rem .7rem;border-radius:.7rem;background:#f7f8f5;border:1px solid rgba(18,35,20,.08)}
+.stats-item strong{font-weight:700}
+.empty{padding:var(--space-8);text-align:center;color:var(--muted)}
+@media (max-width:760px){.app{padding:var(--space-4)}.setup,.table-card,.stats-card,.topbar{padding:var(--space-4)}.topbar{flex-direction:column;align-items:stretch}.brand-stack{align-items:flex-start}.stats-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -65,22 +84,31 @@ th{position:sticky;top:0;background:var(--surface-2);z-index:1;color:#111}
     <div class="panel topbar">
       <div class="brand-stack">
         <img id="brandLogo" src="./logo.png.JPG" alt="Logo" class="brand-logo" loading="eager" width="72" height="72" />
-        <div><h1 id="headline">Anzeige</h1><div class="topbar-meta" id="topMeta"></div></div>
+        <div>
+          <h1 id="headline">Anzeige</h1>
+          <div class="topbar-meta" id="topMeta"></div>
+        </div>
       </div>
     </div>
 
-    <div class="dual-grid">
-      <section class="panel section-card offense">
-        <div class="section-head"><h2>Offensive Aktionen</h2><div class="entry-count" id="offenseCount">0 Einträge</div></div>
+    <div class="tables">
+      <section class="panel table-card offense">
+        <div class="table-tools">
+          <h2>Offensive Aktionen</h2>
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+            <div class="entry-count" id="offenseCount">0 Einträge</div>
+            <div id="offenseSortInfo" class="sort-info"></div>
+          </div>
+        </div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th style="width:7%">#</th>
-                <th style="width:18%">Auslösehandlung</th>
-                <th style="width:12%">Position</th>
-                <th style="width:33%">Folgehandlung</th>
-                <th style="width:20%">Ergebnis</th>
+                <th style="width:7%"><button type="button" data-table="offense" data-sort="index">#</button></th>
+                <th style="width:18%"><button type="button" data-table="offense" data-sort="trigger">Auslösehandlung</button></th>
+                <th style="width:12%"><button type="button" data-table="offense" data-sort="position">Position</button></th>
+                <th style="width:33%"><button type="button" data-table="offense" data-sort="follow">Folgehandlung</button></th>
+                <th style="width:20%"><button type="button" data-table="offense" data-sort="result">Ergebnis</button></th>
               </tr>
             </thead>
             <tbody id="offenseTableBody"><tr><td colspan="5" class="empty">Noch keine offensiven Einträge.</td></tr></tbody>
@@ -88,17 +116,23 @@ th{position:sticky;top:0;background:var(--surface-2);z-index:1;color:#111}
         </div>
       </section>
 
-      <section class="panel section-card defense">
-        <div class="section-head"><h2>Defensive Aktionen</h2><div class="entry-count" id="defenseCount">0 Einträge</div></div>
+      <section class="panel table-card defense">
+        <div class="table-tools">
+          <h2>Defensive Aktionen</h2>
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+            <div class="entry-count" id="defenseCount">0 Einträge</div>
+            <div id="defenseSortInfo" class="sort-info"></div>
+          </div>
+        </div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th style="width:7%">#</th>
-                <th style="width:18%">Auslösehandlung</th>
-                <th style="width:12%">Position</th>
-                <th style="width:33%">Folgehandlung</th>
-                <th style="width:20%">Ergebnis</th>
+                <th style="width:7%"><button type="button" data-table="defense" data-sort="index">#</button></th>
+                <th style="width:18%"><button type="button" data-table="defense" data-sort="trigger">Auslösehandlung</button></th>
+                <th style="width:12%"><button type="button" data-table="defense" data-sort="position">Position</button></th>
+                <th style="width:33%"><button type="button" data-table="defense" data-sort="follow">Folgehandlung</button></th>
+                <th style="width:20%"><button type="button" data-table="defense" data-sort="result">Ergebnis</button></th>
               </tr>
             </thead>
             <tbody id="defenseTableBody"><tr><td colspan="5" class="empty">Noch keine defensiven Einträge.</td></tr></tbody>
@@ -143,7 +177,11 @@ th{position:sticky;top:0;background:var(--surface-2);z-index:1;color:#111}
   const SUPABASE_ANON_KEY = "sb_publishable_JRYstud4CcOx7sC27GQlYQ_xziqf5df";
   const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  const state = { meta:{ opponent:'', matchDate:'' }, offense:{ entries:[] }, defense:{ entries:[] } };
+  const state = {
+    meta:{ opponent:'', matchDate:'' },
+    offense:{ entries:[], sort:{ key:'index', dir:'desc' } },
+    defense:{ entries:[], sort:{ key:'index', dir:'desc' } }
+  };
 
   const els = {
     setup:document.getElementById('setup'),
@@ -155,6 +193,8 @@ th{position:sticky;top:0;background:var(--surface-2);z-index:1;color:#111}
     topMeta:document.getElementById('topMeta'),
     offenseCount:document.getElementById('offenseCount'),
     defenseCount:document.getElementById('defenseCount'),
+    offenseSortInfo:document.getElementById('offenseSortInfo'),
+    defenseSortInfo:document.getElementById('defenseSortInfo'),
     offenseTableBody:document.getElementById('offenseTableBody'),
     defenseTableBody:document.getElementById('defenseTableBody'),
     offenseStats:document.getElementById('offenseStats'),
@@ -179,7 +219,7 @@ th{position:sticky;top:0;background:var(--surface-2);z-index:1;color:#111}
       .select('*')
       .eq('match_opponent', state.meta.opponent)
       .eq('match_date', state.meta.matchDate)
-      .order('created_order', { ascending: false });
+      .order('created_order', { ascending: true });
 
     if (error) {
       console.error(error);
@@ -190,6 +230,7 @@ th{position:sticky;top:0;background:var(--surface-2);z-index:1;color:#111}
 
     state.offense.entries = data.filter(r => r.side === 'offense').map(r => ({
       ...r,
+      createdOrder: r.created_order ?? 0,
       position: r.attack_position ?? '',
       follows: r.follows ? r.follows.split(' | ') : [],
       group: r.result_group,
@@ -198,6 +239,7 @@ th{position:sticky;top:0;background:var(--surface-2);z-index:1;color:#111}
 
     state.defense.entries = data.filter(r => r.side === 'defense').map(r => ({
       ...r,
+      createdOrder: r.created_order ?? 0,
       position: r.attack_position ?? '',
       follows: r.follows ? r.follows.split(' | ') : [],
       group: r.result_group,
@@ -205,24 +247,79 @@ th{position:sticky;top:0;background:var(--surface-2);z-index:1;color:#111}
     }));
   }
 
+  function sortValue(row, key) {
+    if (key === 'index') return row.createdOrder ?? 0;
+    if (key === 'trigger') return row.trigger || '';
+    if (key === 'position') return row.position || '';
+    if (key === 'follow') return joinList(row.follows || []);
+    if (key === 'result') return row.resultDisplay || row.result || '';
+    return '';
+  }
+
+  function sortEntries(domain) {
+    const store = state[domain];
+    const rows = [...store.entries];
+    const { key, dir } = store.sort;
+    const factor = dir === 'asc' ? 1 : -1;
+
+    rows.sort((a, b) => {
+      const av = sortValue(a, key);
+      const bv = sortValue(b, key);
+      let value = typeof av === 'number' && typeof bv === 'number'
+        ? av - bv
+        : String(av).localeCompare(String(bv), 'de');
+      if (value === 0) value = (a.createdOrder ?? 0) - (b.createdOrder ?? 0);
+      return value * factor;
+    });
+
+    return rows;
+  }
+
+  function setSort(domain, key) {
+    const store = state[domain];
+    if (store.sort.key === key) {
+      store.sort.dir = store.sort.dir === 'asc' ? 'desc' : 'asc';
+    } else {
+      store.sort.key = key;
+      store.sort.dir = key === 'index' ? 'desc' : 'asc';
+    }
+    renderTable(domain);
+  }
+
+  function pills(arr, cls) {
+    if (!arr || !arr.length) return '—';
+    return `<div class="pill-list">${arr.map(v => `<span class="pill ${cls}">${h(v)}</span>`).join('')}</div>`;
+  }
+
   function renderTable(domain) {
     const store = state[domain];
     const body = els[`${domain}TableBody`];
     const countEl = els[`${domain}Count`];
+    const sortInfoEl = els[`${domain}SortInfo`];
+    const rows = sortEntries(domain);
 
     countEl.textContent = `${store.entries.length} Einträge`;
 
-    if (!store.entries.length) {
+    const labels = {
+      index: '#',
+      trigger: 'Auslösehandlung',
+      position: 'Position',
+      follow: 'Folgehandlung',
+      result: 'Ergebnis'
+    };
+    sortInfoEl.textContent = `${labels[store.sort.key]} ${store.sort.dir === 'asc' ? '↑' : '↓'}`;
+
+    if (!rows.length) {
       body.innerHTML = `<tr><td colspan="5" class="empty">Noch keine ${domain === 'offense' ? 'offensiven' : 'defensiven'} Einträge.</td></tr>`;
       return;
     }
 
-    body.innerHTML = store.entries.map((row, idx) => `
+    body.innerHTML = rows.map((row, idx) => `
       <tr>
         <td>${idx + 1}</td>
         <td>${h(row.trigger || '')}</td>
         <td>${row.position ? `<span class="pill position">${h(row.position)}</span>` : '—'}</td>
-        <td>${joinList(row.follows || [])}</td>
+        <td>${pills(row.follows || [], 'follow')}</td>
         <td class="result-cell ${row.group || ''}">${h(row.resultDisplay || row.result || '')}</td>
       </tr>
     `).join('');
@@ -319,6 +416,10 @@ th{position:sticky;top:0;background:var(--surface-2);z-index:1;color:#111}
       brandLogo.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><rect width="512" height="512" rx="72" fill="#0d5b1f"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="132" font-weight="700" fill="#ffffff">FÜCHSE</text></svg>`);
     };
   }
+
+  document.querySelectorAll('th button[data-table]').forEach(btn =>
+    btn.addEventListener('click', () => setSort(btn.dataset.table, btn.dataset.sort))
+  );
 
   els.startBtn.addEventListener('click', startApp);
 
