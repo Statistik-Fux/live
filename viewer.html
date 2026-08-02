@@ -53,11 +53,13 @@ tbody tr:nth-child(even){background:#fafafa}
 .result-cell.yellow{background:rgba(247,237,198,.88)}
 .result-cell.split-green-red{background:linear-gradient(90deg,rgba(220,239,214,.82) 0 50%,rgba(247,219,219,.82) 50% 100%)}
 .result-cell.split-red-green{background:linear-gradient(90deg,rgba(247,219,219,.82) 0 50%,rgba(220,239,214,.82) 50% 100%)}
-.pill-list{display:flex;flex-wrap:wrap;gap:.35rem}
 .pill{display:inline-flex;align-items:center;border-radius:999px;padding:.2rem .55rem;background:#eee;font-size:var(--text-sm);font-weight:700}
-.pill.follow{background:#edf4f4;color:#14575c}
-.defense .pill.follow{background:#fbeaea;color:#8c2328}
 .pill.position{background:#eef0f7;color:#33406b}
+.pill.structure{background:#e7f4ea;color:#19502a}
+.pill.finish{background:#f4ece7;color:#7a4720}
+.pill.number{background:#f2edf8;color:#53306f}
+.pill.green-tag{background:#e1f0dc;color:#1b5c26}
+.pill.red-tag{background:#f8dfdf;color:#8d2424}
 .stats-card{padding:var(--space-5);margin-top:var(--space-5)}
 .stats-wrap{display:grid;gap:var(--space-5)}
 .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)}
@@ -106,10 +108,10 @@ tbody tr:nth-child(even){background:#fafafa}
             <thead>
               <tr>
                 <th style="width:7%"><button type="button" data-table="offense" data-sort="index">#</button></th>
-                <th style="width:18%"><button type="button" data-table="offense" data-sort="trigger">Auslösehandlung</button></th>
-                <th style="width:12%"><button type="button" data-table="offense" data-sort="position">Position</button></th>
-                <th style="width:33%"><button type="button" data-table="offense" data-sort="follow">Folgehandlung</button></th>
-                <th style="width:20%"><button type="button" data-table="offense" data-sort="result">Ergebnis</button></th>
+                <th style="width:23%"><button type="button" data-table="offense" data-sort="structure">Struktur</button></th>
+                <th style="width:15%"><button type="button" data-table="offense" data-sort="position">Position</button></th>
+                <th style="width:23%"><button type="button" data-table="offense" data-sort="result">Ergebnis</button></th>
+                <th style="width:15%"><button type="button" data-table="offense" data-sort="number">Zahl</button></th>
               </tr>
             </thead>
             <tbody id="offenseTableBody"><tr><td colspan="5" class="empty">Noch keine offensiven Einträge.</td></tr></tbody>
@@ -130,13 +132,12 @@ tbody tr:nth-child(even){background:#fafafa}
             <thead>
               <tr>
                 <th style="width:7%"><button type="button" data-table="defense" data-sort="index">#</button></th>
-                <th style="width:18%"><button type="button" data-table="defense" data-sort="trigger">Auslösehandlung</button></th>
-                <th style="width:12%"><button type="button" data-table="defense" data-sort="position">Position</button></th>
-                <th style="width:33%"><button type="button" data-table="defense" data-sort="follow">Folgehandlung</button></th>
-                <th style="width:20%"><button type="button" data-table="defense" data-sort="result">Ergebnis</button></th>
+                <th style="width:20%"><button type="button" data-table="defense" data-sort="positionLabel">Position</button></th>
+                <th style="width:28%"><button type="button" data-table="defense" data-sort="finishPositionLabel">Abschlussposition</button></th>
+                <th style="width:15%"><button type="button" data-table="defense" data-sort="number">Zahl</button></th>
               </tr>
             </thead>
-            <tbody id="defenseTableBody"><tr><td colspan="5" class="empty">Noch keine defensiven Einträge.</td></tr></tbody>
+            <tbody id="defenseTableBody"><tr><td colspan="4" class="empty">Noch keine defensiven Einträge.</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -179,39 +180,42 @@ tbody tr:nth-child(even){background:#fafafa}
   const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   const state = {
-    meta:{ opponent:'', matchDate:'' },
-    offense:{ entries:[], sort:{ key:'index', dir:'desc' } },
-    defense:{ entries:[], sort:{ key:'index', dir:'desc' } }
+    meta: { opponent: '', matchDate: '' },
+    offense: { entries: [], sort: { key: 'index', dir: 'desc' } },
+    defense: { entries: [], sort: { key: 'index', dir: 'desc' } }
   };
 
   const els = {
-    setup:document.getElementById('setup'),
-    workspace:document.getElementById('workspace'),
-    opponent:document.getElementById('opponent'),
-    matchDate:document.getElementById('matchDate'),
-    startBtn:document.getElementById('startBtn'),
-    headline:document.getElementById('headline'),
-    topMeta:document.getElementById('topMeta'),
-    offenseCount:document.getElementById('offenseCount'),
-    defenseCount:document.getElementById('defenseCount'),
-    offenseSortInfo:document.getElementById('offenseSortInfo'),
-    defenseSortInfo:document.getElementById('defenseSortInfo'),
-    offenseTableBody:document.getElementById('offenseTableBody'),
-    defenseTableBody:document.getElementById('defenseTableBody'),
-    offenseStats:document.getElementById('offenseStats'),
-    defenseStats:document.getElementById('defenseStats'),
-    offenseHotTakes:document.getElementById('offenseHotTakes'),
-    defenseHotTakes:document.getElementById('defenseHotTakes'),
-    offenseHotSingles:document.getElementById('offenseHotSingles'),
-    defenseHotSingles:document.getElementById('defenseHotSingles')
+    setup: document.getElementById('setup'),
+    workspace: document.getElementById('workspace'),
+    opponent: document.getElementById('opponent'),
+    matchDate: document.getElementById('matchDate'),
+    startBtn: document.getElementById('startBtn'),
+    headline: document.getElementById('headline'),
+    topMeta: document.getElementById('topMeta'),
+    offenseCount: document.getElementById('offenseCount'),
+    defenseCount: document.getElementById('defenseCount'),
+    offenseSortInfo: document.getElementById('offenseSortInfo'),
+    defenseSortInfo: document.getElementById('defenseSortInfo'),
+    offenseTableBody: document.getElementById('offenseTableBody'),
+    defenseTableBody: document.getElementById('defenseTableBody'),
+    offenseStats: document.getElementById('offenseStats'),
+    defenseStats: document.getElementById('defenseStats'),
+    offenseHotTakes: document.getElementById('offenseHotTakes'),
+    defenseHotTakes: document.getElementById('defenseHotTakes'),
+    offenseHotSingles: document.getElementById('offenseHotSingles'),
+    defenseHotSingles: document.getElementById('defenseHotSingles')
   };
 
   const fmtDate = v => new Date(v + 'T00:00:00').toLocaleDateString('de-DE');
   const h = s => String(s ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
-  const joinList = a => a.length ? a.join(' | ') : '—';
 
-  function resultIsPositive(v) {
-    return v === 'gute_chance_tor' || v === 'schlechte_chance_tor';
+  function resultIsPositive(value) {
+    return value === 'gute_chance_tor' || value === 'schlechte_chance_tor';
+  }
+
+  function defenseSuccessValue(entry) {
+    return `${entry.positionSide || ''}|${entry.position || ''}|${entry.finishSide || ''}|${entry.finishPosition || ''}`;
   }
 
   async function loadMatchActions() {
@@ -229,30 +233,49 @@ tbody tr:nth-child(even){background:#fafafa}
       return;
     }
 
-    state.offense.entries = data.filter(r => r.side === 'offense').map(r => ({
-      ...r,
-      createdOrder: r.created_order ?? 0,
-      position: r.attack_position ?? '',
-      follows: r.follows ? r.follows.split(' | ') : [],
-      group: r.result_group,
-      resultDisplay: r.result_display || r.result || ''
-    }));
+    state.offense.entries = data
+      .filter(r => r.side === 'offense')
+      .map(r => ({
+        ...r,
+        id: r.id,
+        createdOrder: r.created_order ?? r.createdOrder ?? 0,
+        structure: r.structure ?? '',
+        position: r.attack_position ?? r.position ?? '',
+        finishPosition: r.finish_position ?? '',
+        positionSide: r.position_side ?? '',
+        finishSide: r.finish_side ?? '',
+        number: r.number_relation ?? r.number ?? '6:6',
+        group: r.result_group ?? '',
+        result: r.result ?? '',
+        resultDisplay: r.result_display ?? r.resultDisplay ?? r.result ?? ''
+      }));
 
-    state.defense.entries = data.filter(r => r.side === 'defense').map(r => ({
-      ...r,
-      createdOrder: r.created_order ?? 0,
-      position: r.attack_position ?? '',
-      follows: r.follows ? r.follows.split(' | ') : [],
-      group: r.result_group,
-      resultDisplay: r.result_display || r.result || ''
-    }));
+    state.defense.entries = data
+      .filter(r => r.side === 'defense')
+      .map(r => ({
+        ...r,
+        id: r.id,
+        createdOrder: r.created_order ?? r.createdOrder ?? 0,
+        structure: r.structure ?? '',
+        position: r.attack_position ?? r.position ?? '',
+        finishPosition: r.finish_position ?? '',
+        positionSide: r.position_side ?? '',
+        finishSide: r.finish_side ?? '',
+        number: r.number_relation ?? r.number ?? '6:6',
+        group: r.result_group ?? (r.position_side === 'green' && r.finish_side === 'green' ? 'green' : 'red'),
+        result: r.result ?? (r.position_side === 'green' && r.finish_side === 'green' ? 'defense_success' : 'defense_fail'),
+        resultDisplay: r.result_display ?? (r.position_side === 'green' && r.finish_side === 'green' ? 'Erfolg' : 'Misserfolg')
+      }));
   }
 
   function sortValue(row, key) {
-    if (key === 'index') return row.createdOrder ?? 0;
-    if (key === 'trigger') return row.trigger || '';
+    if (key === 'index') return row.createdOrder;
+    if (key === 'structure') return row.structure || '';
     if (key === 'position') return row.position || '';
-    if (key === 'follow') return joinList(row.follows || []);
+    if (key === 'positionLabel') return `${row.positionSide === 'green' ? 'Grün' : 'Rot'} ${row.position || ''}`;
+    if (key === 'finishPosition') return row.finishPosition || '';
+    if (key === 'finishPositionLabel') return `${row.finishSide === 'green' ? 'Grün' : 'Rot'} ${row.finishPosition || ''}`;
+    if (key === 'number') return row.number || '';
     if (key === 'result') return row.resultDisplay || row.result || '';
     return '';
   }
@@ -287,11 +310,6 @@ tbody tr:nth-child(even){background:#fafafa}
     renderTable(domain);
   }
 
-  function pills(arr, cls) {
-    if (!arr || !arr.length) return '—';
-    return `<div class="pill-list">${arr.map(v => `<span class="pill ${cls}">${h(v)}</span>`).join('')}</div>`;
-  }
-
   function renderTable(domain) {
     const store = state[domain];
     const body = els[`${domain}TableBody`];
@@ -301,29 +319,37 @@ tbody tr:nth-child(even){background:#fafafa}
 
     countEl.textContent = `${store.entries.length} Einträge`;
 
-    const labels = {
-      index: '#',
-      trigger: 'Auslösehandlung',
-      position: 'Position',
-      follow: 'Folgehandlung',
-      result: 'Ergebnis'
-    };
+    const labels = domain === 'offense'
+      ? { index: '#', structure: 'Struktur', position: 'Position', result: 'Ergebnis', number: 'Zahl' }
+      : { index: '#', positionLabel: 'Position', finishPositionLabel: 'Abschlussposition', number: 'Zahl' };
+
     sortInfoEl.textContent = `${labels[store.sort.key]} ${store.sort.dir === 'asc' ? '↑' : '↓'}`;
 
     if (!rows.length) {
-      body.innerHTML = `<tr><td colspan="5" class="empty">Noch keine ${domain === 'offense' ? 'offensiven' : 'defensiven'} Einträge.</td></tr>`;
+      body.innerHTML = `<tr><td colspan="${domain === 'offense' ? 5 : 4}" class="empty">Noch keine ${domain === 'offense' ? 'offensiven' : 'defensiven'} Einträge.</td></tr>`;
       return;
     }
 
-    body.innerHTML = rows.map((row, idx) => `
-      <tr>
-        <td>${idx + 1}</td>
-        <td>${h(row.trigger || '')}</td>
-        <td>${row.position ? `<span class="pill position">${h(row.position)}</span>` : '—'}</td>
-        <td>${pills(row.follows || [], 'follow')}</td>
-        <td class="result-cell ${row.group || ''}">${h(row.resultDisplay || row.result || '')}</td>
-      </tr>
-    `).join('');
+    if (domain === 'offense') {
+      body.innerHTML = rows.map((row, idx) => `
+        <tr>
+          <td>${idx + 1}</td>
+          <td>${row.structure ? `<span class="pill structure">${h(row.structure)}</span>` : '—'}</td>
+          <td>${row.position ? `<span class="pill position">${h(row.position)}</span>` : '—'}</td>
+          <td class="result-cell ${row.group || ''}">${h(row.resultDisplay || row.result || '')}</td>
+          <td>${row.number ? `<span class="pill number">${h(row.number)}</span>` : '—'}</td>
+        </tr>
+      `).join('');
+    } else {
+      body.innerHTML = rows.map((row, idx) => `
+        <tr>
+          <td>${idx + 1}</td>
+          <td>${row.position ? `<span class="pill ${row.positionSide === 'green' ? 'green-tag' : 'red-tag'}">${h(row.position)}</span>` : '—'}</td>
+          <td>${row.finishPosition ? `<span class="pill ${row.finishSide === 'green' ? 'green-tag' : 'red-tag'}">${h(row.finishPosition)}</span>` : '—'}</td>
+          <td>${row.number ? `<span class="pill number">${h(row.number)}</span>` : '—'}</td>
+        </tr>
+      `).join('');
+    }
   }
 
   function comboStats(domain) {
@@ -331,10 +357,19 @@ tbody tr:nth-child(even){background:#fafafa}
     const map = new Map();
 
     rows.forEach(row => {
-      const key = `${row.trigger || ''} | Pos ${row.position || '—'} | ${(row.follows || []).join(' / ') || '—'}`;
+      const key = domain === 'offense'
+        ? `${row.structure || '—'} | Pos ${row.position || '—'} | Zahl ${row.number || '—'}`
+        : `${row.positionSide === 'green' ? 'grün' : 'rot'} Pos ${row.position || '—'} | ${row.finishSide === 'green' ? 'grün' : 'rot'} Abschluss ${row.finishPosition || '—'} | Zahl ${row.number || '—'}`;
+
       const item = map.get(key) || { key, wins: 0, total: 0 };
       item.total += 1;
-      if (resultIsPositive(row.result)) item.wins += 1;
+
+      if (domain === 'offense') {
+        if (resultIsPositive(row.result)) item.wins += 1;
+      } else {
+        if (defenseSuccessValue(row) === `green|${row.position || ''}|green|${row.finishPosition || ''}`) item.wins += 1;
+      }
+
       map.set(key, item);
     });
 
@@ -342,22 +377,48 @@ tbody tr:nth-child(even){background:#fafafa}
   }
 
   function hotTakes(domain) {
-    const rows = state[domain].entries.filter(r => resultIsPositive(r.result));
-    const comboMap = new Map(), triggerMap = new Map(), positionMap = new Map(), followMap = new Map();
+    const rows = state[domain].entries.slice(-10).filter(r =>
+      domain === 'offense'
+        ? resultIsPositive(r.result)
+        : r.positionSide === 'green' && r.finishSide === 'green'
+    );
+
+    const comboMap = new Map();
+    const structureMap = new Map();
+    const positionMap = new Map();
+    const finishMap = new Map();
+    const numberMap = new Map();
 
     rows.forEach(row => {
-      const combo = `${row.trigger || ''} | Pos ${row.position || '—'} | ${(row.follows || []).join(' / ') || '—'}`;
+      const combo = domain === 'offense'
+        ? `${row.structure || '—'} | Pos ${row.position || '—'} | Zahl ${row.number || '—'}`
+        : `${row.positionSide === 'green' ? 'grün' : 'rot'} Pos ${row.position || '—'} | ${row.finishSide === 'green' ? 'grün' : 'rot'} Abschluss ${row.finishPosition || '—'} | Zahl ${row.number || '—'}`;
+
       comboMap.set(combo, (comboMap.get(combo) || 0) + 1);
-      triggerMap.set(row.trigger || '—', (triggerMap.get(row.trigger || '—') || 0) + 1);
-      positionMap.set(row.position || '—', (positionMap.get(row.position || '—') || 0) + 1);
-      (row.follows || []).forEach(f => followMap.set(f, (followMap.get(f) || 0) + 1));
+
+      if (domain === 'offense') {
+        structureMap.set(row.structure || '—', (structureMap.get(row.structure || '—') || 0) + 1);
+      }
+
+      const positionKey = domain === 'defense'
+        ? `${row.positionSide === 'green' ? 'grün' : 'rot'} ${row.position || '—'}`
+        : (row.position || '—');
+      positionMap.set(positionKey, (positionMap.get(positionKey) || 0) + 1);
+
+      if (domain === 'defense') {
+        const finishKey = `${row.finishSide === 'green' ? 'grün' : 'rot'} ${row.finishPosition || '—'}`;
+        finishMap.set(finishKey, (finishMap.get(finishKey) || 0) + 1);
+      }
+
+      numberMap.set(row.number || '—', (numberMap.get(row.number || '—') || 0) + 1);
     });
 
     return {
       combos: [...comboMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3),
-      triggers: [...triggerMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3),
+      structures: [...structureMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3),
       positions: [...positionMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3),
-      follows: [...followMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3)
+      finishes: [...finishMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3),
+      numbers: [...numberMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3)
     };
   }
 
@@ -379,9 +440,10 @@ tbody tr:nth-child(even){background:#fafafa}
 
       singleEl.innerHTML =
         [
-          ...hot.triggers.map(([key, count]) => `<div class="stats-item"><span>Trigger: ${h(key)}</span><strong>${count}x</strong></div>`),
+          ...(domain === 'offense' ? hot.structures.map(([key, count]) => `<div class="stats-item"><span>Struktur: ${h(key)}</span><strong>${count}x</strong></div>`) : []),
           ...hot.positions.map(([key, count]) => `<div class="stats-item"><span>Position: ${h(key)}</span><strong>${count}x</strong></div>`),
-          ...hot.follows.map(([key, count]) => `<div class="stats-item"><span>Follow: ${h(key)}</span><strong>${count}x</strong></div>`)
+          ...(domain === 'defense' ? hot.finishes.map(([key, count]) => `<div class="stats-item"><span>Abschluss: ${h(key)}</span><strong>${count}x</strong></div>`) : []),
+          ...hot.numbers.map(([key, count]) => `<div class="stats-item"><span>Zahl: ${h(key)}</span><strong>${count}x</strong></div>`)
         ].join('') || '<div class="empty">Noch keine Einzelwerte.</div>';
     });
   }
