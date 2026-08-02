@@ -64,6 +64,7 @@ tbody tr:nth-child(even){background:#fafafa}
 .pill.number-default{background:#f2edf8;color:#53306f}
 .pill.green-tag{background:#e1f0dc;color:#1b5c26}
 .pill.red-tag{background:#f8dfdf;color:#8d2424}
+.pill.yellow-tag{background:#f7edc6;color:#7b5c00}
 .stats-card{padding:var(--space-5);margin-top:var(--space-5)}
 .stats-wrap{display:grid;gap:var(--space-5)}
 .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)}
@@ -218,8 +219,8 @@ tbody tr:nth-child(even){background:#fafafa}
     return value === 'gute_chance_tor' || value === 'schlechte_chance_tor';
   }
 
-  function defenseSuccessValue(entry) {
-    return `${entry.positionSide || ''}|${entry.position || ''}|${entry.finishSide || ''}|${entry.finishPosition || ''}`;
+  function isDefenseSuccess(entry) {
+    return entry.result === 'defense_success' || (entry.positionSide === 'green' && entry.finishSide === 'green');
   }
 
   function getStableRowIndex(entry, allEntries) {
@@ -238,6 +239,25 @@ tbody tr:nth-child(even){background:#fafafa}
     if (value === '6:5') return 'number-65';
     if (value === '7:6') return 'number-76';
     return 'number-default';
+  }
+
+  function defenseSideLabel(side) {
+    if (side === 'green') return 'grün';
+    if (side === 'red') return 'rot';
+    if (side === 'yellow') return 'gelb';
+    return '';
+  }
+
+  function defenseFinishDisplay(entry) {
+    if (entry.finishPosition === 'freiwurf') return 'Freiwurf';
+    if (entry.finishPosition === 'tf') return 'TF';
+    return entry.finishPosition || '';
+  }
+
+  function defenseFinishTagClass(side) {
+    if (side === 'green') return 'green-tag';
+    if (side === 'yellow') return 'yellow-tag';
+    return 'red-tag';
   }
 
   async function loadMatchActions() {
@@ -266,6 +286,7 @@ tbody tr:nth-child(even){background:#fafafa}
       finishSide: r.finish_side ?? '',
       number: r.number_relation ?? r.number ?? '6:6',
       group: r.result_group,
+      result: r.result ?? '',
       resultDisplay: r.result_display ?? r.resultDisplay ?? r.result ?? ''
     }));
 
@@ -279,9 +300,20 @@ tbody tr:nth-child(even){background:#fafafa}
       positionSide: r.position_side ?? '',
       finishSide: r.finish_side ?? '',
       number: r.number_relation ?? r.number ?? '6:6',
-      group: r.result_group ?? (r.position_side === 'green' && r.finish_side === 'green' ? 'green' : 'red'),
-      result: r.result ?? (r.position_side === 'green' && r.finish_side === 'green' ? 'defense_success' : 'defense_fail'),
-      resultDisplay: r.result_display ?? (r.position_side === 'green' && r.finish_side === 'green' ? 'Erfolg' : 'Misserfolg')
+      group: r.result_group ?? (
+        r.finish_side === 'yellow' ? 'yellow' :
+        (r.position_side === 'green' && r.finish_side === 'green' ? 'green' : 'red')
+      ),
+      result: r.result ?? (
+        r.finish_position === 'freiwurf' ? 'freiwurf' :
+        r.finish_position === 'tf' ? 'tf' :
+        (r.position_side === 'green' && r.finish_side === 'green' ? 'defense_success' : 'defense_fail')
+      ),
+      resultDisplay: r.result_display ?? (
+        r.finish_position === 'freiwurf' ? 'Freiwurf' :
+        r.finish_position === 'tf' ? 'TF' :
+        (r.position_side === 'green' && r.finish_side === 'green' ? 'Erfolg' : 'Misserfolg')
+      )
     }));
   }
 
@@ -289,9 +321,9 @@ tbody tr:nth-child(even){background:#fafafa}
     if (key === 'index') return row.createdOrder ?? 0;
     if (key === 'structure') return row.structure || '';
     if (key === 'position') return row.position || '';
-    if (key === 'positionLabel') return `${row.positionSide === 'green' ? 'Grün' : 'Rot'} ${row.position || ''}`;
-    if (key === 'finishPosition') return row.finishPosition || '';
-    if (key === 'finishPositionLabel') return `${row.finishSide === 'green' ? 'Grün' : 'Rot'} ${row.finishPosition || ''}`;
+    if (key === 'positionLabel') return `${defenseSideLabel(row.positionSide)} ${row.position || ''}`;
+    if (key === 'finishPosition') return defenseFinishDisplay(row) || '';
+    if (key === 'finishPositionLabel') return `${defenseSideLabel(row.finishSide)} ${defenseFinishDisplay(row) || ''}`;
     if (key === 'number') return row.number || '';
     if (key === 'result') return row.resultDisplay || row.result || '';
     return '';
@@ -362,7 +394,7 @@ tbody tr:nth-child(even){background:#fafafa}
         `<tr>
           <td>${getStableRowIndex(row, store.entries)}</td>
           <td>${row.position ? `<span class="pill ${row.positionSide === 'green' ? 'green-tag' : 'red-tag'}">${h(row.position)}</span>` : '—'}</td>
-          <td>${row.finishPosition ? `<span class="pill ${row.finishSide === 'green' ? 'green-tag' : 'red-tag'}">${h(row.finishPosition)}</span>` : '—'}</td>
+          <td>${row.finishPosition ? `<span class="pill ${defenseFinishTagClass(row.finishSide)}">${h(defenseFinishDisplay(row))}</span>` : '—'}</td>
           <td>${row.number ? `<span class="pill number ${numberClass(row.number)}">${h(row.number)}</span>` : '—'}</td>
         </tr>`
       ).join('');
@@ -376,10 +408,10 @@ tbody tr:nth-child(even){background:#fafafa}
     rows.forEach(row => {
       const key = domain === 'offense'
         ? `${row.structure || '—'} | Pos ${row.position || '—'} | Zahl ${row.number || '—'}`
-        : `${row.positionSide === 'green' ? 'grün' : 'rot'} Pos ${row.position || '—'} | ${row.finishSide === 'green' ? 'grün' : 'rot'} Abschluss ${row.finishPosition || '—'} | Zahl ${row.number || '—'}`;
+        : `${defenseSideLabel(row.positionSide)} Pos ${row.position || '—'} | ${defenseSideLabel(row.finishSide)} Abschluss ${defenseFinishDisplay(row) || '—'} | Zahl ${row.number || '—'}`;
       const item = map.get(key) || { key, wins: 0, total: 0 };
       item.total += 1;
-      if (domain === 'offense' ? resultIsPositive(row.result) : defenseSuccessValue(row) === `green|${row.position || ''}|green|${row.finishPosition || ''}`) item.wins += 1;
+      if (domain === 'offense' ? resultIsPositive(row.result) : isDefenseSuccess(row)) item.wins += 1;
       map.set(key, item);
     });
 
@@ -387,17 +419,19 @@ tbody tr:nth-child(even){background:#fafafa}
   }
 
   function hotTakes(domain) {
-    const rows = state[domain].entries.slice(-10).filter(r => domain === 'offense' ? resultIsPositive(r.result) : (r.positionSide === 'green' && r.finishSide === 'green'));
+    const rows = state[domain].entries.slice(-10).filter(r =>
+      domain === 'offense' ? resultIsPositive(r.result) : isDefenseSuccess(r)
+    );
     const comboMap = new Map(), structureMap = new Map(), positionMap = new Map(), finishMap = new Map(), numberMap = new Map();
 
     rows.forEach(row => {
       const combo = domain === 'offense'
         ? `${row.structure || '—'} | Pos ${row.position || '—'} | Zahl ${row.number || '—'}`
-        : `${row.positionSide === 'green' ? 'grün' : 'rot'} Pos ${row.position || '—'} | ${row.finishSide === 'green' ? 'grün' : 'rot'} Abschluss ${row.finishPosition || '—'} | Zahl ${row.number || '—'}`;
+        : `${defenseSideLabel(row.positionSide)} Pos ${row.position || '—'} | ${defenseSideLabel(row.finishSide)} Abschluss ${defenseFinishDisplay(row) || '—'} | Zahl ${row.number || '—'}`;
       comboMap.set(combo, (comboMap.get(combo) || 0) + 1);
       if (domain === 'offense') structureMap.set(row.structure || '—', (structureMap.get(row.structure || '—') || 0) + 1);
-      positionMap.set(`${domain === 'defense' ? (row.positionSide === 'green' ? 'grün ' : 'rot ') : ''}${row.position || '—'}`, (positionMap.get(`${domain === 'defense' ? (row.positionSide === 'green' ? 'grün ' : 'rot ') : ''}${row.position || '—'}`) || 0) + 1);
-      if (domain === 'defense') finishMap.set(`${row.finishSide === 'green' ? 'grün ' : 'rot '}${row.finishPosition || '—'}`, (finishMap.get(`${row.finishSide === 'green' ? 'grün ' : 'rot '}${row.finishPosition || '—'}`) || 0) + 1);
+      positionMap.set(`${domain === 'defense' ? (defenseSideLabel(row.positionSide) + ' ') : ''}${row.position || '—'}`, (positionMap.get(`${domain === 'defense' ? (defenseSideLabel(row.positionSide) + ' ') : ''}${row.position || '—'}`) || 0) + 1);
+      if (domain === 'defense') finishMap.set(`${defenseSideLabel(row.finishSide)} ${defenseFinishDisplay(row) || '—'}`, (finishMap.get(`${defenseSideLabel(row.finishSide)} ${defenseFinishDisplay(row) || '—'}`) || 0) + 1);
       numberMap.set(row.number || '—', (numberMap.get(row.number || '—') || 0) + 1);
     });
 
