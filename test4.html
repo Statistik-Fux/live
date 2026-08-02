@@ -37,6 +37,7 @@ button,input,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!im
 .controls{display:grid;gap:var(--space-4)}.group{border:1px solid var(--border);border-radius:var(--radius-lg);background:rgba(255,255,255,.94);padding:var(--space-4);box-shadow:0 1px 0 rgba(255,255,255,.7) inset}.group h3{margin:0 0 var(--space-3);font-size:var(--text-base)}
 .button-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:var(--space-3)}
 .button-grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.button-grid.two-wide{grid-template-columns:repeat(2,minmax(0,1fr))}
 .stack-grid{display:grid;gap:var(--space-3)}
 .result-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--space-2);align-items:stretch}
 .choice-btn,.result-btn{min-height:46px;border-radius:var(--radius-md);border:1px solid var(--border);background:#fff;font-weight:700;padding:.5rem .45rem;font-size:.94rem;color:#111;transition:transform .14s ease,border-color .14s ease,background-color .14s ease,box-shadow .14s ease}
@@ -45,8 +46,10 @@ button,input,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!im
 .defense .choice-btn.selected{background:rgba(217,31,38,.1);border-color:var(--fox-red);box-shadow:0 0 0 2px rgba(217,31,38,.08) inset}
 .choice-btn.green-variant{background:linear-gradient(180deg,#e7f5e2,#dbefd4);border-color:rgba(63,125,50,.28)}
 .choice-btn.red-variant{background:linear-gradient(180deg,#fae5e5,#f6d8d8);border-color:rgba(177,58,58,.28)}
+.choice-btn.yellow-variant{background:linear-gradient(180deg,#f7edc6,#f1e2a4);border-color:rgba(169,121,0,.35)}
 .choice-btn.green-variant.selected{background:rgba(63,125,50,.28);border-color:var(--green-strong)}
 .choice-btn.red-variant.selected{background:rgba(177,58,58,.28);border-color:var(--red-strong)}
+.choice-btn.yellow-variant.selected{background:rgba(169,121,0,.28);border-color:var(--yellow-strong)}
 .result-btn.green{background:linear-gradient(180deg,#dff0d9,#d2e9cb);border-color:rgba(63,125,50,.3)}
 .result-btn.red{background:linear-gradient(180deg,#f9dfdf,#f4caca);border-color:rgba(177,58,58,.3)}
 .result-btn.yellow{background:linear-gradient(180deg,#f7edc6,#f1e2a4);border-color:rgba(169,121,0,.35)}
@@ -72,10 +75,11 @@ tbody tr:hover{background:#faf8f3}tbody tr.editing{background:#e7f0ff}
 .pill.number{background:#f2edf8;color:#53306f}
 .pill.green-tag{background:#e1f0dc;color:#1b5c26}
 .pill.red-tag{background:#f8dfdf;color:#8d2424}
+.pill.yellow-tag{background:#f7edc6;color:#7b5c00}
 tbody tr:nth-child(even){background:#fafafa}
 .stats-card{padding:var(--space-5);margin-top:var(--space-5)}.stats-wrap{display:grid;gap:var(--space-5)}.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)}.stats-block{border:1px solid var(--border);border-radius:var(--radius-lg);background:#fff;padding:var(--space-4)}.hot-singles{margin-top:var(--space-3)}.stats-block h3,.stats-block h4{margin:0 0 var(--space-3)}.stats-list{display:grid;gap:.45rem}.stats-item{display:flex;justify-content:space-between;gap:1rem;padding:.55rem .7rem;border-radius:.7rem;background:#f7f8f5;border:1px solid rgba(18,35,20,.08)}.stats-item strong{font-weight:700}.notes{padding:var(--space-5);margin-top:var(--space-5)}.notes textarea{min-height:110px;resize:vertical}.install-note{font-size:var(--text-sm);color:var(--muted)}.empty{padding:var(--space-8);text-align:center;color:var(--muted)}
 @media (max-width:1100px){.dual-grid{grid-template-columns:1fr}.topbar::after{opacity:.08}}
-@media (max-width:760px){.app{padding:var(--space-4)}.setup,.section-card,.table-card,.notes,.topbar,.stats-card{padding:var(--space-4)}.topbar{flex-direction:column;align-items:stretch}.brand-stack{align-items:flex-start}.button-grid,.button-grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}.result-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats-grid{grid-template-columns:1fr}}
+@media (max-width:760px){.app{padding:var(--space-4)}.setup,.section-card,.table-card,.notes,.topbar,.stats-card{padding:var(--space-4)}.topbar{flex-direction:column;align-items:stretch}.brand-stack{align-items:flex-start}.button-grid,.button-grid.four,.button-grid.two-wide{grid-template-columns:repeat(2,minmax(0,1fr))}.result-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -128,6 +132,7 @@ tbody tr:nth-child(even){background:#fafafa}
             <div class="stack-grid">
               <div id="defenseFinishGreenButtons" class="button-grid four"></div>
               <div id="defenseFinishRedButtons" class="button-grid four"></div>
+              <div id="defenseFinishSpecialButtons" class="button-grid two-wide"></div>
             </div>
           </div>
           <div class="group"><h3>Zahl</h3><div id="defenseNumberButtons" class="button-grid"></div></div>
@@ -201,6 +206,10 @@ tbody tr:nth-child(even){background:#fafafa}
   const offenseStructureOptions = ['Kreis breit 1/2','Kreis breit 5/6','3/4 -> 2','3/4 -> 5'];
   const positionOptions = ['2','3','4','5'];
   const defenseFinishOptions = ['Außen','Kreis/DBR breit','Kreis/DBR zentral','Fernwurf'];
+  const defenseFinishSpecialOptions = [
+    { key: 'freiwurf', display: 'Freiwurf', variant: 'yellow' },
+    { key: 'tf', display: 'TF', variant: 'red' }
+  ];
   const numberOptions = ['6:6','6:5','7:6'];
 
   const offenseResults = [
@@ -258,6 +267,7 @@ tbody tr:nth-child(even){background:#fafafa}
     defensePositionRedButtons: document.getElementById('defensePositionRedButtons'),
     defenseFinishGreenButtons: document.getElementById('defenseFinishGreenButtons'),
     defenseFinishRedButtons: document.getElementById('defenseFinishRedButtons'),
+    defenseFinishSpecialButtons: document.getElementById('defenseFinishSpecialButtons'),
     defenseNumberButtons: document.getElementById('defenseNumberButtons'),
     offenseSaveBtn: document.getElementById('offenseSaveBtn'),
     defenseSaveBtn: document.getElementById('defenseSaveBtn'),
@@ -335,9 +345,9 @@ tbody tr:nth-child(even){background:#fafafa}
         positionSide: r.position_side ?? '',
         finishSide: r.finish_side ?? '',
         number: r.number_relation ?? r.number ?? '6:6',
-        group: r.result_group ?? (r.position_side === 'green' && r.finish_side === 'green' ? 'green' : 'red'),
-        result: r.result ?? (r.position_side === 'green' && r.finish_side === 'green' ? 'defense_success' : 'defense_fail'),
-        resultDisplay: r.result_display ?? (r.position_side === 'green' && r.finish_side === 'green' ? 'Erfolg' : 'Misserfolg')
+        group: r.result_group ?? ((r.position_side === 'green' && r.finish_side === 'green') ? 'green' : (r.finish_side === 'yellow' ? 'yellow' : 'red')),
+        result: r.result ?? ((r.position_side === 'green' && r.finish_side === 'green') ? 'defense_success' : 'defense_fail'),
+        resultDisplay: r.result_display ?? ((r.position_side === 'green' && r.finish_side === 'green') ? 'Erfolg' : (r.finish_position === 'freiwurf' ? 'Freiwurf' : r.finish_position === 'tf' ? 'TF' : 'Misserfolg'))
       }));
   }
 
@@ -424,16 +434,17 @@ tbody tr:nth-child(even){background:#fafafa}
     items.forEach(item => {
       const value = typeof item === 'string' ? item : item.key;
       const label = typeof item === 'string' ? item : item.display;
+      const itemVariant = typeof item === 'string' ? variant : (item.variant || variant);
       const group = typeof item === 'string' ? '' : item.group;
       const b = document.createElement('button');
       b.type = 'button';
       b.dataset.value = value;
       b.dataset.domain = domain;
       b.dataset.type = type;
-      if (variant) b.dataset.variant = variant;
-      b.className = type === 'result' ? `result-btn ${group}` : `choice-btn ${variant ? variant + '-variant' : ''}`;
+      if (itemVariant) b.dataset.variant = itemVariant;
+      b.className = type === 'result' ? `result-btn ${group}` : `choice-btn ${itemVariant ? itemVariant + '-variant' : ''}`;
       b.textContent = label;
-      b.addEventListener('click', () => handleSelection(domain, type, value, group, label, variant));
+      b.addEventListener('click', () => handleSelection(domain, type, value, group, label, itemVariant));
       mount.appendChild(b);
     });
   }
@@ -456,10 +467,23 @@ tbody tr:nth-child(even){background:#fafafa}
       store.selection.resultDisplay = display || value;
     }
     if (domain === 'defense') {
+      const isSpecialYellow = store.selection.finishPosition === 'freiwurf' && store.selection.finishSide === 'yellow';
+      const isSpecialRed = store.selection.finishPosition === 'tf' && store.selection.finishSide === 'red';
       const success = store.selection.positionSide === 'green' && store.selection.finishSide === 'green';
-      store.selection.result = success ? 'defense_success' : 'defense_fail';
-      store.selection.resultDisplay = success ? 'Erfolg' : 'Misserfolg';
-      store.selection.group = success ? 'green' : 'red';
+
+      if (isSpecialYellow) {
+        store.selection.result = 'freiwurf';
+        store.selection.resultDisplay = 'Freiwurf';
+        store.selection.group = 'yellow';
+      } else if (isSpecialRed) {
+        store.selection.result = 'tf';
+        store.selection.resultDisplay = 'TF';
+        store.selection.group = 'red';
+      } else {
+        store.selection.result = success ? 'defense_success' : 'defense_fail';
+        store.selection.resultDisplay = success ? 'Erfolg' : 'Misserfolg';
+        store.selection.group = success ? 'green' : 'red';
+      }
     }
     updateSelectedButtons(domain);
   }
@@ -483,7 +507,7 @@ tbody tr:nth-child(even){background:#fafafa}
     });
 
     if (domain === 'defense') {
-      ['defensePositionGreenButtons','defensePositionRedButtons','defenseFinishGreenButtons','defenseFinishRedButtons'].forEach(id => {
+      ['defensePositionGreenButtons','defensePositionRedButtons','defenseFinishGreenButtons','defenseFinishRedButtons','defenseFinishSpecialButtons'].forEach(id => {
         const el = els[id];
         if (!el) return;
         el.querySelectorAll('button').forEach(btn => {
@@ -532,9 +556,27 @@ tbody tr:nth-child(even){background:#fafafa}
       positionSide: domain === 'defense' ? store.selection.positionSide : '',
       finishSide: domain === 'defense' ? store.selection.finishSide : '',
       number: store.selection.number || '6:6',
-      result: domain === 'defense' ? (store.selection.positionSide === 'green' && store.selection.finishSide === 'green' ? 'defense_success' : 'defense_fail') : store.selection.result,
-      resultDisplay: domain === 'defense' ? (store.selection.positionSide === 'green' && store.selection.finishSide === 'green' ? 'Erfolg' : 'Misserfolg') : (store.selection.resultDisplay || store.selection.result),
-      group: domain === 'defense' ? (store.selection.positionSide === 'green' && store.selection.finishSide === 'green' ? 'green' : 'red') : store.selection.group,
+      result: domain === 'defense'
+        ? (store.selection.finishPosition === 'freiwurf' && store.selection.finishSide === 'yellow'
+            ? 'freiwurf'
+            : store.selection.finishPosition === 'tf' && store.selection.finishSide === 'red'
+              ? 'tf'
+              : (store.selection.positionSide === 'green' && store.selection.finishSide === 'green' ? 'defense_success' : 'defense_fail'))
+        : store.selection.result,
+      resultDisplay: domain === 'defense'
+        ? (store.selection.finishPosition === 'freiwurf' && store.selection.finishSide === 'yellow'
+            ? 'Freiwurf'
+            : store.selection.finishPosition === 'tf' && store.selection.finishSide === 'red'
+              ? 'TF'
+              : (store.selection.positionSide === 'green' && store.selection.finishSide === 'green' ? 'Erfolg' : 'Misserfolg'))
+        : (store.selection.resultDisplay || store.selection.result),
+      group: domain === 'defense'
+        ? (store.selection.finishPosition === 'freiwurf' && store.selection.finishSide === 'yellow'
+            ? 'yellow'
+            : store.selection.finishPosition === 'tf' && store.selection.finishSide === 'red'
+              ? 'red'
+              : (store.selection.positionSide === 'green' && store.selection.finishSide === 'green' ? 'green' : 'red'))
+        : store.selection.group,
       createdOrder: isEditing && existingEntry ? existingEntry.createdOrder : (store.entries.length + 1)
     };
 
@@ -607,7 +649,7 @@ tbody tr:nth-child(even){background:#fafafa}
     if (key === 'position') return row.position || '';
     if (key === 'positionLabel') return `${row.positionSide === 'green' ? 'Grün' : 'Rot'} ${row.position || ''}`;
     if (key === 'finishPosition') return row.finishPosition || '';
-    if (key === 'finishPositionLabel') return `${row.finishSide === 'green' ? 'Grün' : 'Rot'} ${row.finishPosition || ''}`;
+    if (key === 'finishPositionLabel') return `${row.finishSide === 'green' ? 'Grün' : row.finishSide === 'yellow' ? 'Gelb' : 'Rot'} ${row.finishPosition || ''}`;
     if (key === 'number') return row.number || '';
     if (key === 'result') return row.resultDisplay || row.result || '';
     return '';
@@ -705,7 +747,7 @@ tbody tr:nth-child(even){background:#fafafa}
         `<tr data-domain="${domain}" data-id="${row.id}" class="${store.editingId === row.id ? 'editing' : ''}">
           <td>${idx + 1}</td>
           <td>${row.position ? `<span class="pill ${row.positionSide === 'green' ? 'green-tag' : 'red-tag'}">${h(row.position)}</span>` : '—'}</td>
-          <td>${row.finishPosition ? `<span class="pill ${row.finishSide === 'green' ? 'green-tag' : 'red-tag'}">${h(row.finishPosition)}</span>` : '—'}</td>
+          <td>${row.finishPosition ? `<span class="pill ${row.finishSide === 'green' ? 'green-tag' : row.finishSide === 'yellow' ? 'yellow-tag' : 'red-tag'}">${h(row.finishPosition === 'freiwurf' ? 'Freiwurf' : row.finishPosition === 'tf' ? 'TF' : row.finishPosition)}</span>` : '—'}</td>
           <td>${row.number ? `<span class="pill number">${h(row.number)}</span>` : '—'}</td>
         </tr>`
       ).join('');
@@ -728,10 +770,12 @@ tbody tr:nth-child(even){background:#fafafa}
     rows.forEach(row => {
       const key = domain === 'offense'
         ? `${row.structure || '—'} | Pos ${row.position || '—'} | Zahl ${row.number || '—'}`
-        : `${row.positionSide === 'green' ? 'grün' : 'rot'} Pos ${row.position || '—'} | ${row.finishSide === 'green' ? 'grün' : 'rot'} Abschluss ${row.finishPosition || '—'} | Zahl ${row.number || '—'}`;
+        : `${row.positionSide === 'green' ? 'grün' : 'rot'} Pos ${row.position || '—'} | ${row.finishSide === 'green' ? 'grün' : row.finishSide === 'yellow' ? 'gelb' : 'rot'} Abschluss ${row.finishPosition || '—'} | Zahl ${row.number || '—'}`;
       const item = map.get(key) || { key, wins: 0, total: 0 };
       item.total += 1;
-      if (domain === 'offense' ? resultIsPositive(row.result) : defenseSuccessValue(row) === 'green|' + (row.position || '') + '|green|' + (row.finishPosition || '')) item.wins += 1;
+      if (domain === 'offense'
+        ? resultIsPositive(row.result)
+        : (row.result === 'freiwurf' ? false : row.result === 'tf' ? false : defenseSuccessValue(row) === 'green|' + (row.position || '') + '|green|' + (row.finishPosition || ''))) item.wins += 1;
       map.set(key, item);
     });
     return [...map.values()].sort((a, b) => (b.wins / b.total) - (a.wins / a.total) || b.total - a.total || a.key.localeCompare(b.key, 'de'));
@@ -744,11 +788,11 @@ tbody tr:nth-child(even){background:#fafafa}
     rows.forEach(row => {
       const combo = domain === 'offense'
         ? `${row.structure || '—'} | Pos ${row.position || '—'} | Zahl ${row.number || '—'}`
-        : `${row.positionSide === 'green' ? 'grün' : 'rot'} Pos ${row.position || '—'} | ${row.finishSide === 'green' ? 'grün' : 'rot'} Abschluss ${row.finishPosition || '—'} | Zahl ${row.number || '—'}`;
+        : `${row.positionSide === 'green' ? 'grün' : 'rot'} Pos ${row.position || '—'} | ${row.finishSide === 'green' ? 'grün' : row.finishSide === 'yellow' ? 'gelb' : 'rot'} Abschluss ${row.finishPosition || '—'} | Zahl ${row.number || '—'}`;
       comboMap.set(combo, (comboMap.get(combo) || 0) + 1);
       if (domain === 'offense') structureMap.set(row.structure || '—', (structureMap.get(row.structure || '—') || 0) + 1);
       positionMap.set(`${domain === 'defense' ? (row.positionSide === 'green' ? 'grün ' : 'rot ') : ''}${row.position || '—'}`, (positionMap.get(`${domain === 'defense' ? (row.positionSide === 'green' ? 'grün ' : 'rot ') : ''}${row.position || '—'}`) || 0) + 1);
-      if (domain === 'defense') finishMap.set(`${row.finishSide === 'green' ? 'grün ' : 'rot '}${row.finishPosition || '—'}`, (finishMap.get(`${row.finishSide === 'green' ? 'grün ' : 'rot '}${row.finishPosition || '—'}`) || 0) + 1);
+      if (domain === 'defense') finishMap.set(`${row.finishSide === 'green' ? 'grün ' : row.finishSide === 'yellow' ? 'gelb ' : 'rot '}${row.finishPosition || '—'}`, (finishMap.get(`${row.finishSide === 'green' ? 'grün ' : row.finishSide === 'yellow' ? 'gelb ' : 'rot '}${row.finishPosition || '—'}`) || 0) + 1);
       numberMap.set(row.number || '—', (numberMap.get(row.number || '—') || 0) + 1);
     });
 
@@ -785,7 +829,7 @@ tbody tr:nth-child(even){background:#fafafa}
         [
           ...(domain === 'offense' ? hot.structures.map(([key, count]) => `<div class="stats-item"><span>Struktur: ${h(key)}</span><strong>${count}x</strong></div>`) : []),
           ...hot.positions.map(([key, count]) => `<div class="stats-item"><span>Position: ${h(key)}</span><strong>${count}x</strong></div>`),
-          ...(domain === 'defense' ? hot.finishes.map(([key, count]) => `<div class="stats-item"><span>Abschluss: ${h(key)}</span><strong>${count}x</strong></div>`) : []),
+          ...(domain === 'defense' ? hot.finishes.map(([key, count]) => `<div class="stats-item"><span>Abschluss: ${h(key === 'gelb freiwurf' ? 'gelb Freiwurf' : key === 'rot tf' ? 'rot TF' : key)}</span><strong>${count}x</strong></div>`) : []),
           ...hot.numbers.map(([key, count]) => `<div class="stats-item"><span>Zahl: ${h(key)}</span><strong>${count}x</strong></div>`)
         ].join('')
         || '<div class="empty">Noch keine Einzelwerte.</div>';
@@ -831,7 +875,7 @@ tbody tr:nth-child(even){background:#fafafa}
     const defenseRows = sortEntries('defense').map((row, idx) => [
       idx + 1,
       `${row.positionSide === 'green' ? 'grün ' : 'rot '}${row.position || ''}`,
-      `${row.finishSide === 'green' ? 'grün ' : 'rot '}${row.finishPosition || ''}`,
+      `${row.finishSide === 'green' ? 'grün ' : row.finishSide === 'yellow' ? 'gelb ' : 'rot '}${row.finishPosition === 'freiwurf' ? 'Freiwurf' : row.finishPosition === 'tf' ? 'TF' : (row.finishPosition || '')}`,
       row.number || ''
     ]);
 
@@ -927,6 +971,7 @@ tbody tr:nth-child(even){background:#fafafa}
   renderButtons(els.defensePositionRedButtons, positionOptions, 'position', 'defense', 'red');
   renderButtons(els.defenseFinishGreenButtons, defenseFinishOptions, 'finishPosition', 'defense', 'green');
   renderButtons(els.defenseFinishRedButtons, defenseFinishOptions, 'finishPosition', 'defense', 'red');
+  renderButtons(els.defenseFinishSpecialButtons, defenseFinishSpecialOptions, 'finishPosition', 'defense');
   renderButtons(els.defenseNumberButtons, numberOptions, 'number', 'defense');
 
   updateSelectedButtons('offense');
