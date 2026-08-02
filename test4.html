@@ -38,7 +38,6 @@ button,input,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!im
 .button-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:var(--space-3)}
 .button-grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
 .stack-grid{display:grid;gap:var(--space-3)}
-.stack-grid-label{font-size:var(--text-sm);font-weight:700;color:var(--muted);margin:0}
 .result-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--space-2);align-items:stretch}
 .choice-btn,.result-btn{min-height:46px;border-radius:var(--radius-md);border:1px solid var(--border);background:#fff;font-weight:700;padding:.5rem .45rem;font-size:.94rem;color:#111;transition:transform .14s ease,border-color .14s ease,background-color .14s ease,box-shadow .14s ease}
 .choice-btn:active,.result-btn:active,.save-btn:active,.utility-btn:active,.start-btn:active{transform:scale(.985)}
@@ -58,7 +57,7 @@ button,input,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!im
 .result-btn.selected.yellow{background:rgba(169,121,0,.28);border-color:var(--yellow-strong)}
 .result-btn.selected.split-green-red{background:linear-gradient(90deg,rgba(63,125,50,.38) 0 50%,rgba(177,58,58,.34) 50% 100%);border-color:#6f6b60;box-shadow:0 0 0 2px rgba(18,35,20,.08) inset}
 .result-btn.selected.split-red-green{background:linear-gradient(90deg,rgba(177,58,58,.34) 0 50%,rgba(63,125,50,.38) 50% 100%);border-color:#6f6b60;box-shadow:0 0 0 2px rgba(18,35,20,.08) inset}
-.action-row{display:flex;gap:var(--space-3);flex-wrap:wrap}.save-btn{flex:1;min-width:180px;background:#fff;border-color:var(--border)}.save-btn.primary{background:var(--primary);color:#fff;border-color:var(--primary)}.defense .save-btn.primary{background:var(--fox-red);border-color:var(--fox-red)}
+.action-row{display:flex;gap:var(--space-3);flex-wrap:wrap}.save-btn{flex:1;min-width:180px;background:#fff;border-color:var(--border);color:#000}.save-btn.primary{background:var(--primary);color:#fff;border-color:var(--primary)}.defense .save-btn.primary{background:var(--fox-red);border-color:var(--fox-red)}
 .tables{display:grid;gap:var(--space-5);margin-top:var(--space-5)}.table-card{padding:var(--space-5);position:relative;overflow:hidden}.table-card::before{content:"";position:fixed;left:50%;top:50%;width:min(260px,58vw);height:min(260px,58vw);background:url('logo.png.JPG') center/contain no-repeat;opacity:.14;pointer-events:none;filter:grayscale(1) contrast(.95);transform:translate(-50%,-50%) scale(2.15) translateY(6px);transform-origin:center center;z-index:0}.table-card > *{position:relative;z-index:1}.table-card.offense{border-top:8px solid var(--primary)}.table-card.defense{border-top:8px solid var(--fox-red)}
 .table-tools{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4);flex-wrap:wrap}.table-wrap{overflow:auto;border:1px solid var(--border);border-radius:var(--radius-lg);background:#fff;max-width:100%}
 table{width:100%;table-layout:fixed;border-collapse:collapse}th,td{padding:.82rem .72rem;border-bottom:1px solid rgba(40,37,29,.09);text-align:left;vertical-align:top;word-break:break-word}th{position:sticky;top:0;background:var(--surface-2);z-index:1;color:#111}th button{background:transparent;border:0;padding:0;font:inherit;font-weight:700;color:#111}
@@ -120,18 +119,14 @@ tbody tr:nth-child(even){background:#fafafa}
           <div class="group">
             <h3>Angegriffene Position</h3>
             <div class="stack-grid">
-              <p class="stack-grid-label">Grün</p>
               <div id="defensePositionGreenButtons" class="button-grid four"></div>
-              <p class="stack-grid-label">Rot</p>
               <div id="defensePositionRedButtons" class="button-grid four"></div>
             </div>
           </div>
           <div class="group">
             <h3>Abschlussposition</h3>
             <div class="stack-grid">
-              <p class="stack-grid-label">Grün</p>
               <div id="defenseFinishGreenButtons" class="button-grid four"></div>
-              <p class="stack-grid-label">Rot</p>
               <div id="defenseFinishRedButtons" class="button-grid four"></div>
             </div>
           </div>
@@ -219,7 +214,7 @@ tbody tr:nth-child(even){background:#fafafa}
 
   const defaultSelection = domain => domain === 'offense'
     ? { structure: '', position: '', finishPosition: '', positionSide: '', finishSide: '', number: '6:6', result: '', resultDisplay: '', group: '' }
-    : { structure: '', position: '', finishPosition: '', positionSide: '', finishSide: '', number: '6:6', result: 'defense_entry', resultDisplay: 'Defensiv', group: '' };
+    : { structure: '', position: '', finishPosition: '', positionSide: '', finishSide: '', number: '6:6', result: '', resultDisplay: '', group: '' };
 
   const state = {
     meta: { opponent: '', matchDate: '' },
@@ -284,10 +279,8 @@ tbody tr:nth-child(even){background:#fafafa}
     return value === 'gute_chance_tor' || value === 'schlechte_chance_tor';
   }
 
-  function labeledValue(value, side) {
-    if (!value) return '';
-    if (!side) return value;
-    return `${value} (${side === 'green' ? 'grün' : 'rot'})`;
+  function defenseSuccessValue(entry) {
+    return `${entry.positionSide || ''}|${entry.position || ''}|${entry.finishSide || ''}|${entry.finishPosition || ''}`;
   }
 
   async function loadMatchActionsForCurrentGame() {
@@ -342,8 +335,9 @@ tbody tr:nth-child(even){background:#fafafa}
         positionSide: r.position_side ?? '',
         finishSide: r.finish_side ?? '',
         number: r.number_relation ?? r.number ?? '6:6',
-        group: r.result_group,
-        resultDisplay: r.result_display ?? r.resultDisplay ?? 'Defensiv'
+        group: r.result_group ?? (r.position_side === 'green' && r.finish_side === 'green' ? 'green' : 'red'),
+        result: r.result ?? (r.position_side === 'green' && r.finish_side === 'green' ? 'defense_success' : 'defense_fail'),
+        resultDisplay: r.result_display ?? (r.position_side === 'green' && r.finish_side === 'green' ? 'Erfolg' : 'Misserfolg')
       }));
   }
 
@@ -425,7 +419,7 @@ tbody tr:nth-child(even){background:#fafafa}
     if (error) throw error;
   }
 
-  function renderButtons(mount, items, type, domain, extraClass = '') {
+  function renderButtons(mount, items, type, domain, variant = '') {
     mount.innerHTML = '';
     items.forEach(item => {
       const value = typeof item === 'string' ? item : item.key;
@@ -436,68 +430,69 @@ tbody tr:nth-child(even){background:#fafafa}
       b.dataset.value = value;
       b.dataset.domain = domain;
       b.dataset.type = type;
-      b.className = `${type === 'result' ? `result-btn ${group}` : 'choice-btn'} ${extraClass}`.trim();
+      if (variant) b.dataset.variant = variant;
+      b.className = type === 'result' ? `result-btn ${group}` : `choice-btn ${variant ? variant + '-variant' : ''}`;
       b.textContent = label;
-      b.addEventListener('click', () => handleSelection(domain, type, value, group, label));
+      b.addEventListener('click', () => handleSelection(domain, type, value, group, label, variant));
       mount.appendChild(b);
     });
   }
 
-  function handleSelection(domain, type, value, group = '', display = '') {
+  function handleSelection(domain, type, value, group = '', display = '', variant = '') {
     const store = currentStore(domain);
     if (type === 'structure') store.selection.structure = value;
-    if (type === 'positionGreen') {
+    if (type === 'position') {
       store.selection.position = value;
-      store.selection.positionSide = 'green';
+      if (domain === 'defense') store.selection.positionSide = variant;
     }
-    if (type === 'positionRed') {
-      store.selection.position = value;
-      store.selection.positionSide = 'red';
-    }
-    if (type === 'finishGreen') {
+    if (type === 'finishPosition') {
       store.selection.finishPosition = value;
-      store.selection.finishSide = 'green';
+      if (domain === 'defense') store.selection.finishSide = variant;
     }
-    if (type === 'finishRed') {
-      store.selection.finishPosition = value;
-      store.selection.finishSide = 'red';
-    }
-    if (type === 'position') store.selection.position = value;
     if (type === 'number') store.selection.number = value;
     if (type === 'result') {
       store.selection.result = value;
       store.selection.group = group;
       store.selection.resultDisplay = display || value;
     }
+    if (domain === 'defense') {
+      const success = store.selection.positionSide === 'green' && store.selection.finishSide === 'green';
+      store.selection.result = success ? 'defense_success' : 'defense_fail';
+      store.selection.resultDisplay = success ? 'Erfolg' : 'Misserfolg';
+      store.selection.group = success ? 'green' : 'red';
+    }
     updateSelectedButtons(domain);
   }
 
   function updateSelectedButtons(domain) {
     const store = currentStore(domain);
-    [
-      'StructureButtons',
-      'PositionButtons',
-      'ResultButtons',
-      'NumberButtons',
-      'PositionGreenButtons',
-      'PositionRedButtons',
-      'FinishGreenButtons',
-      'FinishRedButtons'
-    ].forEach(s => {
+    ['StructureButtons', 'PositionButtons', 'FinishButtons', 'NumberButtons', 'ResultButtons'].forEach(s => {
       const el = els[`${domain}${s}`];
       if (!el) return;
       el.querySelectorAll('button').forEach(btn => {
         const type = btn.dataset.type;
         if (type === 'structure') btn.classList.toggle('selected', btn.dataset.value === store.selection.structure);
-        if (type === 'position') btn.classList.toggle('selected', btn.dataset.value === store.selection.position);
+        if (type === 'position') {
+          if (domain === 'defense') btn.classList.toggle('selected', btn.dataset.value === store.selection.position && btn.dataset.variant === store.selection.positionSide);
+          else btn.classList.toggle('selected', btn.dataset.value === store.selection.position);
+        }
+        if (type === 'finishPosition') btn.classList.toggle('selected', btn.dataset.value === store.selection.finishPosition && btn.dataset.variant === store.selection.finishSide);
         if (type === 'number') btn.classList.toggle('selected', btn.dataset.value === store.selection.number);
         if (type === 'result') btn.classList.toggle('selected', btn.dataset.value === store.selection.result);
-        if (type === 'positionGreen') btn.classList.toggle('selected', btn.dataset.value === store.selection.position && store.selection.positionSide === 'green');
-        if (type === 'positionRed') btn.classList.toggle('selected', btn.dataset.value === store.selection.position && store.selection.positionSide === 'red');
-        if (type === 'finishGreen') btn.classList.toggle('selected', btn.dataset.value === store.selection.finishPosition && store.selection.finishSide === 'green');
-        if (type === 'finishRed') btn.classList.toggle('selected', btn.dataset.value === store.selection.finishPosition && store.selection.finishSide === 'red');
       });
     });
+
+    if (domain === 'defense') {
+      ['defensePositionGreenButtons','defensePositionRedButtons','defenseFinishGreenButtons','defenseFinishRedButtons'].forEach(id => {
+        const el = els[id];
+        if (!el) return;
+        el.querySelectorAll('button').forEach(btn => {
+          const type = btn.dataset.type;
+          if (type === 'position') btn.classList.toggle('selected', btn.dataset.value === store.selection.position && btn.dataset.variant === store.selection.positionSide);
+          if (type === 'finishPosition') btn.classList.toggle('selected', btn.dataset.value === store.selection.finishPosition && btn.dataset.variant === store.selection.finishSide);
+        });
+      });
+    }
   }
 
   function clearSelection(domain) {
@@ -511,10 +506,10 @@ tbody tr:nth-child(even){background:#fafafa}
   function validate(domain) {
     const s = currentStore(domain).selection;
     if (domain === 'offense' && (!s.structure || !s.position || !s.number || !s.result)) {
-      alert('Bitte Struktur, angegriffene Position, Ergebnis und Zahl auswählen.');
+      alert('Bitte Struktur, angegriffene Position, Zahl und Ergebnis auswählen.');
       return false;
     }
-    if (domain === 'defense' && (!s.position || !s.positionSide || !s.finishPosition || !s.finishSide || !s.number)) {
+    if (domain === 'defense' && (!s.position || !s.finishPosition || !s.positionSide || !s.finishSide || !s.number)) {
       alert('Bitte angegriffene Position, Abschlussposition und Zahl auswählen.');
       return false;
     }
@@ -537,9 +532,9 @@ tbody tr:nth-child(even){background:#fafafa}
       positionSide: domain === 'defense' ? store.selection.positionSide : '',
       finishSide: domain === 'defense' ? store.selection.finishSide : '',
       number: store.selection.number || '6:6',
-      result: domain === 'offense' ? store.selection.result : 'defense_entry',
-      resultDisplay: domain === 'offense' ? (store.selection.resultDisplay || store.selection.result) : 'Defensiv',
-      group: domain === 'offense' ? store.selection.group : '',
+      result: domain === 'defense' ? (store.selection.positionSide === 'green' && store.selection.finishSide === 'green' ? 'defense_success' : 'defense_fail') : store.selection.result,
+      resultDisplay: domain === 'defense' ? (store.selection.positionSide === 'green' && store.selection.finishSide === 'green' ? 'Erfolg' : 'Misserfolg') : (store.selection.resultDisplay || store.selection.result),
+      group: domain === 'defense' ? (store.selection.positionSide === 'green' && store.selection.finishSide === 'green' ? 'green' : 'red') : store.selection.group,
       createdOrder: isEditing && existingEntry ? existingEntry.createdOrder : (store.entries.length + 1)
     };
 
@@ -587,9 +582,9 @@ tbody tr:nth-child(even){background:#fafafa}
           positionSide: action.before.positionSide || '',
           finishSide: action.before.finishSide || '',
           number: action.before.number || '6:6',
-          result: action.before.result || (action.domain === 'defense' ? 'defense_entry' : ''),
-          resultDisplay: action.before.resultDisplay || action.before.result || (action.domain === 'defense' ? 'Defensiv' : ''),
-          group: action.before.group || '',
+          result: action.before.result,
+          resultDisplay: action.before.resultDisplay || action.before.result,
+          group: action.before.group,
           createdOrder: action.before.createdOrder
         });
         const idx = store.entries.findIndex(e => e.id === action.before.id);
@@ -610,9 +605,9 @@ tbody tr:nth-child(even){background:#fafafa}
     if (key === 'index') return row.createdOrder;
     if (key === 'structure') return row.structure || '';
     if (key === 'position') return row.position || '';
-    if (key === 'positionLabel') return labeledValue(row.position, row.positionSide);
+    if (key === 'positionLabel') return `${row.positionSide === 'green' ? 'Grün' : 'Rot'} ${row.position || ''}`;
     if (key === 'finishPosition') return row.finishPosition || '';
-    if (key === 'finishPositionLabel') return labeledValue(row.finishPosition, row.finishSide);
+    if (key === 'finishPositionLabel') return `${row.finishSide === 'green' ? 'Grün' : 'Rot'} ${row.finishPosition || ''}`;
     if (key === 'number') return row.number || '';
     if (key === 'result') return row.resultDisplay || row.result || '';
     return '';
@@ -666,9 +661,9 @@ tbody tr:nth-child(even){background:#fafafa}
       positionSide: entry.positionSide || '',
       finishSide: entry.finishSide || '',
       number: entry.number || '6:6',
-      result: domain === 'offense' ? entry.result : 'defense_entry',
-      resultDisplay: domain === 'offense' ? (entry.resultDisplay || entry.result) : 'Defensiv',
-      group: domain === 'offense' ? entry.group : ''
+      result: entry.result,
+      resultDisplay: entry.resultDisplay || entry.result,
+      group: entry.group
     };
     updateSelectedButtons(domain);
     renderTable(domain);
@@ -709,8 +704,8 @@ tbody tr:nth-child(even){background:#fafafa}
       body.innerHTML = rows.map((row, idx) =>
         `<tr data-domain="${domain}" data-id="${row.id}" class="${store.editingId === row.id ? 'editing' : ''}">
           <td>${idx + 1}</td>
-          <td>${row.position ? `<span class="pill ${row.positionSide === 'green' ? 'green-tag' : 'red-tag'}">${h(labeledValue(row.position, row.positionSide))}</span>` : '—'}</td>
-          <td>${row.finishPosition ? `<span class="pill ${row.finishSide === 'green' ? 'green-tag' : 'red-tag'}">${h(labeledValue(row.finishPosition, row.finishSide))}</span>` : '—'}</td>
+          <td>${row.position ? `<span class="pill ${row.positionSide === 'green' ? 'green-tag' : 'red-tag'}">${h(row.position)}</span>` : '—'}</td>
+          <td>${row.finishPosition ? `<span class="pill ${row.finishSide === 'green' ? 'green-tag' : 'red-tag'}">${h(row.finishPosition)}</span>` : '—'}</td>
           <td>${row.number ? `<span class="pill number">${h(row.number)}</span>` : '—'}</td>
         </tr>`
       ).join('');
@@ -732,34 +727,28 @@ tbody tr:nth-child(even){background:#fafafa}
     const map = new Map();
     rows.forEach(row => {
       const key = domain === 'offense'
-        ? `${row.structure || '—'} | Pos ${row.position || '—'} | Ergebnis ${row.resultDisplay || '—'} | Zahl ${row.number || '—'}`
-        : `Pos ${labeledValue(row.position, row.positionSide) || '—'} | Abschluss ${labeledValue(row.finishPosition, row.finishSide) || '—'} | Zahl ${row.number || '—'}`;
+        ? `${row.structure || '—'} | Pos ${row.position || '—'} | Zahl ${row.number || '—'}`
+        : `${row.positionSide === 'green' ? 'grün' : 'rot'} Pos ${row.position || '—'} | ${row.finishSide === 'green' ? 'grün' : 'rot'} Abschluss ${row.finishPosition || '—'} | Zahl ${row.number || '—'}`;
       const item = map.get(key) || { key, wins: 0, total: 0 };
       item.total += 1;
-      if (resultIsPositive(row.result)) item.wins += 1;
+      if (domain === 'offense' ? resultIsPositive(row.result) : defenseSuccessValue(row) === 'green|' + (row.position || '') + '|green|' + (row.finishPosition || '')) item.wins += 1;
       map.set(key, item);
     });
     return [...map.values()].sort((a, b) => (b.wins / b.total) - (a.wins / a.total) || b.total - a.total || a.key.localeCompare(b.key, 'de'));
   }
 
   function hotTakes(domain) {
-    const rows = currentStore(domain).entries.slice(-10);
-    const filteredRows = domain === 'offense' ? rows.filter(r => resultIsPositive(r.result)) : rows;
+    const rows = currentStore(domain).entries.slice(-10).filter(r => domain === 'offense' ? resultIsPositive(r.result) : (r.positionSide === 'green' && r.finishSide === 'green'));
+    const comboMap = new Map(), structureMap = new Map(), positionMap = new Map(), finishMap = new Map(), numberMap = new Map();
 
-    const comboMap = new Map(), structureMap = new Map(), positionMap = new Map(), finishMap = new Map(), numberMap = new Map(), resultMap = new Map();
-
-    filteredRows.forEach(row => {
+    rows.forEach(row => {
       const combo = domain === 'offense'
-        ? `${row.structure || '—'} | Pos ${row.position || '—'} | Ergebnis ${row.resultDisplay || '—'} | Zahl ${row.number || '—'}`
-        : `Pos ${labeledValue(row.position, row.positionSide) || '—'} | Abschluss ${labeledValue(row.finishPosition, row.finishSide) || '—'} | Zahl ${row.number || '—'}`;
-
+        ? `${row.structure || '—'} | Pos ${row.position || '—'} | Zahl ${row.number || '—'}`
+        : `${row.positionSide === 'green' ? 'grün' : 'rot'} Pos ${row.position || '—'} | ${row.finishSide === 'green' ? 'grün' : 'rot'} Abschluss ${row.finishPosition || '—'} | Zahl ${row.number || '—'}`;
       comboMap.set(combo, (comboMap.get(combo) || 0) + 1);
-      if (domain === 'offense') {
-        structureMap.set(row.structure || '—', (structureMap.get(row.structure || '—') || 0) + 1);
-        resultMap.set(row.resultDisplay || '—', (resultMap.get(row.resultDisplay || '—') || 0) + 1);
-      }
-      positionMap.set(labeledValue(row.position, row.positionSide) || '—', (positionMap.get(labeledValue(row.position, row.positionSide) || '—') || 0) + 1);
-      if (domain === 'defense') finishMap.set(labeledValue(row.finishPosition, row.finishSide) || '—', (finishMap.get(labeledValue(row.finishPosition, row.finishSide) || '—') || 0) + 1);
+      if (domain === 'offense') structureMap.set(row.structure || '—', (structureMap.get(row.structure || '—') || 0) + 1);
+      positionMap.set(`${domain === 'defense' ? (row.positionSide === 'green' ? 'grün ' : 'rot ') : ''}${row.position || '—'}`, (positionMap.get(`${domain === 'defense' ? (row.positionSide === 'green' ? 'grün ' : 'rot ') : ''}${row.position || '—'}`) || 0) + 1);
+      if (domain === 'defense') finishMap.set(`${row.finishSide === 'green' ? 'grün ' : 'rot '}${row.finishPosition || '—'}`, (finishMap.get(`${row.finishSide === 'green' ? 'grün ' : 'rot '}${row.finishPosition || '—'}`) || 0) + 1);
       numberMap.set(row.number || '—', (numberMap.get(row.number || '—') || 0) + 1);
     });
 
@@ -768,8 +757,7 @@ tbody tr:nth-child(even){background:#fafafa}
       structures: [...structureMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3),
       positions: [...positionMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3),
       finishes: [...finishMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3),
-      numbers: [...numberMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3),
-      results: [...resultMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3)
+      numbers: [...numberMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).slice(0, 3)
     };
   }
 
@@ -783,9 +771,8 @@ tbody tr:nth-child(even){background:#fafafa}
       const rows = comboStats(domain).filter(x => x.total >= 2).slice(0, 8);
       statsEl.innerHTML = rows.length
         ? rows.map(r => {
-            const pct = domain === 'offense' ? Math.round(r.wins / r.total * 100) : 100;
-            const info = domain === 'offense' ? `${pct}% (${r.wins} aus ${r.total})` : `${r.total}x`;
-            return `<div class="stats-item"><span>${h(r.key)}</span><strong>${info}</strong></div>`;
+            const pct = Math.round(r.wins / r.total * 100);
+            return `<div class="stats-item"><span>${h(r.key)}</span><strong>${pct}% (${r.wins} aus ${r.total})</strong></div>`;
           }).join('')
         : '<div class="empty">Noch keine belastbaren Kombinationen.</div>';
 
@@ -799,7 +786,6 @@ tbody tr:nth-child(even){background:#fafafa}
           ...(domain === 'offense' ? hot.structures.map(([key, count]) => `<div class="stats-item"><span>Struktur: ${h(key)}</span><strong>${count}x</strong></div>`) : []),
           ...hot.positions.map(([key, count]) => `<div class="stats-item"><span>Position: ${h(key)}</span><strong>${count}x</strong></div>`),
           ...(domain === 'defense' ? hot.finishes.map(([key, count]) => `<div class="stats-item"><span>Abschluss: ${h(key)}</span><strong>${count}x</strong></div>`) : []),
-          ...(domain === 'offense' ? hot.results.map(([key, count]) => `<div class="stats-item"><span>Ergebnis: ${h(key)}</span><strong>${count}x</strong></div>`) : []),
           ...hot.numbers.map(([key, count]) => `<div class="stats-item"><span>Zahl: ${h(key)}</span><strong>${count}x</strong></div>`)
         ].join('')
         || '<div class="empty">Noch keine Einzelwerte.</div>';
@@ -807,7 +793,7 @@ tbody tr:nth-child(even){background:#fafafa}
   }
 
   function applyResultColor(data) {
-    if (data.section !== 'body') return;
+    if (data.section !== 'body' || data.column.index !== 3) return;
     const v = String(data.cell.raw || '');
     if (v === 'Freiwurf') data.cell.styles.fillColor = [247, 237, 198];
     else if (v === 'TF') data.cell.styles.fillColor = [247, 219, 219];
@@ -844,8 +830,8 @@ tbody tr:nth-child(even){background:#fafafa}
 
     const defenseRows = sortEntries('defense').map((row, idx) => [
       idx + 1,
-      labeledValue(row.position, row.positionSide) || '',
-      labeledValue(row.finishPosition, row.finishSide) || '',
+      `${row.positionSide === 'green' ? 'grün ' : 'rot '}${row.position || ''}`,
+      `${row.finishSide === 'green' ? 'grün ' : 'rot '}${row.finishPosition || ''}`,
       row.number || ''
     ]);
 
@@ -858,7 +844,7 @@ tbody tr:nth-child(even){background:#fafafa}
       theme: 'grid',
       styles: { fontSize: 7.5, cellPadding: 2, lineWidth: 0.2, lineColor: [140, 140, 140] },
       headStyles: { fillColor: [230, 242, 241], textColor: 20 },
-      didParseCell: data => { if (data.column.index === 3) applyResultColor(data); }
+      didParseCell: applyResultColor
     });
 
     let y = doc.lastAutoTable.finalY + 10;
@@ -937,10 +923,10 @@ tbody tr:nth-child(even){background:#fafafa}
   renderButtons(els.offenseResultButtons, offenseResults, 'result', 'offense');
   renderButtons(els.offenseNumberButtons, numberOptions, 'number', 'offense');
 
-  renderButtons(els.defensePositionGreenButtons, positionOptions, 'positionGreen', 'defense', 'green-variant');
-  renderButtons(els.defensePositionRedButtons, positionOptions, 'positionRed', 'defense', 'red-variant');
-  renderButtons(els.defenseFinishGreenButtons, defenseFinishOptions, 'finishGreen', 'defense', 'green-variant');
-  renderButtons(els.defenseFinishRedButtons, defenseFinishOptions, 'finishRed', 'defense', 'red-variant');
+  renderButtons(els.defensePositionGreenButtons, positionOptions, 'position', 'defense', 'green');
+  renderButtons(els.defensePositionRedButtons, positionOptions, 'position', 'defense', 'red');
+  renderButtons(els.defenseFinishGreenButtons, defenseFinishOptions, 'finishPosition', 'defense', 'green');
+  renderButtons(els.defenseFinishRedButtons, defenseFinishOptions, 'finishPosition', 'defense', 'red');
   renderButtons(els.defenseNumberButtons, numberOptions, 'number', 'defense');
 
   updateSelectedButtons('offense');
