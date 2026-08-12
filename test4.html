@@ -663,7 +663,6 @@ tbody tr.editing {
   .app {
     padding: var(--space-4);
   }
-
   .setup,
   .section-card,
   .table-card,
@@ -777,8 +776,13 @@ tbody tr.editing {
           </div>
 
           <div class="action-row">
-            <button id="offenseResetBtn" class="save-btn" type="button">Auswahl leeren</button>
-            <button id="offenseSaveBtn" class="save-btn primary" type="button">Offensive Aktion speichern</button>
+            <button id="offenseResetBtn" class="save-btn" type="button">
+              Auswahl leeren
+            </button>
+
+            <button id="offenseSaveBtn" class="save-btn primary" type="button">
+              Offensive Aktion speichern
+            </button>
           </div>
         </div>
       </section>
@@ -792,6 +796,7 @@ tbody tr.editing {
         <div class="controls">
           <div class="group">
             <h3>Angegriffene Position</h3>
+
             <div class="stack-grid">
               <div id="defensePositionGreenButtons" class="button-grid four"></div>
               <div id="defensePositionRedButtons" class="button-grid four"></div>
@@ -800,6 +805,7 @@ tbody tr.editing {
 
           <div class="group">
             <h3>Abschlussposition</h3>
+
             <div class="stack-grid">
               <div id="defenseFinishGreenButtons" class="button-grid four"></div>
               <div id="defenseFinishRedButtons" class="button-grid four"></div>
@@ -813,14 +819,20 @@ tbody tr.editing {
           </div>
 
           <div class="action-row">
-            <button id="defenseResetBtn" class="save-btn" type="button">Auswahl leeren</button>
-            <button id="defenseSaveBtn" class="save-btn primary" type="button">Defensive Aktion speichern</button>
+            <button id="defenseResetBtn" class="save-btn" type="button">
+              Auswahl leeren
+            </button>
+
+            <button id="defenseSaveBtn" class="save-btn primary" type="button">
+              Defensive Aktion speichern
+            </button>
           </div>
         </div>
       </section>
     </div>
 
     <div class="tables">
+
       <section class="panel table-card offense">
         <div class="table-tools">
           <h2>Angriff</h2>
@@ -831,15 +843,44 @@ tbody tr.editing {
           <table>
             <thead>
               <tr>
-                <th style="width:7%"><button type="button" data-table="offense" data-sort="index">#</button></th>
-                <th style="width:23%"><button type="button" data-table="offense" data-sort="structure">Struktur</button></th>
-                <th style="width:15%"><button type="button" data-table="offense" data-sort="position">Position</button></th>
-                <th style="width:23%"><button type="button" data-table="offense" data-sort="result">Ergebnis</button></th>
-                <th style="width:15%"><button type="button" data-table="offense" data-sort="number">Zahl</button></th>
+                <th style="width:7%">
+                  <button type="button" data-table="offense" data-sort="index">
+                    #
+                  </button>
+                </th>
+
+                <th style="width:23%">
+                  <button type="button" data-table="offense" data-sort="structure">
+                    Struktur
+                  </button>
+                </th>
+
+                <th style="width:15%">
+                  <button type="button" data-table="offense" data-sort="position">
+                    Position
+                  </button>
+                </th>
+
+                <th style="width:23%">
+                  <button type="button" data-table="offense" data-sort="result">
+                    Ergebnis
+                  </button>
+                </th>
+
+                <th style="width:15%">
+                  <button type="button" data-table="offense" data-sort="number">
+                    Zahl
+                  </button>
+                </th>
               </tr>
             </thead>
+
             <tbody id="offenseTableBody">
-              <tr><td colspan="5" class="empty">Noch keine offensiven Einträge.</td></tr>
+              <tr>
+                <td colspan="5" class="empty">
+                  Noch keine offensiven Einträge.
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -855,14 +896,38 @@ tbody tr.editing {
           <table>
             <thead>
               <tr>
-                <th style="width:7%"><button type="button" data-table="defense" data-sort="index">#</button></th>
-                <th style="width:20%"><button type="button" data-table="defense" data-sort="positionLabel">Position</button></th>
-                <th style="width:28%"><button type="button" data-table="defense" data-sort="finishPositionLabel">Abschlussposition</button></th>
-                <th style="width:15%"><button type="button" data-table="defense" data-sort="number">Zahl</button></th>
+                <th style="width:7%">
+                  <button type="button" data-table="defense" data-sort="index">
+                    #
+                  </button>
+                </th>
+
+                <th style="width:20%">
+                  <button type="button" data-table="defense" data-sort="positionLabel">
+                    Position
+                  </button>
+                </th>
+
+                <th style="width:28%">
+                  <button type="button" data-table="defense" data-sort="finishPositionLabel">
+                    Abschlussposition
+                  </button>
+                </th>
+
+                <th style="width:15%">
+                  <button type="button" data-table="defense" data-sort="number">
+                    Zahl
+                  </button>
+                </th>
               </tr>
             </thead>
+
             <tbody id="defenseTableBody">
-              <tr><td colspan="4" class="empty">Noch keine defensiven Einträge.</td></tr>
+              <tr>
+                <td colspan="4" class="empty">
+                  Noch keine defensiven Einträge.
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -871,9 +936,12 @@ tbody tr.editing {
 
     <section class="panel notes">
       <label for="notes">Notizen</label>
-      <textarea id="notes" placeholder="Notizen zum Spiel eingeben..."></textarea>
-      <p class="install-note">Nach dem ersten Online-Laden kann diese Version über den Homescreen offline nutzbar sein, wenn sie über eine feste Webadresse mit Service Worker bereitgestellt wird.</p>
+      <textarea
+        id="notes"
+        placeholder="Notizen zum Spiel eingeben..."
+      ></textarea>
     </section>
+
   </section>
 </div>
 
@@ -883,10 +951,16 @@ tbody tr.editing {
 
 <script>
 (() => {
-  const SUPABASE_URL = "https://lyrqevymateeftoqxbua.supabase.co";
-  const SUPABASE_ANON_KEY = "sb_publishable_JRYstud4CcOx7sC27GQlYQ_xziqf5df";
+  const SUPABASE_URL =
+    "https://lyrqevymateeftoqxbua.supabase.co";
 
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const SUPABASE_ANON_KEY =
+    "sb_publishable_JRYstud4CcOx7sC27GQlYQ_xziqf5df";
+
+  const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
 
   const offenseStructureOptions = [
     "Kreis breit 1/2",
@@ -899,28 +973,75 @@ tbody tr.editing {
     "Schnelle Mitte"
   ];
 
-  const positionOptions = ["2", "3", "4", "5"];
-
-  const defenseFinishOptions = ["Außen", "Kreis/DBR breit", "Kreis/DBR zentral", "Fernwurf"];
-
-  const defenseFinishSpecialOptions = [
-    { key: "freiwurf", display: "Freiwurf", variant: "yellow" },
-    { key: "tf", display: "TF", variant: "red" }
+  const positionOptions = [
+    "2",
+    "3",
+    "4",
+    "5"
   ];
 
-  const numberOptions = ["6:6", "6:5", "7:6"];
+  const defenseFinishOptions = [
+    "Außen",
+    "Kreis/DBR breit",
+    "Kreis/DBR zentral",
+    "Fernwurf",
+    "7m"
+  ];
+
+  const defenseFinishSpecialOptions = [
+    {
+      key: "freiwurf",
+      display: "Freiwurf",
+      variant: "yellow"
+    },
+    {
+      key: "tf",
+      display: "TF",
+      variant: "red"
+    }
+  ];
+
+  const numberOptions = [
+    "6:6",
+    "6:5",
+    "7:6"
+  ];
 
   const offenseResults = [
-    { key: "gute_chance_tor", display: "gute Chance - Tor", group: "green" },
-    { key: "gute_chance_kein_tor", display: "gute Chance - kein Tor", group: "split-green-red" },
-    { key: "freiwurf", display: "Freiwurf", group: "yellow" },
-    { key: "tf", display: "TF", group: "red" },
-    { key: "schlechte_chance_kein_tor", display: "schlechte Chance - kein Tor", group: "red" },
-    { key: "schlechte_chance_tor", display: "schlechte Chance - Tor", group: "split-red-green" }
+    {
+      key: "gute_chance_tor",
+      display: "gute Chance - Tor",
+      group: "green"
+    },
+    {
+      key: "gute_chance_kein_tor",
+      display: "gute Chance - kein Tor",
+      group: "split-green-red"
+    },
+    {
+      key: "freiwurf",
+      display: "Freiwurf",
+      group: "yellow"
+    },
+    {
+      key: "tf",
+      display: "TF",
+      group: "red"
+    },
+    {
+      key: "schlechte_chance_kein_tor",
+      display: "schlechte Chance - kein Tor",
+      group: "red"
+    },
+    {
+      key: "schlechte_chance_tor",
+      display: "schlechte Chance - Tor",
+      group: "split-red-green"
+    }
   ];
 
   const defaultSelection = () => ({
-    structure: "",
+    structure: [],
     position: "",
     finishPosition: "",
     positionSide: "",
@@ -932,10 +1053,32 @@ tbody tr.editing {
   });
 
   const state = {
-    meta: { opponent: "", matchDate: "" },
+    meta: {
+      opponent: "",
+      matchDate: ""
+    },
+
     undoStack: [],
-    offense: { entries: [], editingId: null, selection: defaultSelection(), sort: { key: "index", dir: "desc" } },
-    defense: { entries: [], editingId: null, selection: defaultSelection(), sort: { key: "index", dir: "desc" } }
+
+    offense: {
+      entries: [],
+      editingId: null,
+      selection: defaultSelection(),
+      sort: {
+        key: "index",
+        dir: "desc"
+      }
+    },
+
+    defense: {
+      entries: [],
+      editingId: null,
+      selection: defaultSelection(),
+      sort: {
+        key: "index",
+        dir: "desc"
+      }
+    }
   };
 
   const els = {
@@ -975,23 +1118,61 @@ tbody tr.editing {
   let longPressFired = false;
 
   const currentStore = domain => state[domain];
-  const clone = value => JSON.parse(JSON.stringify(value));
-  const escapeHtml = value => String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
-  const formatDate = value => new Date(`${value}T00:00:00`).toLocaleDateString("de-DE");
+
+  const clone = value =>
+    JSON.parse(JSON.stringify(value));
+
+  const escapeHtml = value =>
+    String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+  const formatDate = value =>
+    new Date(`${value}T00:00:00`)
+      .toLocaleDateString("de-DE");
 
   function setToday() {
-    els.matchDate.value = new Date().toISOString().split("T")[0];
+    els.matchDate.value =
+      new Date().toISOString().split("T")[0];
   }
 
   function getDefenseResult(selection) {
-    const specialFreeThrow = selection.finishPosition === "freiwurf" && selection.finishSide === "yellow";
-    const specialTechnical = selection.finishPosition === "tf" && selection.finishSide === "red";
+    const specialFreeThrow =
+      selection.finishPosition === "freiwurf" &&
+      selection.finishSide === "yellow";
 
-    if (specialFreeThrow) return { result: "freiwurf", resultDisplay: "Freiwurf", group: "yellow" };
-    if (specialTechnical) return { result: "tf", resultDisplay: "TF", group: "red" };
+    const specialTechnical =
+      selection.finishPosition === "tf" &&
+      selection.finishSide === "red";
 
-    const success = selection.positionSide === "green" && selection.finishSide === "green";
-    return { result: success ? "defense_success" : "defense_fail", resultDisplay: success ? "Erfolg" : "Misserfolg", group: success ? "green" : "red" };
+    if (specialFreeThrow) {
+      return {
+        result: "freiwurf",
+        resultDisplay: "Freiwurf",
+        group: "yellow"
+      };
+    }
+
+    if (specialTechnical) {
+      return {
+        result: "tf",
+        resultDisplay: "TF",
+        group: "red"
+      };
+    }
+
+    const success =
+      selection.positionSide === "green" &&
+      selection.finishSide === "green";
+
+    return {
+      result: success ? "defense_success" : "defense_fail",
+      resultDisplay: success ? "Erfolg" : "Misserfolg",
+      group: success ? "green" : "red"
+    };
   }
 
   function buildSupabaseRow(domain, payload) {
@@ -1016,16 +1197,35 @@ tbody tr.editing {
     return {
       ...row,
       id: row.id,
-      createdOrder: row.created_order ?? fallback.createdOrder,
-      structure: row.structure ?? fallback.structure ?? "",
-      position: row.attack_position ?? fallback.position ?? "",
-      finishPosition: row.finish_position ?? fallback.finishPosition ?? "",
-      positionSide: row.position_side ?? fallback.positionSide ?? "",
-      finishSide: row.finish_side ?? fallback.finishSide ?? "",
-      number: row.number_relation ?? fallback.number ?? "6:6",
-      result: row.result ?? fallback.result ?? "",
-      resultDisplay: row.result_display ?? fallback.resultDisplay ?? "",
-      group: row.result_group ?? fallback.group ?? ""
+      createdOrder:
+        row.created_order ?? fallback.createdOrder,
+
+      structure:
+        row.structure ?? fallback.structure ?? "",
+
+      position:
+        row.attack_position ?? fallback.position ?? "",
+
+      finishPosition:
+        row.finish_position ?? fallback.finishPosition ?? "",
+
+      positionSide:
+        row.position_side ?? fallback.positionSide ?? "",
+
+      finishSide:
+        row.finish_side ?? fallback.finishSide ?? "",
+
+      number:
+        row.number_relation ?? fallback.number ?? "6:6",
+
+      result:
+        row.result ?? fallback.result ?? "",
+
+      resultDisplay:
+        row.result_display ?? fallback.resultDisplay ?? "",
+
+      group:
+        row.result_group ?? fallback.group ?? ""
     };
   }
 
@@ -1035,78 +1235,218 @@ tbody tr.editing {
       .select("*")
       .eq("match_opponent", state.meta.opponent)
       .eq("match_date", state.meta.matchDate)
-      .order("created_order", { ascending: true });
+      .order("created_order", {
+        ascending: true
+      });
 
     if (error) {
       console.error(error);
-      alert(error.message || "Fehler beim Laden der Spieldaten.");
+      alert(
+        error.message ||
+        "Fehler beim Laden der Spieldaten."
+      );
       return;
     }
 
-    state.offense.entries = data.filter(row => row.side === "offense").map(row => normalizeRow(row));
-    state.defense.entries = data.filter(row => row.side === "defense").map(row => {
-      const normalized = normalizeRow(row);
-      if (!normalized.result) {
-        const success = normalized.positionSide === "green" && normalized.finishSide === "green";
-        normalized.result = success ? "defense_success" : "defense_fail";
-        normalized.resultDisplay = success ? "Erfolg" : normalized.finishPosition === "freiwurf" ? "Freiwurf" : normalized.finishPosition === "tf" ? "TF" : "Misserfolg";
-        normalized.group = normalized.finishPosition === "freiwurf" ? "yellow" : success ? "green" : "red";
-      }
-      return normalized;
-    });
+    state.offense.entries = data
+      .filter(row => row.side === "offense")
+      .map(row => normalizeRow(row));
+
+    state.defense.entries = data
+      .filter(row => row.side === "defense")
+      .map(row => {
+        const normalized = normalizeRow(row);
+
+        if (!normalized.result) {
+          const success =
+            normalized.positionSide === "green" &&
+            normalized.finishSide === "green";
+
+          normalized.result =
+            success
+              ? "defense_success"
+              : "defense_fail";
+
+          normalized.resultDisplay =
+            success
+              ? "Erfolg"
+              : normalized.finishPosition === "freiwurf"
+                ? "Freiwurf"
+                : normalized.finishPosition === "tf"
+                  ? "TF"
+                  : "Misserfolg";
+
+          normalized.group =
+            normalized.finishPosition === "freiwurf"
+              ? "yellow"
+              : success
+                ? "green"
+                : "red";
+        }
+
+        return normalized;
+      });
   }
 
   async function insertEntry(domain, payload) {
-    const { data, error } = await supabase.from("match_actions").insert(buildSupabaseRow(domain, payload)).select("*").single();
-    if (error) throw error;
+    const { data, error } = await supabase
+      .from("match_actions")
+      .insert(buildSupabaseRow(domain, payload))
+      .select("*")
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
     return normalizeRow(data, payload);
   }
 
   async function updateEntry(id, domain, payload) {
-    const { data, error } = await supabase.from("match_actions").update(buildSupabaseRow(domain, payload)).eq("id", id).select("*").single();
-    if (error) throw error;
+    const { data, error } = await supabase
+      .from("match_actions")
+      .update(buildSupabaseRow(domain, payload))
+      .eq("id", id)
+      .select("*")
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
     return normalizeRow(data, payload);
   }
 
   async function deleteEntry(id) {
-    const { error } = await supabase.from("match_actions").delete().eq("id", id);
-    if (error) throw error;
-  }
+    const { error } = await supabase
+      .from("match_actions")
+      .delete()
+      .eq("id", id);
 
-  function renderButtons(mount, items, type, domain, variant = "") {
+    if (error) {
+      throw error;
+    }
+  }
+  function renderButtons(
+    mount,
+    items,
+    type,
+    domain,
+    variant = ""
+  ) {
     mount.innerHTML = "";
+
     items.forEach(item => {
-      const value = typeof item === "string" ? item : item.key;
-      const label = typeof item === "string" ? item : item.display;
-      const itemVariant = typeof item === "string" ? variant : (item.variant || variant);
-      const group = typeof item === "string" ? "" : item.group || "";
-      const button = document.createElement("button");
+      const value =
+        typeof item === "string"
+          ? item
+          : item.key;
+
+      const label =
+        typeof item === "string"
+          ? item
+          : item.display;
+
+      const itemVariant =
+        typeof item === "string"
+          ? variant
+          : item.variant || variant;
+
+      const group =
+        typeof item === "string"
+          ? ""
+          : item.group || "";
+
+      const button =
+        document.createElement("button");
+
       button.type = "button";
       button.dataset.value = value;
       button.dataset.type = type;
       button.dataset.domain = domain;
-      if (itemVariant) button.dataset.variant = itemVariant;
-      button.className = type === "result" ? `result-btn ${group}` : `choice-btn ${itemVariant ? `${itemVariant}-variant` : ""}`;
+
+      if (itemVariant) {
+        button.dataset.variant = itemVariant;
+      }
+
+      button.className =
+        type === "result"
+          ? `result-btn ${group}`
+          : `choice-btn ${
+              itemVariant
+                ? `${itemVariant}-variant`
+                : ""
+            }`;
+
       button.textContent = label;
-      button.addEventListener("click", () => handleSelection(domain, type, value, group, label, itemVariant));
+
+      button.addEventListener("click", () => {
+        handleSelection(
+          domain,
+          type,
+          value,
+          group,
+          label,
+          itemVariant
+        );
+      });
+
       mount.appendChild(button);
     });
   }
 
-  function handleSelection(domain, type, value, group, display, variant) {
+  function handleSelection(
+    domain,
+    type,
+    value,
+    group,
+    display,
+    variant
+  ) {
     const store = currentStore(domain);
     const selection = store.selection;
 
-    if (type === "structure") selection.structure = value;
+    if (type === "structure") {
+      if (!Array.isArray(selection.structure)) {
+        selection.structure = selection.structure
+          ? [selection.structure]
+          : [];
+      }
+
+      if (selection.structure.includes(value)) {
+        selection.structure =
+          selection.structure.filter(
+            item => item !== value
+          );
+      } else if (selection.structure.length < 2) {
+        selection.structure.push(value);
+      } else {
+        alert(
+          "Es können höchstens zwei Strukturen ausgewählt werden."
+        );
+      }
+    }
+
     if (type === "position") {
       selection.position = value;
-      if (domain === "defense") selection.positionSide = variant;
+
+      if (domain === "defense") {
+        selection.positionSide = variant;
+      }
     }
+
     if (type === "finishPosition") {
       selection.finishPosition = value;
-      if (domain === "defense") selection.finishSide = variant;
+
+      if (domain === "defense") {
+        selection.finishSide = variant;
+      }
     }
-    if (type === "number") selection.number = value;
+
+    if (type === "number") {
+      selection.number = value;
+    }
+
     if (type === "result") {
       selection.result = value;
       selection.resultDisplay = display;
@@ -1115,6 +1455,7 @@ tbody tr.editing {
 
     if (domain === "defense") {
       const result = getDefenseResult(selection);
+
       selection.result = result.result;
       selection.resultDisplay = result.resultDisplay;
       selection.group = result.group;
@@ -1127,40 +1468,107 @@ tbody tr.editing {
     const store = currentStore(domain);
     const selection = store.selection;
 
-    document.querySelectorAll(`button[data-domain="${domain}"]`).forEach(button => {
-      const type = button.dataset.type;
-      const value = button.dataset.value;
-      const variant = button.dataset.variant || "";
-      let selected = false;
+    document
+      .querySelectorAll(
+        `button[data-domain="${domain}"]`
+      )
+      .forEach(button => {
+        const type = button.dataset.type;
+        const value = button.dataset.value;
+        const variant =
+          button.dataset.variant || "";
 
-      if (type === "structure") selected = value === selection.structure;
-      if (type === "position") selected = value === selection.position && (domain !== "defense" || variant === selection.positionSide);
-      if (type === "finishPosition") selected = value === selection.finishPosition && variant === selection.finishSide;
-      if (type === "number") selected = value === selection.number;
-      if (type === "result") selected = value === selection.result;
+        let selected = false;
 
-      button.classList.toggle("selected", selected);
-    });
+        if (type === "structure") {
+          const structures =
+            Array.isArray(selection.structure)
+              ? selection.structure
+              : selection.structure
+                ? [selection.structure]
+                : [];
+
+          selected = structures.includes(value);
+        }
+
+        if (type === "position") {
+          selected =
+            value === selection.position &&
+            (
+              domain !== "defense" ||
+              variant === selection.positionSide
+            );
+        }
+
+        if (type === "finishPosition") {
+          selected =
+            value === selection.finishPosition &&
+            variant === selection.finishSide;
+        }
+
+        if (type === "number") {
+          selected = value === selection.number;
+        }
+
+        if (type === "result") {
+          selected = value === selection.result;
+        }
+
+        button.classList.toggle(
+          "selected",
+          selected
+        );
+      });
   }
 
   function clearSelection(domain) {
     const store = currentStore(domain);
+
     store.selection = defaultSelection();
     store.editingId = null;
+
     updateSelectedButtons(domain);
     renderTable(domain);
   }
 
   function validate(domain) {
-    const selection = currentStore(domain).selection;
+    const selection =
+      currentStore(domain).selection;
 
-    if (domain === "offense" && (!selection.structure || !selection.position || !selection.number || !selection.result)) {
-      alert("Bitte Struktur, angegriffene Position, Zahl und Ergebnis auswählen.");
+    const structures =
+      Array.isArray(selection.structure)
+        ? selection.structure
+        : selection.structure
+          ? [selection.structure]
+          : [];
+
+    if (
+      domain === "offense" &&
+      (
+        structures.length === 0 ||
+        !selection.number ||
+        !selection.result
+      )
+    ) {
+      alert(
+        "Bitte mindestens eine Struktur, Zahl und Ergebnis auswählen."
+      );
       return false;
     }
 
-    if (domain === "defense" && (!selection.position || !selection.finishPosition || !selection.positionSide || !selection.finishSide || !selection.number)) {
-      alert("Bitte angegriffene Position, Abschlussposition und Zahl auswählen.");
+    if (
+      domain === "defense" &&
+      (
+        !selection.position ||
+        !selection.finishPosition ||
+        !selection.positionSide ||
+        !selection.finishSide ||
+        !selection.number
+      )
+    ) {
+      alert(
+        "Bitte angegriffene Position, Abschlussposition und Zahl auswählen."
+      );
       return false;
     }
 
@@ -1168,37 +1576,76 @@ tbody tr.editing {
   }
 
   function createPayload(domain) {
-    const selection = currentStore(domain).selection;
+    const selection =
+      currentStore(domain).selection;
+
     const store = currentStore(domain);
-    const existing = store.entries.find(entry => entry.id === store.editingId);
+
+    const existing =
+      store.entries.find(
+        entry => entry.id === store.editingId
+      );
 
     let result = selection.result;
     let resultDisplay = selection.resultDisplay;
     let group = selection.group;
 
     if (domain === "defense") {
-      const defenseResult = getDefenseResult(selection);
+      const defenseResult =
+        getDefenseResult(selection);
+
       result = defenseResult.result;
-      resultDisplay = defenseResult.resultDisplay;
+      resultDisplay =
+        defenseResult.resultDisplay;
       group = defenseResult.group;
     }
 
+    const structures =
+      Array.isArray(selection.structure)
+        ? selection.structure
+        : selection.structure
+          ? [selection.structure]
+          : [];
+
     return {
-      structure: domain === "offense" ? selection.structure : "",
+      structure:
+        domain === "offense"
+          ? structures.join(" + ")
+          : "",
+
       position: selection.position,
-      finishPosition: domain === "defense" ? selection.finishPosition : "",
-      positionSide: domain === "defense" ? selection.positionSide : "",
-      finishSide: domain === "defense" ? selection.finishSide : "",
+
+      finishPosition:
+        domain === "defense"
+          ? selection.finishPosition
+          : "",
+
+      positionSide:
+        domain === "defense"
+          ? selection.positionSide
+          : "",
+
+      finishSide:
+        domain === "defense"
+          ? selection.finishSide
+          : "",
+
       number: selection.number || "6:6",
       result,
       resultDisplay,
       group,
-      createdOrder: existing ? existing.createdOrder : store.entries.length + 1
+
+      createdOrder:
+        existing
+          ? existing.createdOrder
+          : store.entries.length + 1
     };
   }
 
   async function saveEntry(domain) {
-    if (!validate(domain)) return;
+    if (!validate(domain)) {
+      return;
+    }
 
     const store = currentStore(domain);
     const payload = createPayload(domain);
@@ -1206,16 +1653,44 @@ tbody tr.editing {
 
     try {
       if (editing) {
-        const existing = store.entries.find(entry => entry.id === store.editingId);
+        const existing =
+          store.entries.find(
+            entry => entry.id === store.editingId
+          );
+
         const before = clone(existing);
-        const updated = await updateEntry(existing.id, domain, payload);
-        const index = store.entries.findIndex(entry => entry.id === existing.id);
+
+        const updated =
+          await updateEntry(
+            existing.id,
+            domain,
+            payload
+          );
+
+        const index =
+          store.entries.findIndex(
+            entry => entry.id === existing.id
+          );
+
         store.entries[index] = updated;
-        state.undoStack.push({ type: "edit", domain, before, after: clone(updated) });
+
+        state.undoStack.push({
+          type: "edit",
+          domain,
+          before,
+          after: clone(updated)
+        });
       } else {
-        const inserted = await insertEntry(domain, payload);
+        const inserted =
+          await insertEntry(domain, payload);
+
         store.entries.push(inserted);
-        state.undoStack.push({ type: "add", domain, entry: clone(inserted) });
+
+        state.undoStack.push({
+          type: "add",
+          domain,
+          entry: clone(inserted)
+        });
       }
 
       clearSelection(domain);
@@ -1223,41 +1698,83 @@ tbody tr.editing {
       renderTable("defense");
     } catch (error) {
       console.error(error);
-      alert(error.message || "Fehler beim Speichern.");
+      alert(
+        error.message ||
+        "Fehler beim Speichern."
+      );
     }
   }
 
   async function undoLast() {
     const action = state.undoStack.pop();
+
     if (!action) {
-      alert("Es gibt keine Aktion zum Rückgängigmachen.");
+      alert(
+        "Es gibt keine Aktion zum Rückgängigmachen."
+      );
       return;
     }
 
-    const store = currentStore(action.domain);
+    const store =
+      currentStore(action.domain);
 
     try {
       if (action.type === "add") {
         await deleteEntry(action.entry.id);
-        store.entries = store.entries.filter(entry => entry.id !== action.entry.id);
+
+        store.entries =
+          store.entries.filter(
+            entry => entry.id !== action.entry.id
+          );
       }
 
       if (action.type === "edit") {
-        const restored = await updateEntry(action.before.id, action.domain, {
-          structure: action.before.structure || "",
-          position: action.before.position || "",
-          finishPosition: action.before.finishPosition || "",
-          positionSide: action.before.positionSide || "",
-          finishSide: action.before.finishSide || "",
-          number: action.before.number || "6:6",
-          result: action.before.result || "",
-          resultDisplay: action.before.resultDisplay || "",
-          group: action.before.group || "",
-          createdOrder: action.before.createdOrder
-        });
+        const restored =
+          await updateEntry(
+            action.before.id,
+            action.domain,
+            {
+              structure:
+                action.before.structure || "",
 
-        const index = store.entries.findIndex(entry => entry.id === action.before.id);
-        if (index !== -1) store.entries[index] = restored;
+              position:
+                action.before.position || "",
+
+              finishPosition:
+                action.before.finishPosition || "",
+
+              positionSide:
+                action.before.positionSide || "",
+
+              finishSide:
+                action.before.finishSide || "",
+
+              number:
+                action.before.number || "6:6",
+
+              result:
+                action.before.result || "",
+
+              resultDisplay:
+                action.before.resultDisplay || "",
+
+              group:
+                action.before.group || "",
+
+              createdOrder:
+                action.before.createdOrder
+            }
+          );
+
+        const index =
+          store.entries.findIndex(
+            entry =>
+              entry.id === action.before.id
+          );
+
+        if (index !== -1) {
+          store.entries[index] = restored;
+        }
       }
 
       clearSelection(action.domain);
@@ -1265,18 +1782,42 @@ tbody tr.editing {
       renderTable("defense");
     } catch (error) {
       console.error(error);
-      alert(error.message || "Fehler beim Rückgängigmachen.");
+      alert(
+        error.message ||
+        "Fehler beim Rückgängigmachen."
+      );
     }
   }
 
   function getSortValue(row, key) {
-    if (key === "index") return row.createdOrder || 0;
-    if (key === "structure") return row.structure || "";
-    if (key === "position") return row.position || "";
-    if (key === "positionLabel") return `${row.positionSide || ""} ${row.position || ""}`;
-    if (key === "finishPositionLabel") return `${row.finishSide || ""} ${row.finishPosition || ""}`;
-    if (key === "number") return row.number || "";
-    if (key === "result") return row.resultDisplay || row.result || "";
+    if (key === "index") {
+      return row.createdOrder || 0;
+    }
+
+    if (key === "structure") {
+      return row.structure || "";
+    }
+
+    if (key === "position") {
+      return row.position || "";
+    }
+
+    if (key === "positionLabel") {
+      return `${row.positionSide || ""} ${row.position || ""}`;
+    }
+
+    if (key === "finishPositionLabel") {
+      return `${row.finishSide || ""} ${row.finishPosition || ""}`;
+    }
+
+    if (key === "number") {
+      return row.number || "";
+    }
+
+    if (key === "result") {
+      return row.resultDisplay || row.result || "";
+    }
+
     return "";
   }
 
@@ -1289,12 +1830,28 @@ tbody tr.editing {
     rows.sort((a, b) => {
       const valueA = getSortValue(a, key);
       const valueB = getSortValue(b, key);
+
       let comparison;
 
-      if (typeof valueA === "number" && typeof valueB === "number") comparison = valueA - valueB;
-      else comparison = String(valueA).localeCompare(String(valueB), "de");
+      if (
+        typeof valueA === "number" &&
+        typeof valueB === "number"
+      ) {
+        comparison = valueA - valueB;
+      } else {
+        comparison =
+          String(valueA).localeCompare(
+            String(valueB),
+            "de"
+          );
+      }
 
-      if (comparison === 0) comparison = (a.createdOrder || 0) - (b.createdOrder || 0);
+      if (comparison === 0) {
+        comparison =
+          (a.createdOrder || 0) -
+          (b.createdOrder || 0);
+      }
+
       return comparison * factor;
     });
 
@@ -1303,19 +1860,36 @@ tbody tr.editing {
 
   function setSort(domain, key) {
     const store = currentStore(domain);
+
     if (store.sort.key === key) {
-      store.sort.dir = store.sort.dir === "asc" ? "desc" : "asc";
+      store.sort.dir =
+        store.sort.dir === "asc"
+          ? "desc"
+          : "asc";
     } else {
       store.sort.key = key;
-      store.sort.dir = key === "index" ? "desc" : "asc";
+      store.sort.dir =
+        key === "index"
+          ? "desc"
+          : "asc";
     }
+
     renderTable(domain);
   }
 
   function getNumberClass(number) {
-    if (number === "6:6") return "number-66";
-    if (number === "7:6") return "number-76";
-    if (number === "6:5") return "number-65";
+    if (number === "6:6") {
+      return "number-66";
+    }
+
+    if (number === "7:6") {
+      return "number-76";
+    }
+
+    if (number === "6:5") {
+      return "number-65";
+    }
+
     return "number";
   }
 
@@ -1323,42 +1897,175 @@ tbody tr.editing {
     const store = currentStore(domain);
     const rows = sortEntries(domain);
     const body = els[`${domain}TableBody`];
-    const countElement = els[`${domain}Count`];
-    const sortInfo = els[`${domain}SortInfo`];
+    const countElement =
+      els[`${domain}Count`];
 
-    countElement.textContent = `${store.entries.length} Einträge`;
-    sortInfo.textContent = `${store.sort.key} ${store.sort.dir === "asc" ? "↑" : "↓"}`;
+    const sortInfo =
+      els[`${domain}SortInfo`];
+
+    countElement.textContent =
+      `${store.entries.length} Einträge`;
+
+    sortInfo.textContent =
+      `${store.sort.key} ${
+        store.sort.dir === "asc"
+          ? "↑"
+          : "↓"
+      }`;
 
     if (!rows.length) {
       body.innerHTML = `
         <tr>
-          <td colspan="${domain === "offense" ? 5 : 4}" class="empty">
-            Noch keine ${domain === "offense" ? "offensiven" : "defensiven"} Einträge.
+          <td
+            colspan="${domain === "offense" ? 5 : 4}"
+            class="empty"
+          >
+            Noch keine ${
+              domain === "offense"
+                ? "offensiven"
+                : "defensiven"
+            } Einträge.
           </td>
         </tr>
       `;
+
       return;
     }
 
     if (domain === "offense") {
-      body.innerHTML = rows.map((row, index) => `
-        <tr data-domain="offense" data-id="${row.id}" class="${store.editingId === row.id ? "editing" : ""}">
-          <td>${index + 1}</td>
-          <td>${row.structure ? `<span class="pill structure">${escapeHtml(row.structure)}</span>` : "—"}</td>
-          <td>${row.position ? `<span class="pill position">${escapeHtml(row.position)}</span>` : "—"}</td>
-          <td class="result-cell ${row.group || ""}">${escapeHtml(row.resultDisplay || row.result || "")}</td>
-          <td>${row.number ? `<span class="pill ${getNumberClass(row.number)}">${escapeHtml(row.number)}</span>` : "—"}</td>
-        </tr>
-      `).join("");
+      body.innerHTML = rows
+        .map((row, index) => `
+          <tr
+            data-domain="offense"
+            data-id="${row.id}"
+            class="${
+              store.editingId === row.id
+                ? "editing"
+                : ""
+            }"
+          >
+            <td>${index + 1}</td>
+
+            <td>
+              ${
+                row.structure
+                  ? `
+                    <span class="pill structure">
+                      ${escapeHtml(row.structure)}
+                    </span>
+                  `
+                  : "—"
+              }
+            </td>
+
+            <td>
+              ${
+                row.position
+                  ? `
+                    <span class="pill position">
+                      ${escapeHtml(row.position)}
+                    </span>
+                  `
+                  : "—"
+              }
+            </td>
+
+            <td class="result-cell ${
+              row.group || ""
+            }">
+              ${escapeHtml(
+                row.resultDisplay ||
+                row.result ||
+                ""
+              )}
+            </td>
+
+            <td>
+              ${
+                row.number
+                  ? `
+                    <span class="pill ${
+                      getNumberClass(row.number)
+                    }">
+                      ${escapeHtml(row.number)}
+                    </span>
+                  `
+                  : "—"
+              }
+            </td>
+          </tr>
+        `)
+        .join("");
     } else {
-      body.innerHTML = rows.map((row, index) => `
-        <tr data-domain="defense" data-id="${row.id}" class="${store.editingId === row.id ? "editing" : ""}">
-          <td>${index + 1}</td>
-          <td>${row.position ? `<span class="pill ${row.positionSide === "green" ? "green-tag" : "red-tag"}">${escapeHtml(row.position)}</span>` : "—"}</td>
-          <td>${row.finishPosition ? `<span class="pill ${row.finishSide === "green" ? "green-tag" : row.finishSide === "yellow" ? "yellow-tag" : "red-tag"}">${escapeHtml(row.finishPosition === "freiwurf" ? "Freiwurf" : row.finishPosition === "tf" ? "TF" : row.finishPosition)}</span>` : "—"}</td>
-          <td>${row.number ? `<span class="pill ${getNumberClass(row.number)}">${escapeHtml(row.number)}</span>` : "—"}</td>
-        </tr>
-      `).join("");
+      body.innerHTML = rows
+        .map((row, index) => `
+          <tr
+            data-domain="defense"
+            data-id="${row.id}"
+            class="${
+              store.editingId === row.id
+                ? "editing"
+                : ""
+            }"
+          >
+            <td>${index + 1}</td>
+
+            <td>
+              ${
+                row.position
+                  ? `
+                    <span class="pill ${
+                      row.positionSide === "green"
+                        ? "green-tag"
+                        : "red-tag"
+                    }">
+                      ${escapeHtml(row.position)}
+                    </span>
+                  `
+                  : "—"
+              }
+            </td>
+
+            <td>
+              ${
+                row.finishPosition
+                  ? `
+                    <span class="pill ${
+                      row.finishSide === "green"
+                        ? "green-tag"
+                        : row.finishSide === "yellow"
+                          ? "yellow-tag"
+                          : "red-tag"
+                    }">
+                      ${escapeHtml(
+                        row.finishPosition === "freiwurf"
+                          ? "Freiwurf"
+                          : row.finishPosition === "tf"
+                            ? "TF"
+                            : row.finishPosition
+                      )}
+                    </span>
+                  `
+                  : "—"
+              }
+            </td>
+
+            <td>
+              ${
+                row.number
+                  ? `
+                    <span class="pill ${
+                      getNumberClass(row.number)
+                    }">
+                      ${escapeHtml(row.number)}
+                    </span>
+                  `
+                  : "—"
+              }
+            </td>
+          </tr>
+        `)
+        .join("");
     }
 
     addLongPressListeners(domain);
@@ -1367,21 +2074,59 @@ tbody tr.editing {
   function addLongPressListeners(domain) {
     const body = els[`${domain}TableBody`];
 
-    body.querySelectorAll("tr[data-id]").forEach(row => {
-      const id = row.dataset.id;
+    body
+      .querySelectorAll("tr[data-id]")
+      .forEach(row => {
+        const id = row.dataset.id;
 
-      row.addEventListener("mousedown", () => startLongPress(domain, id));
-      row.addEventListener("mouseup", () => { if (!longPressFired) stopLongPress(); });
-      row.addEventListener("mouseleave", stopLongPress);
-      row.addEventListener("touchstart", event => { startLongPress(domain, id); event.preventDefault(); }, { passive: false });
-      row.addEventListener("touchend", event => { stopLongPress(); event.preventDefault(); }, { passive: false });
-      row.addEventListener("touchcancel", stopLongPress);
-    });
+        row.addEventListener(
+          "mousedown",
+          () => startLongPress(domain, id)
+        );
+
+        row.addEventListener(
+          "mouseup",
+          () => {
+            if (!longPressFired) {
+              stopLongPress();
+            }
+          }
+        );
+
+        row.addEventListener(
+          "mouseleave",
+          stopLongPress
+        );
+
+        row.addEventListener(
+          "touchstart",
+          event => {
+            startLongPress(domain, id);
+            event.preventDefault();
+          },
+          { passive: false }
+        );
+
+        row.addEventListener(
+          "touchend",
+          event => {
+            stopLongPress();
+            event.preventDefault();
+          },
+          { passive: false }
+        );
+
+        row.addEventListener(
+          "touchcancel",
+          stopLongPress
+        );
+      });
   }
 
   function startLongPress(domain, id) {
     stopLongPress();
     longPressFired = false;
+
     pressTimer = setTimeout(() => {
       longPressFired = true;
       loadForEdit(domain, id);
@@ -1394,12 +2139,27 @@ tbody tr.editing {
 
   function loadForEdit(domain, id) {
     const store = currentStore(domain);
-    const entry = store.entries.find(row => String(row.id) === String(id));
-    if (!entry) return;
+
+    const entry =
+      store.entries.find(
+        row => String(row.id) === String(id)
+      );
+
+    if (!entry) {
+      return;
+    }
 
     store.editingId = entry.id;
+
+    const structureValues =
+      entry.structure
+        ? String(entry.structure)
+            .split(" + ")
+            .filter(Boolean)
+        : [];
+
     store.selection = {
-      structure: entry.structure || "",
+      structure: structureValues,
       position: entry.position || "",
       finishPosition: entry.finishPosition || "",
       positionSide: entry.positionSide || "",
@@ -1412,101 +2172,213 @@ tbody tr.editing {
 
     updateSelectedButtons(domain);
     renderTable(domain);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
   }
 
   function applyResultColor(data) {
-    if (data.section !== "body" || data.column.index !== 3) return;
-    const value = String(data.cell.raw || "");
+    if (
+      data.section !== "body" ||
+      data.column.index !== 3
+    ) {
+      return;
+    }
 
-    if (value === "Freiwurf") data.cell.styles.fillColor = [247, 237, 198];
-    else if (value === "TF") data.cell.styles.fillColor = [247, 219, 219];
-    else if (value === "gute Chance - Tor") data.cell.styles.fillColor = [220, 239, 214];
-    else if (value === "schlechte Chance - kein Tor") data.cell.styles.fillColor = [220, 239, 214];
-    else if (value === "gute Chance - kein Tor") data.cell.styles.fillColor = [220, 239, 214];
-    else if (value === "schlechte Chance - Tor") data.cell.styles.fillColor = [247, 219, 219];
+    const value =
+      String(data.cell.raw || "");
+
+    if (value === "Freiwurf") {
+      data.cell.styles.fillColor =
+        [247, 237, 198];
+    } else if (value === "TF") {
+      data.cell.styles.fillColor =
+        [247, 219, 219];
+    } else if (value === "gute Chance - Tor") {
+      data.cell.styles.fillColor =
+        [220, 239, 214];
+    } else if (
+      value === "schlechte Chance - kein Tor"
+    ) {
+      data.cell.styles.fillColor =
+        [220, 239, 214];
+    } else if (
+      value === "gute Chance - kein Tor"
+    ) {
+      data.cell.styles.fillColor =
+        [220, 239, 214];
+    } else if (
+      value === "schlechte Chance - Tor"
+    ) {
+      data.cell.styles.fillColor =
+        [247, 219, 219];
+    }
   }
 
   function getNumberFillColor(number) {
-    if (number === "6:6") return [255, 255, 255];
-    if (number === "7:6") return [240, 247, 255];
-    if (number === "6:5") return [255, 249, 240];
+    if (number === "6:6") {
+      return [255, 255, 255];
+    }
+
+    if (number === "7:6") {
+      return [240, 247, 255];
+    }
+
+    if (number === "6:5") {
+      return [255, 249, 240];
+    }
+
     return [255, 255, 255];
   }
 
   function applyNumberColor(data) {
-    if (data.section !== "body") return;
-    
-    if (data.table.section === "Angriff" && data.column.index === 4) {
-      const value = String(data.cell.raw || "");
-      data.cell.styles.fillColor = getNumberFillColor(value);
+    if (data.section !== "body") {
+      return;
     }
-    
-    if (data.table.section === "Abwehr" && data.column.index === 3) {
-      const value = String(data.cell.raw || "");
-      data.cell.styles.fillColor = getNumberFillColor(value);
+
+    if (
+      data.table.section === "Angriff" &&
+      data.column.index === 4
+    ) {
+      const value =
+        String(data.cell.raw || "");
+
+      data.cell.styles.fillColor =
+        getNumberFillColor(value);
+    }
+
+    if (
+      data.table.section === "Abwehr" &&
+      data.column.index === 3
+    ) {
+      const value =
+        String(data.cell.raw || "");
+
+      data.cell.styles.fillColor =
+        getNumberFillColor(value);
     }
   }
 
   function exportPdf() {
-    if (!window.jspdf || !window.jspdf.jsPDF) {
-      alert("Der PDF-Export konnte nicht geladen werden. Bitte öffne die App einmal mit Internetverbindung und versuche es erneut.");
+    if (
+      !window.jspdf ||
+      !window.jspdf.jsPDF
+    ) {
+      alert(
+        "Der PDF-Export konnte nicht geladen werden. " +
+        "Bitte öffne die App einmal mit Internetverbindung " +
+        "und versuche es erneut."
+      );
       return;
     }
 
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
+
+    const doc = new jsPDF({
+      orientation: "landscape",
+      unit: "mm",
+      format: "a4"
+    });
 
     if (typeof doc.autoTable !== "function") {
-      alert("Das PDF-Tabellenmodul konnte nicht geladen werden. Bitte öffne die App mit Internetverbindung und versuche es erneut.");
+      alert(
+        "Das PDF-Tabellenmodul konnte nicht geladen werden. " +
+        "Bitte öffne die App mit Internetverbindung " +
+        "und versuche es erneut."
+      );
       return;
     }
 
     doc.setFontSize(16);
-    doc.text(`Kollektive Statistik vs ${state.meta.opponent}`, 14, 14);
+
+    doc.text(
+      `Kollektive Statistik vs ${
+        state.meta.opponent
+      }`,
+      14,
+      14
+    );
+
     doc.setFontSize(10);
-    doc.text(`Datum: ${formatDate(state.meta.matchDate)}`, 14, 21);
 
-    const offenseRows = sortEntries("offense").map((row, index) => [
-      index + 1,
-      row.structure || "",
-      row.position || "",
-      row.resultDisplay || row.result || "",
-      row.number || ""
-    ]);
+    doc.text(
+      `Datum: ${
+        formatDate(state.meta.matchDate)
+      }`,
+      14,
+      21
+    );
 
-    const defenseRows = sortEntries("defense").map((row, index) => [
-      index + 1,
-      row.position || "",
-      row.finishPosition === "freiwurf" ? "Freiwurf" : row.finishPosition === "tf" ? "TF" : row.finishPosition || "",
-      row.number || ""
-    ]);
+    const offenseRows =
+      sortEntries("offense").map(
+        (row, index) => [
+          index + 1,
+          row.structure || "",
+          row.position || "",
+          row.resultDisplay ||
+            row.result ||
+            "",
+          row.number || ""
+        ]
+      );
+
+    const defenseRows =
+      sortEntries("defense").map(
+        (row, index) => [
+          index + 1,
+          row.position || "",
+          row.finishPosition === "freiwurf"
+            ? "Freiwurf"
+            : row.finishPosition === "tf"
+              ? "TF"
+              : row.finishPosition || "",
+          row.number || ""
+        ]
+      );
 
     doc.setFontSize(12);
     doc.text("Angriff", 14, 30);
 
     doc.autoTable({
-      head: [["#", "Struktur", "Position", "Ergebnis", "Zahl"]],
-      body: offenseRows.length ? offenseRows : [["", "Keine Einträge", "", "", ""]],
+      head: [[
+        "#",
+        "Struktur",
+        "Position",
+        "Ergebnis",
+        "Zahl"
+      ]],
+
+      body:
+        offenseRows.length
+          ? offenseRows
+          : [["", "Keine Einträge", "", "", ""]],
+
       startY: 33,
       theme: "grid",
+
       styles: {
         fontSize: 7.5,
         cellPadding: 2,
         lineWidth: .2,
         lineColor: [140, 140, 140]
       },
+
       headStyles: {
         fillColor: [230, 242, 241],
         textColor: 20
       },
+
       didParseCell: data => {
         applyResultColor(data);
         applyNumberColor(data);
       }
     });
 
-    let nextY = doc.lastAutoTable.finalY + 10;
+    let nextY =
+      doc.lastAutoTable.finalY + 10;
+
     if (nextY > 170) {
       doc.addPage();
       nextY = 18;
@@ -1516,75 +2388,142 @@ tbody tr.editing {
     doc.text("Abwehr", 14, nextY);
 
     doc.autoTable({
-      head: [["#", "Position", "Abschlussposition", "Zahl"]],
-      body: defenseRows.length ? defenseRows : [["", "Keine Einträge", "", ""]],
+      head: [[
+        "#",
+        "Position",
+        "Abschlussposition",
+        "Zahl"
+      ]],
+
+      body:
+        defenseRows.length
+          ? defenseRows
+          : [["", "Keine Einträge", "", ""]],
+
       startY: nextY + 3,
       theme: "grid",
+
       styles: {
         fontSize: 7.5,
         cellPadding: 2,
         lineWidth: .2,
         lineColor: [140, 140, 140]
       },
+
       headStyles: {
         fillColor: [248, 232, 233],
         textColor: 20
       },
+
       didParseCell: data => {
-        if (data.section !== "body") return;
-        
+        if (data.section !== "body") {
+          return;
+        }
+
         if (data.column.index === 1) {
-          const row = defenseRows[data.row.index];
-          const positionSide = sortEntries("defense")[data.row.index]?.positionSide || "";
-          if (positionSide === "green") data.cell.styles.fillColor = [225, 240, 220];
-          else if (positionSide === "red") data.cell.styles.fillColor = [248, 223, 223];
+          const positionSide =
+            sortEntries("defense")[
+              data.row.index
+            ]?.positionSide || "";
+
+          if (positionSide === "green") {
+            data.cell.styles.fillColor =
+              [225, 240, 220];
+          } else if (positionSide === "red") {
+            data.cell.styles.fillColor =
+              [248, 223, 223];
+          }
         }
-        
+
         if (data.column.index === 2) {
-          const row = defenseRows[data.row.index];
-          const finishSide = sortEntries("defense")[data.row.index]?.finishSide || "";
-          if (finishSide === "green") data.cell.styles.fillColor = [225, 240, 220];
-          else if (finishSide === "red") data.cell.styles.fillColor = [248, 223, 223];
-          else if (finishSide === "yellow") data.cell.styles.fillColor = [247, 237, 198];
+          const finishSide =
+            sortEntries("defense")[
+              data.row.index
+            ]?.finishSide || "";
+
+          if (finishSide === "green") {
+            data.cell.styles.fillColor =
+              [225, 240, 220];
+          } else if (finishSide === "red") {
+            data.cell.styles.fillColor =
+              [248, 223, 223];
+          } else if (finishSide === "yellow") {
+            data.cell.styles.fillColor =
+              [247, 237, 198];
+          }
         }
-        
+
         applyNumberColor(data);
       }
     });
 
-    const noteText = els.notes.value.trim();
+    const noteText =
+      els.notes.value.trim();
+
     if (noteText) {
-      let noteY = doc.lastAutoTable.finalY + 10;
+      let noteY =
+        doc.lastAutoTable.finalY + 10;
+
       if (noteY > 180) {
         doc.addPage();
         noteY = 20;
       }
+
       doc.setFontSize(11);
       doc.text("Notizen:", 14, noteY);
+
       doc.setFontSize(10);
-      const lines = doc.splitTextToSize(noteText, 255);
-      doc.text(lines, 14, noteY + 6);
+
+      const lines =
+        doc.splitTextToSize(
+          noteText,
+          255
+        );
+
+      doc.text(
+        lines,
+        14,
+        noteY + 6
+      );
     }
 
-    const safeOpponent = state.meta.opponent
-      .replace(/[^\wäöüÄÖÜß-]+/g, "_")
-      .replace(/^_+|_+$/g, "");
+    const safeOpponent =
+      state.meta.opponent
+        .replace(/[^\wäöüÄÖÜß-]+/g, "_")
+        .replace(/^_+|_+$/g, "");
 
-    doc.save(`Kollektive_Statistik_vs_${safeOpponent || "Gegner"}.pdf`);
+    doc.save(
+      `Kollektive_Statistik_vs_${
+        safeOpponent || "Gegner"
+      }.pdf`
+    );
   }
 
   function startApp() {
-    const opponent = els.opponent.value.trim();
-    const matchDate = els.matchDate.value;
+    const opponent =
+      els.opponent.value.trim();
+
+    const matchDate =
+      els.matchDate.value;
 
     if (!opponent || !matchDate) {
-      alert("Bitte Gegner und Datum eintragen.");
+      alert(
+        "Bitte Gegner und Datum eintragen."
+      );
       return;
     }
 
-    state.meta = { opponent, matchDate };
-    els.headline.textContent = `Statistik vs ${opponent}`;
-    els.topMeta.textContent = formatDate(matchDate);
+    state.meta = {
+      opponent,
+      matchDate
+    };
+
+    els.headline.textContent =
+      `Statistik vs ${opponent}`;
+
+    els.topMeta.textContent =
+      formatDate(matchDate);
+
     els.setup.classList.add("hidden");
     els.workspace.classList.remove("hidden");
 
@@ -1596,31 +2535,125 @@ tbody tr.editing {
     });
   }
 
-  document.querySelectorAll("th button[data-table]").forEach(button => {
-    button.addEventListener("click", () => {
-      setSort(button.dataset.table, button.dataset.sort);
+  document
+    .querySelectorAll("th button[data-table]")
+    .forEach(button => {
+      button.addEventListener("click", () => {
+        setSort(
+          button.dataset.table,
+          button.dataset.sort
+        );
+      });
     });
-  });
 
-  els.startBtn.addEventListener("click", startApp);
-  els.undoBtn.addEventListener("click", undoLast);
-  els.pdfBtn.addEventListener("click", exportPdf);
-  els.offenseSaveBtn.addEventListener("click", () => saveEntry("offense"));
-  els.defenseSaveBtn.addEventListener("click", () => saveEntry("defense"));
-  els.offenseResetBtn.addEventListener("click", () => clearSelection("offense"));
-  els.defenseResetBtn.addEventListener("click", () => clearSelection("defense"));
+  els.startBtn.addEventListener(
+    "click",
+    startApp
+  );
 
-  renderButtons(els.offenseStructureButtons, offenseStructureOptions, "structure", "offense");
-  renderButtons(els.offensePositionButtons, positionOptions, "position", "offense");
-  renderButtons(els.offenseResultButtons, offenseResults, "result", "offense");
-  renderButtons(els.offenseNumberButtons, numberOptions, "number", "offense");
+  els.undoBtn.addEventListener(
+    "click",
+    undoLast
+  );
 
-  renderButtons(els.defensePositionGreenButtons, positionOptions, "position", "defense", "green");
-  renderButtons(els.defensePositionRedButtons, positionOptions, "position", "defense", "red");
-  renderButtons(els.defenseFinishGreenButtons, defenseFinishOptions, "finishPosition", "defense", "green");
-  renderButtons(els.defenseFinishRedButtons, defenseFinishOptions, "finishPosition", "defense", "red");
-  renderButtons(els.defenseFinishSpecialButtons, defenseFinishSpecialOptions, "finishPosition", "defense");
-  renderButtons(els.defenseNumberButtons, numberOptions, "number", "defense");
+  els.pdfBtn.addEventListener(
+    "click",
+    exportPdf
+  );
+
+  els.offenseSaveBtn.addEventListener(
+    "click",
+    () => saveEntry("offense")
+  );
+
+  els.defenseSaveBtn.addEventListener(
+    "click",
+    () => saveEntry("defense")
+  );
+
+  els.offenseResetBtn.addEventListener(
+    "click",
+    () => clearSelection("offense")
+  );
+
+  els.defenseResetBtn.addEventListener(
+    "click",
+    () => clearSelection("defense")
+  );
+
+  renderButtons(
+    els.offenseStructureButtons,
+    offenseStructureOptions,
+    "structure",
+    "offense"
+  );
+
+  renderButtons(
+    els.offensePositionButtons,
+    positionOptions,
+    "position",
+    "offense"
+  );
+
+  renderButtons(
+    els.offenseResultButtons,
+    offenseResults,
+    "result",
+    "offense"
+  );
+
+  renderButtons(
+    els.offenseNumberButtons,
+    numberOptions,
+    "number",
+    "offense"
+  );
+
+  renderButtons(
+    els.defensePositionGreenButtons,
+    positionOptions,
+    "position",
+    "defense",
+    "green"
+  );
+
+  renderButtons(
+    els.defensePositionRedButtons,
+    positionOptions,
+    "position",
+    "defense",
+    "red"
+  );
+
+  renderButtons(
+    els.defenseFinishGreenButtons,
+    defenseFinishOptions,
+    "finishPosition",
+    "defense",
+    "green"
+  );
+
+  renderButtons(
+    els.defenseFinishRedButtons,
+    defenseFinishOptions,
+    "finishPosition",
+    "defense",
+    "red"
+  );
+
+  renderButtons(
+    els.defenseFinishSpecialButtons,
+    defenseFinishSpecialOptions,
+    "finishPosition",
+    "defense"
+  );
+
+  renderButtons(
+    els.defenseNumberButtons,
+    numberOptions,
+    "number",
+    "defense"
+  );
 
   updateSelectedButtons("offense");
   updateSelectedButtons("defense");
