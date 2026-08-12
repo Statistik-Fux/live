@@ -255,11 +255,19 @@ button {
 }
 
 .section-card.offense {
-  background: linear-gradient(180deg, rgba(13,91,31,.07), rgba(255,255,255,.95) 26%);
+  background: linear-gradient(
+    180deg,
+    rgba(13,91,31,.07),
+    rgba(255,255,255,.95) 26%
+  );
 }
 
 .section-card.defense {
-  background: linear-gradient(180deg, rgba(217,31,38,.07), rgba(255,255,255,.95) 26%);
+  background: linear-gradient(
+    180deg,
+    rgba(217,31,38,.07),
+    rgba(255,255,255,.95) 26%
+  );
 }
 
 .section-head {
@@ -324,6 +332,16 @@ button {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.structure-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.structure-row + .structure-row {
+  margin-top: var(--space-3);
+}
+
 .stack-grid {
   display: grid;
   gap: var(--space-3);
@@ -345,7 +363,11 @@ button {
   padding: .5rem .45rem;
   font-size: .94rem;
   color: #111;
-  transition: transform .14s ease, border-color .14s ease, background-color .14s ease, box-shadow .14s ease;
+  transition:
+    transform .14s ease,
+    border-color .14s ease,
+    background-color .14s ease,
+    box-shadow .14s ease;
 }
 
 .choice-btn:active,
@@ -414,12 +436,20 @@ button {
 }
 
 .result-btn.split-green-red {
-  background: linear-gradient(90deg, #dff0d9 0 50%, #f9dfdf 50% 100%);
+  background: linear-gradient(
+    90deg,
+    #dff0d9 0 50%,
+    #f9dfdf 50% 100%
+  );
   border-color: rgba(110,95,95,.35);
 }
 
 .result-btn.split-red-green {
-  background: linear-gradient(90deg, #f9dfdf 0 50%, #dff0d9 50% 100%);
+  background: linear-gradient(
+    90deg,
+    #f9dfdf 0 50%,
+    #dff0d9 50% 100%
+  );
   border-color: rgba(110,95,95,.35);
 }
 
@@ -439,13 +469,21 @@ button {
 }
 
 .result-btn.selected.split-green-red {
-  background: linear-gradient(90deg, rgba(63,125,50,.38) 0 50%, rgba(177,58,58,.34) 50% 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(63,125,50,.38) 0 50%,
+    rgba(177,58,58,.34) 50% 100%
+  );
   border-color: #6f6b60;
   box-shadow: 0 0 0 2px rgba(18,35,20,.08) inset;
 }
 
 .result-btn.selected.split-red-green {
-  background: linear-gradient(90deg, rgba(177,58,58,.34) 0 50%, rgba(63,125,50,.38) 50% 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(177,58,58,.34) 0 50%,
+    rgba(63,125,50,.38) 50% 100%
+  );
   border-color: #6f6b60;
   box-shadow: 0 0 0 2px rgba(18,35,20,.08) inset;
 }
@@ -569,11 +607,19 @@ tbody tr.editing {
 }
 
 .result-cell.split-green-red {
-  background: linear-gradient(90deg, rgba(220,239,214,.82) 0 50%, rgba(247,219,219,.82) 50% 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(220,239,214,.82) 0 50%,
+    rgba(247,219,219,.82) 50% 100%
+  );
 }
 
 .result-cell.split-red-green {
-  background: linear-gradient(90deg, rgba(247,219,219,.82) 0 50%, rgba(220,239,214,.82) 50% 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(247,219,219,.82) 0 50%,
+    rgba(220,239,214,.82) 50% 100%
+  );
 }
 
 .pill {
@@ -617,6 +663,11 @@ tbody tr.editing {
   color: #53306f;
 }
 
+.pill.number-tempo {
+  background: #f7edc6;
+  color: #7b5c00;
+}
+
 .pill.green-tag {
   background: #e1f0dc;
   color: #1b5c26;
@@ -642,11 +693,6 @@ tbody tr.editing {
   resize: vertical;
 }
 
-.install-note {
-  color: var(--muted);
-  font-size: var(--text-sm);
-}
-
 .empty {
   padding: var(--space-8);
   text-align: center;
@@ -663,6 +709,7 @@ tbody tr.editing {
   .app {
     padding: var(--space-4);
   }
+
   .setup,
   .section-card,
   .table-card,
@@ -682,7 +729,8 @@ tbody tr.editing {
 
   .button-grid,
   .button-grid.four,
-  .button-grid.two-wide {
+  .button-grid.two-wide,
+  .structure-row {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -702,7 +750,11 @@ tbody tr.editing {
 
       <div class="field">
         <label for="opponent">Gegner</label>
-        <input id="opponent" type="text" placeholder="Gegner eingeben">
+        <input
+          id="opponent"
+          type="text"
+          placeholder="Gegner eingeben"
+        >
       </div>
 
       <div class="field">
@@ -736,11 +788,20 @@ tbody tr.editing {
       </div>
 
       <div class="topbar-actions">
-        <button id="undoBtn" class="utility-btn undo" type="button" aria-label="Rückgängig">
+        <button
+          id="undoBtn"
+          class="utility-btn undo"
+          type="button"
+          aria-label="Rückgängig"
+        >
           ↶
         </button>
 
-        <button id="pdfBtn" class="utility-btn primary" type="button">
+        <button
+          id="pdfBtn"
+          class="utility-btn primary"
+          type="button"
+        >
           Export PDF
         </button>
       </div>
@@ -751,55 +812,89 @@ tbody tr.editing {
       <section class="panel section-card offense">
         <div class="section-head">
           <h2>Offensive Aktionen</h2>
-          <div id="offenseCount" class="entry-count">0 Einträge</div>
+          <div id="offenseCount" class="entry-count">
+            0 Einträge
+          </div>
         </div>
 
         <div class="controls">
+
           <div class="group">
             <h3>Struktur</h3>
-            <div id="offenseStructureButtons" class="button-grid"></div>
+
+            <div id="offenseStructureRow1" class="structure-row"></div>
+            <div id="offenseStructureRow2" class="structure-row"></div>
+            <div id="offenseStructureRow3" class="structure-row"></div>
           </div>
 
           <div class="group">
             <h3>Angegriffene Position</h3>
-            <div id="offensePositionButtons" class="button-grid"></div>
+            <div
+              id="offensePositionButtons"
+              class="button-grid"
+            ></div>
           </div>
 
           <div class="group">
             <h3>Ergebnis</h3>
-            <div id="offenseResultButtons" class="result-grid"></div>
+            <div
+              id="offenseResultButtons"
+              class="result-grid"
+            ></div>
           </div>
 
           <div class="group">
             <h3>Zahl</h3>
-            <div id="offenseNumberButtons" class="button-grid"></div>
+            <div
+              id="offenseNumberButtons"
+              class="button-grid"
+            ></div>
           </div>
 
           <div class="action-row">
-            <button id="offenseResetBtn" class="save-btn" type="button">
+            <button
+              id="offenseResetBtn"
+              class="save-btn"
+              type="button"
+            >
               Auswahl leeren
             </button>
 
-            <button id="offenseSaveBtn" class="save-btn primary" type="button">
+            <button
+              id="offenseSaveBtn"
+              class="save-btn primary"
+              type="button"
+            >
               Offensive Aktion speichern
             </button>
           </div>
+
         </div>
       </section>
 
       <section class="panel section-card defense">
         <div class="section-head">
           <h2>Defensive Aktionen</h2>
-          <div id="defenseCount" class="entry-count">0 Einträge</div>
+          <div id="defenseCount" class="entry-count">
+            0 Einträge
+          </div>
         </div>
 
         <div class="controls">
+
           <div class="group">
             <h3>Angegriffene Position</h3>
 
             <div class="stack-grid">
-              <div id="defensePositionGreenButtons" class="button-grid four"></div>
-              <div id="defensePositionRedButtons" class="button-grid four"></div>
+              <div
+                id="defensePositionGreenButtons"
+                class="button-grid four"
+              ></div>
+
+              <div
+                id="defensePositionRedButtons"
+                class="button-grid four"
+              ></div>
             </div>
           </div>
 
@@ -807,32 +902,56 @@ tbody tr.editing {
             <h3>Abschlussposition</h3>
 
             <div class="stack-grid">
-              <div id="defenseFinishGreenButtons" class="button-grid four"></div>
-              <div id="defenseFinishRedButtons" class="button-grid four"></div>
-              <div id="defenseFinishSpecialButtons" class="button-grid two-wide"></div>
+              <div
+                id="defenseFinishGreenButtons"
+                class="button-grid four"
+              ></div>
+
+              <div
+                id="defenseFinishRedButtons"
+                class="button-grid four"
+              ></div>
+
+              <div
+                id="defenseFinishSpecialButtons"
+                class="button-grid two-wide"
+              ></div>
             </div>
           </div>
 
           <div class="group">
             <h3>Zahl</h3>
-            <div id="defenseNumberButtons" class="button-grid"></div>
+
+            <div
+              id="defenseNumberButtons"
+              class="button-grid"
+            ></div>
           </div>
 
           <div class="action-row">
-            <button id="defenseResetBtn" class="save-btn" type="button">
+            <button
+              id="defenseResetBtn"
+              class="save-btn"
+              type="button"
+            >
               Auswahl leeren
             </button>
 
-            <button id="defenseSaveBtn" class="save-btn primary" type="button">
+            <button
+              id="defenseSaveBtn"
+              class="save-btn primary"
+              type="button"
+            >
               Defensive Aktion speichern
             </button>
           </div>
+
         </div>
       </section>
+
     </div>
 
     <div class="tables">
-
       <section class="panel table-card offense">
         <div class="table-tools">
           <h2>Angriff</h2>
@@ -844,31 +963,51 @@ tbody tr.editing {
             <thead>
               <tr>
                 <th style="width:7%">
-                  <button type="button" data-table="offense" data-sort="index">
+                  <button
+                    type="button"
+                    data-table="offense"
+                    data-sort="index"
+                  >
                     #
                   </button>
                 </th>
 
                 <th style="width:23%">
-                  <button type="button" data-table="offense" data-sort="structure">
+                  <button
+                    type="button"
+                    data-table="offense"
+                    data-sort="structure"
+                  >
                     Struktur
                   </button>
                 </th>
 
                 <th style="width:15%">
-                  <button type="button" data-table="offense" data-sort="position">
+                  <button
+                    type="button"
+                    data-table="offense"
+                    data-sort="position"
+                  >
                     Position
                   </button>
                 </th>
 
                 <th style="width:23%">
-                  <button type="button" data-table="offense" data-sort="result">
+                  <button
+                    type="button"
+                    data-table="offense"
+                    data-sort="result"
+                  >
                     Ergebnis
                   </button>
                 </th>
 
                 <th style="width:15%">
-                  <button type="button" data-table="offense" data-sort="number">
+                  <button
+                    type="button"
+                    data-table="offense"
+                    data-sort="number"
+                  >
                     Zahl
                   </button>
                 </th>
@@ -897,25 +1036,41 @@ tbody tr.editing {
             <thead>
               <tr>
                 <th style="width:7%">
-                  <button type="button" data-table="defense" data-sort="index">
+                  <button
+                    type="button"
+                    data-table="defense"
+                    data-sort="index"
+                  >
                     #
                   </button>
                 </th>
 
                 <th style="width:20%">
-                  <button type="button" data-table="defense" data-sort="positionLabel">
+                  <button
+                    type="button"
+                    data-table="defense"
+                    data-sort="positionLabel"
+                  >
                     Position
                   </button>
                 </th>
 
                 <th style="width:28%">
-                  <button type="button" data-table="defense" data-sort="finishPositionLabel">
+                  <button
+                    type="button"
+                    data-table="defense"
+                    data-sort="finishPositionLabel"
+                  >
                     Abschlussposition
                   </button>
                 </th>
 
                 <th style="width:15%">
-                  <button type="button" data-table="defense" data-sort="number">
+                  <button
+                    type="button"
+                    data-table="defense"
+                    data-sort="number"
+                  >
                     Zahl
                   </button>
                 </th>
@@ -936,6 +1091,7 @@ tbody tr.editing {
 
     <section class="panel notes">
       <label for="notes">Notizen</label>
+
       <textarea
         id="notes"
         placeholder="Notizen zum Spiel eingeben..."
@@ -962,16 +1118,28 @@ tbody tr.editing {
     SUPABASE_ANON_KEY
   );
 
-  const offenseStructureOptions = [
-    "Kreis breit 1/2",
-    "Kreis breit 5/6",
-    "3/4 -> 2",
-    "3/4 -> 5",
-    "1. Welle",
-    "2. Welle",
-    "3. Welle",
-    "Schnelle Mitte"
+  const offenseStructureRows = [
+    [
+      "Kreis breit 1/2",
+      "Kreis breit 5/6",
+      "2/3",
+      "4/5"
+    ],
+    [
+      "3/4 -> 2",
+      "3/4 -> 5",
+      "3/4"
+    ],
+    [
+      "1. Welle",
+      "2. Welle",
+      "3. Welle",
+      "Schnelle Mitte"
+    ]
   ];
+
+  const offenseStructureOptions =
+    offenseStructureRows.flat();
 
   const positionOptions = [
     "2",
@@ -1001,10 +1169,17 @@ tbody tr.editing {
     }
   ];
 
-  const numberOptions = [
+  const offenseNumberOptions = [
     "6:6",
     "6:5",
     "7:6"
+  ];
+
+  const defenseNumberOptions = [
+    "6:6",
+    "6:5",
+    "7:6",
+    "Tempo"
   ];
 
   const offenseResults = [
@@ -1040,17 +1215,19 @@ tbody tr.editing {
     }
   ];
 
-  const defaultSelection = () => ({
-    structure: [],
-    position: "",
-    finishPosition: "",
-    positionSide: "",
-    finishSide: "",
-    number: "6:6",
-    result: "",
-    resultDisplay: "",
-    group: ""
-  });
+  function defaultSelection(domain = "offense") {
+    return {
+      structure: [],
+      position: "",
+      finishPosition: "",
+      positionSide: "",
+      finishSide: "",
+      number: domain === "defense" ? [] : "6:6",
+      result: "",
+      resultDisplay: "",
+      group: ""
+    };
+  }
 
   const state = {
     meta: {
@@ -1063,7 +1240,7 @@ tbody tr.editing {
     offense: {
       entries: [],
       editingId: null,
-      selection: defaultSelection(),
+      selection: defaultSelection("offense"),
       sort: {
         key: "index",
         dir: "desc"
@@ -1073,7 +1250,7 @@ tbody tr.editing {
     defense: {
       entries: [],
       editingId: null,
-      selection: defaultSelection(),
+      selection: defaultSelection("defense"),
       sort: {
         key: "index",
         dir: "desc"
@@ -1092,32 +1269,111 @@ tbody tr.editing {
     undoBtn: document.getElementById("undoBtn"),
     pdfBtn: document.getElementById("pdfBtn"),
     notes: document.getElementById("notes"),
-    offenseCount: document.getElementById("offenseCount"),
-    defenseCount: document.getElementById("defenseCount"),
-    offenseSortInfo: document.getElementById("offenseSortInfo"),
-    defenseSortInfo: document.getElementById("defenseSortInfo"),
-    offenseTableBody: document.getElementById("offenseTableBody"),
-    defenseTableBody: document.getElementById("defenseTableBody"),
-    offenseStructureButtons: document.getElementById("offenseStructureButtons"),
-    offensePositionButtons: document.getElementById("offensePositionButtons"),
-    offenseResultButtons: document.getElementById("offenseResultButtons"),
-    offenseNumberButtons: document.getElementById("offenseNumberButtons"),
-    defensePositionGreenButtons: document.getElementById("defensePositionGreenButtons"),
-    defensePositionRedButtons: document.getElementById("defensePositionRedButtons"),
-    defenseFinishGreenButtons: document.getElementById("defenseFinishGreenButtons"),
-    defenseFinishRedButtons: document.getElementById("defenseFinishRedButtons"),
-    defenseFinishSpecialButtons: document.getElementById("defenseFinishSpecialButtons"),
-    defenseNumberButtons: document.getElementById("defenseNumberButtons"),
-    offenseSaveBtn: document.getElementById("offenseSaveBtn"),
-    defenseSaveBtn: document.getElementById("defenseSaveBtn"),
-    offenseResetBtn: document.getElementById("offenseResetBtn"),
-    defenseResetBtn: document.getElementById("defenseResetBtn")
+
+    offenseCount:
+      document.getElementById("offenseCount"),
+
+    defenseCount:
+      document.getElementById("defenseCount"),
+
+    offenseSortInfo:
+      document.getElementById("offenseSortInfo"),
+
+    defenseSortInfo:
+      document.getElementById("defenseSortInfo"),
+
+    offenseTableBody:
+      document.getElementById("offenseTableBody"),
+
+    defenseTableBody:
+      document.getElementById("defenseTableBody"),
+
+    offenseStructureRow1:
+      document.getElementById(
+        "offenseStructureRow1"
+      ),
+
+    offenseStructureRow2:
+      document.getElementById(
+        "offenseStructureRow2"
+      ),
+
+    offenseStructureRow3:
+      document.getElementById(
+        "offenseStructureRow3"
+      ),
+
+    offensePositionButtons:
+      document.getElementById(
+        "offensePositionButtons"
+      ),
+
+    offenseResultButtons:
+      document.getElementById(
+        "offenseResultButtons"
+      ),
+
+    offenseNumberButtons:
+      document.getElementById(
+        "offenseNumberButtons"
+      ),
+
+    defensePositionGreenButtons:
+      document.getElementById(
+        "defensePositionGreenButtons"
+      ),
+
+    defensePositionRedButtons:
+      document.getElementById(
+        "defensePositionRedButtons"
+      ),
+
+    defenseFinishGreenButtons:
+      document.getElementById(
+        "defenseFinishGreenButtons"
+      ),
+
+    defenseFinishRedButtons:
+      document.getElementById(
+        "defenseFinishRedButtons"
+      ),
+
+    defenseFinishSpecialButtons:
+      document.getElementById(
+        "defenseFinishSpecialButtons"
+      ),
+
+    defenseNumberButtons:
+      document.getElementById(
+        "defenseNumberButtons"
+      ),
+
+    offenseSaveBtn:
+      document.getElementById(
+        "offenseSaveBtn"
+      ),
+
+    defenseSaveBtn:
+      document.getElementById(
+        "defenseSaveBtn"
+      ),
+
+    offenseResetBtn:
+      document.getElementById(
+        "offenseResetBtn"
+      ),
+
+    defenseResetBtn:
+      document.getElementById(
+        "defenseResetBtn"
+      )
   };
 
   let pressTimer = null;
   let longPressFired = false;
 
-  const currentStore = domain => state[domain];
+  const currentStore = domain =>
+    state[domain];
 
   const clone = value =>
     JSON.parse(JSON.stringify(value));
@@ -1136,7 +1392,9 @@ tbody tr.editing {
 
   function setToday() {
     els.matchDate.value =
-      new Date().toISOString().split("T")[0];
+      new Date()
+        .toISOString()
+        .split("T")[0];
   }
 
   function getDefenseResult(selection) {
@@ -1169,159 +1427,292 @@ tbody tr.editing {
       selection.finishSide === "green";
 
     return {
-      result: success ? "defense_success" : "defense_fail",
-      resultDisplay: success ? "Erfolg" : "Misserfolg",
-      group: success ? "green" : "red"
+      result: success
+        ? "defense_success"
+        : "defense_fail",
+
+      resultDisplay: success
+        ? "Erfolg"
+        : "Misserfolg",
+
+      group: success
+        ? "green"
+        : "red"
     };
   }
 
-  function buildSupabaseRow(domain, payload) {
+  function normalizeNumberValue(
+    value,
+    domain
+  ) {
+    if (domain !== "defense") {
+      return value || "6:6";
+    }
+
+    if (Array.isArray(value)) {
+      return value;
+    }
+
+    if (!value) {
+      return [];
+    }
+
+    return String(value)
+      .split(" + ")
+      .filter(Boolean);
+  }
+
+  function buildSupabaseRow(
+    domain,
+    payload
+  ) {
     return {
-      match_opponent: state.meta.opponent,
-      match_date: state.meta.matchDate,
+      match_opponent:
+        state.meta.opponent,
+
+      match_date:
+        state.meta.matchDate,
+
       side: domain,
-      structure: payload.structure,
-      attack_position: payload.position,
-      finish_position: payload.finishPosition,
-      position_side: payload.positionSide,
-      finish_side: payload.finishSide,
-      number_relation: payload.number,
-      result: payload.result,
-      result_display: payload.resultDisplay,
-      result_group: payload.group,
-      created_order: payload.createdOrder
-    };
-  }
-
-  function normalizeRow(row, fallback = {}) {
-    return {
-      ...row,
-      id: row.id,
-      createdOrder:
-        row.created_order ?? fallback.createdOrder,
 
       structure:
-        row.structure ?? fallback.structure ?? "",
+        payload.structure,
 
-      position:
-        row.attack_position ?? fallback.position ?? "",
+      attack_position:
+        payload.position,
 
-      finishPosition:
-        row.finish_position ?? fallback.finishPosition ?? "",
+      finish_position:
+        payload.finishPosition,
 
-      positionSide:
-        row.position_side ?? fallback.positionSide ?? "",
+      position_side:
+        payload.positionSide,
 
-      finishSide:
-        row.finish_side ?? fallback.finishSide ?? "",
+      finish_side:
+        payload.finishSide,
 
-      number:
-        row.number_relation ?? fallback.number ?? "6:6",
+      number_relation:
+        payload.number,
 
       result:
-        row.result ?? fallback.result ?? "",
+        payload.result,
+
+      result_display:
+        payload.resultDisplay,
+
+      result_group:
+        payload.group,
+
+      created_order:
+        payload.createdOrder
+    };
+  }
+
+  function normalizeRow(
+    row,
+    fallback = {}
+  ) {
+    const domain =
+      row.side || fallback.domain || "offense";
+
+    return {
+      ...row,
+
+      id: row.id,
+
+      createdOrder:
+        row.created_order ??
+        fallback.createdOrder,
+
+      structure:
+        row.structure ??
+        fallback.structure ??
+        "",
+
+      position:
+        row.attack_position ??
+        fallback.position ??
+        "",
+
+      finishPosition:
+        row.finish_position ??
+        fallback.finishPosition ??
+        "",
+
+      positionSide:
+        row.position_side ??
+        fallback.positionSide ??
+        "",
+
+      finishSide:
+        row.finish_side ??
+        fallback.finishSide ??
+        "",
+
+      number:
+        normalizeNumberValue(
+          row.number_relation ??
+          fallback.number,
+          domain
+        ),
+
+      result:
+        row.result ??
+        fallback.result ??
+        "",
 
       resultDisplay:
-        row.result_display ?? fallback.resultDisplay ?? "",
+        row.result_display ??
+        fallback.resultDisplay ??
+        "",
 
       group:
-        row.result_group ?? fallback.group ?? ""
+        row.result_group ??
+        fallback.group ??
+        ""
     };
   }
 
   async function loadMatchActions() {
-    const { data, error } = await supabase
-      .from("match_actions")
-      .select("*")
-      .eq("match_opponent", state.meta.opponent)
-      .eq("match_date", state.meta.matchDate)
-      .order("created_order", {
-        ascending: true
-      });
+    const { data, error } =
+      await supabase
+        .from("match_actions")
+        .select("*")
+        .eq(
+          "match_opponent",
+          state.meta.opponent
+        )
+        .eq(
+          "match_date",
+          state.meta.matchDate
+        )
+        .order("created_order", {
+          ascending: true
+        });
 
     if (error) {
       console.error(error);
+
       alert(
         error.message ||
         "Fehler beim Laden der Spieldaten."
       );
+
       return;
     }
 
-    state.offense.entries = data
-      .filter(row => row.side === "offense")
-      .map(row => normalizeRow(row));
+    state.offense.entries =
+      data
+        .filter(
+          row => row.side === "offense"
+        )
+        .map(row =>
+          normalizeRow(row, {
+            domain: "offense"
+          })
+        );
 
-    state.defense.entries = data
-      .filter(row => row.side === "defense")
-      .map(row => {
-        const normalized = normalizeRow(row);
+    state.defense.entries =
+      data
+        .filter(
+          row => row.side === "defense"
+        )
+        .map(row => {
+          const normalized =
+            normalizeRow(row, {
+              domain: "defense"
+            });
 
-        if (!normalized.result) {
-          const success =
-            normalized.positionSide === "green" &&
-            normalized.finishSide === "green";
+          if (!normalized.result) {
+            const success =
+              normalized.positionSide === "green" &&
+              normalized.finishSide === "green";
 
-          normalized.result =
-            success
-              ? "defense_success"
-              : "defense_fail";
+            normalized.result =
+              success
+                ? "defense_success"
+                : "defense_fail";
 
-          normalized.resultDisplay =
-            success
-              ? "Erfolg"
-              : normalized.finishPosition === "freiwurf"
-                ? "Freiwurf"
-                : normalized.finishPosition === "tf"
-                  ? "TF"
-                  : "Misserfolg";
+            normalized.resultDisplay =
+              success
+                ? "Erfolg"
+                : normalized.finishPosition === "freiwurf"
+                  ? "Freiwurf"
+                  : normalized.finishPosition === "tf"
+                    ? "TF"
+                    : "Misserfolg";
 
-          normalized.group =
-            normalized.finishPosition === "freiwurf"
-              ? "yellow"
-              : success
-                ? "green"
-                : "red";
-        }
+            normalized.group =
+              normalized.finishPosition === "freiwurf"
+                ? "yellow"
+                : success
+                  ? "green"
+                  : "red";
+          }
 
-        return normalized;
-      });
+          return normalized;
+        });
   }
 
-  async function insertEntry(domain, payload) {
-    const { data, error } = await supabase
-      .from("match_actions")
-      .insert(buildSupabaseRow(domain, payload))
-      .select("*")
-      .single();
+  async function insertEntry(
+    domain,
+    payload
+  ) {
+    const { data, error } =
+      await supabase
+        .from("match_actions")
+        .insert(
+          buildSupabaseRow(
+            domain,
+            payload
+          )
+        )
+        .select("*")
+        .single();
 
     if (error) {
       throw error;
     }
 
-    return normalizeRow(data, payload);
+    return normalizeRow(data, {
+      ...payload,
+      domain
+    });
   }
 
-  async function updateEntry(id, domain, payload) {
-    const { data, error } = await supabase
-      .from("match_actions")
-      .update(buildSupabaseRow(domain, payload))
-      .eq("id", id)
-      .select("*")
-      .single();
+  async function updateEntry(
+    id,
+    domain,
+    payload
+  ) {
+    const { data, error } =
+      await supabase
+        .from("match_actions")
+        .update(
+          buildSupabaseRow(
+            domain,
+            payload
+          )
+        )
+        .eq("id", id)
+        .select("*")
+        .single();
 
     if (error) {
       throw error;
     }
 
-    return normalizeRow(data, payload);
+    return normalizeRow(data, {
+      ...payload,
+      domain
+    });
   }
 
   async function deleteEntry(id) {
-    const { error } = await supabase
-      .from("match_actions")
-      .delete()
-      .eq("id", id);
+    const { error } =
+      await supabase
+        .from("match_actions")
+        .delete()
+        .eq("id", id);
 
     if (error) {
       throw error;
