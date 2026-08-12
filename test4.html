@@ -2452,3 +2452,403 @@ tbody tr.editing {
         );
     }
   }
+    function exportPdf() {
+    if (
+      !window.jspdf ||
+      !window.jspdf.jsPDF
+    ) {
+      alert(
+        "Der PDF-Export konnte nicht geladen werden. " +
+        "Bitte öffne die App einmal mit Internetverbindung " +
+        "und versuche es erneut."
+      );
+      return;
+    }
+
+    const { jsPDF } = window.jspdf;
+
+    const doc = new jsPDF({
+      orientation: "landscape",
+      unit: "mm",
+      format: "a4"
+    });
+
+    if (typeof doc.autoTable !== "function") {
+      alert(
+        "Das PDF-Tabellenmodul konnte nicht geladen werden. " +
+        "Bitte öffne die App mit Internetverbindung " +
+        "und versuche es erneut."
+      );
+      return;
+    }
+
+    doc.setFontSize(16);
+
+    doc.text(
+      `Kollektive Statistik vs ${state.meta.opponent}`,
+      14,
+      14
+    );
+
+    doc.setFontSize(10);
+
+    doc.text(
+      `Datum: ${formatDate(state.meta.matchDate)}`,
+      14,
+      21
+    );
+
+    const offenseRows =
+      sortEntries("offense").map(row => [
+        row.createdOrder || "",
+        row.structure || "",
+        row.position || "",
+        row.resultDisplay || row.result || "",
+        Array.isArray(row.number)
+          ? row.number.join(" + ")
+          : row.number || ""
+      ]);
+
+    const defenseRows =
+      sortEntries("defense").map(row => [
+        row.createdOrder || "",
+        row.position || "",
+        row.finishPosition === "freiwurf"
+          ? "Freiwurf"
+          : row.finishPosition === "tf"
+            ? "TF"
+            : row.finishPosition || "",
+        Array.isArray(row.number)
+          ? row.number.join(" + ")
+          : row.number || ""
+      ]);
+
+    doc.setFontSize(12);
+    doc.text("Angriff", 14, 30);
+
+    doc.autoTable({
+      head: [[
+        "#",
+        "Struktur",
+        "Position",
+        "Ergebnis",
+        "Zahl"
+      ]],
+
+      body: offenseRows.length
+        ? offenseRows
+        : [["", "Keine Einträge", "", "", ""]],
+
+      startY: 33,
+      theme: "grid",
+
+      styles: {
+        fontSize: 7.5,
+        cellPadding: 2,
+        lineWidth: .2,
+        lineColor: [140, 140, 140]
+      },
+
+      headStyles: {
+        fillColor: [230, 242, 241],
+        textColor: 20
+      },
+
+      didParseCell: data => {
+        applyResultColor(data);
+        applyNumberColor(data);
+      }
+    });
+
+    let nextY =
+      doc.lastAutoTable.finalY + 10;
+
+    if (nextY > 170) {
+      doc.addPage();
+      nextY = 18;
+    }
+
+    doc.setFontSize(12);
+    doc.text("Abwehr", 14, nextY);
+
+    doc.autoTable({
+      head: [[
+        "#",
+        "Position",
+        "Abschlussposition",
+        "Zahl"
+      ]],
+
+      body: defenseRows.length
+        ? defenseRows
+        : [["", "Keine Einträge", "", ""]],
+
+      startY: nextY + 3,
+      theme: "grid",
+
+      styles: {
+        fontSize: 7.5,
+        cellPadding: 2,
+        lineWidth: .2,
+        lineColor: [140, 140, 140]
+      },
+
+      headStyles: {
+        fillColor: [248, 232, 233],
+        textColor: 20
+      },
+
+      didParseCell: data => {
+        if (data.section !== "body") {
+          return;
+        }
+
+        if (data.column.index === 1) {
+          const row =
+            sortEntries("defense")[data.row.index];
+
+          const positionSide =
+            row?.positionSide || "";
+
+          if (positionSide === "green") {
+            data.cell.styles.fillColor =
+              [225, 240, 220];
+          } else if (positionSide === "red") {
+            data.cell.styles.fillColor =
+              [248, 223, 223];
+          }
+        }
+
+        if (data.column.index === 2) {
+          const row =
+            sortEntries("defense")[data.row.index];
+
+          const finishSide =
+            row?.finishSide || "";
+
+          if (finishSide === "green") {
+            data.cell.styles.fillColor =
+              [225, 240, 220];
+          } else if (finishSide === "red") {
+            data.cell.styles.fillColor =
+              [248, 223, 223];
+          } else if (finishSide === "yellow") {
+            data.cell.styles.fillColor =
+              [247, 237, 198];
+          }
+        }
+
+        applyNumberColor(data);
+      }
+    });
+
+    const noteText =
+      els.notes.value.trim();
+
+    if (noteText) {
+      let noteY =
+        doc.lastAutoTable.finalY + 10;
+
+      if (noteY > 180) {
+        doc.addPage();
+        noteY = 20;
+      }
+
+      doc.setFontSize(11);
+      doc.text("Notizen:", 14, noteY);
+
+      doc.setFontSize(10);
+
+      const lines =
+        doc.splitTextToSize(
+          noteText,
+          255
+        );
+
+      doc.text(
+        lines,
+        14,
+        noteY + 6
+      );
+    }
+
+    const safeOpponent =
+      state.meta.opponent
+        .replace(/[^\wäöüÄÖÜß-]+/g, "_")
+        .replace(/^_+|_+$/g, "");
+
+    doc.save(
+      `Kollektive_Statistik_vs_${
+        safeOpponent || "Gegner"
+      }.pdf`
+    );
+  }
+
+  function startApp() {
+    const opponent =
+      els.opponent.value.trim();
+
+    const matchDate =
+      els.matchDate.value;
+
+    if (!opponent || !matchDate) {
+      alert(
+        "Bitte Gegner und Datum eintragen."
+      );
+      return;
+    }
+
+    state.meta = {
+      opponent,
+      matchDate
+    };
+
+    els.headline.textContent =
+      `Statistik vs ${opponent}`;
+
+    els.topMeta.textContent =
+      formatDate(matchDate);
+
+    els.setup.classList.add("hidden");
+    els.workspace.classList.remove("hidden");
+
+    loadMatchActions().then(() => {
+      renderTable("offense");
+      renderTable("defense");
+      updateSelectedButtons("offense");
+      updateSelectedButtons("defense");
+    });
+  }
+
+  document
+    .querySelectorAll("th button[data-table]")
+    .forEach(button => {
+      button.addEventListener("click", () => {
+        setSort(
+          button.dataset.table,
+          button.dataset.sort
+        );
+      });
+    });
+
+  els.startBtn.addEventListener(
+    "click",
+    startApp
+  );
+
+  els.undoBtn.addEventListener(
+    "click",
+    undoLast
+  );
+
+  els.pdfBtn.addEventListener(
+    "click",
+    exportPdf
+  );
+
+  els.offenseSaveBtn.addEventListener(
+    "click",
+    () => saveEntry("offense")
+  );
+
+  els.defenseSaveBtn.addEventListener(
+    "click",
+    () => saveEntry("defense")
+  );
+
+  els.offenseResetBtn.addEventListener(
+    "click",
+    () => clearSelection("offense")
+  );
+
+  els.defenseResetBtn.addEventListener(
+    "click",
+    () => clearSelection("defense")
+  );
+
+  offenseStructureRows.forEach(
+    (row, index) => {
+      renderButtons(
+        els[`offenseStructureRow${index + 1}`],
+        row,
+        "structure",
+        "offense"
+      );
+    }
+  );
+
+  renderButtons(
+    els.offensePositionButtons,
+    positionOptions,
+    "position",
+    "offense"
+  );
+
+  renderButtons(
+    els.offenseResultButtons,
+    offenseResults,
+    "result",
+    "offense"
+  );
+
+  renderButtons(
+    els.offenseNumberButtons,
+    offenseNumberOptions,
+    "number",
+    "offense"
+  );
+
+  renderButtons(
+    els.defensePositionGreenButtons,
+    positionOptions,
+    "position",
+    "defense",
+    "green"
+  );
+
+  renderButtons(
+    els.defensePositionRedButtons,
+    positionOptions,
+    "position",
+    "defense",
+    "red"
+  );
+
+  renderButtons(
+    els.defenseFinishGreenButtons,
+    defenseFinishOptions,
+    "finishPosition",
+    "defense",
+    "green"
+  );
+
+  renderButtons(
+    els.defenseFinishRedButtons,
+    defenseFinishOptions,
+    "finishPosition",
+    "defense",
+    "red"
+  );
+
+  renderButtons(
+    els.defenseFinishSpecialButtons,
+    defenseFinishSpecialOptions,
+    "finishPosition",
+    "defense"
+  );
+
+  renderButtons(
+    els.defenseNumberButtons,
+    defenseNumberOptions,
+    "number",
+    "defense"
+  );
+
+  updateSelectedButtons("offense");
+  updateSelectedButtons("defense");
+  setToday();
+})();
+</script>
+
+</body>
+</html>
