@@ -601,6 +601,22 @@ tbody tr.editing {
   color: #53306f;
 }
 
+.pill.number-66 {
+  background: #ffffff;
+  color: #53306f;
+  border: 1px solid #e0e0e0;
+}
+
+.pill.number-76 {
+  background: #f0f7ff;
+  color: #53306f;
+}
+
+.pill.number-65 {
+  background: #fff9f0;
+  color: #53306f;
+}
+
 .pill.green-tag {
   background: #e1f0dc;
   color: #1b5c26;
@@ -1296,6 +1312,13 @@ tbody tr.editing {
     renderTable(domain);
   }
 
+  function getNumberClass(number) {
+    if (number === "6:6") return "number-66";
+    if (number === "7:6") return "number-76";
+    if (number === "6:5") return "number-65";
+    return "number";
+  }
+
   function renderTable(domain) {
     const store = currentStore(domain);
     const rows = sortEntries(domain);
@@ -1324,7 +1347,7 @@ tbody tr.editing {
           <td>${row.structure ? `<span class="pill structure">${escapeHtml(row.structure)}</span>` : "—"}</td>
           <td>${row.position ? `<span class="pill position">${escapeHtml(row.position)}</span>` : "—"}</td>
           <td class="result-cell ${row.group || ""}">${escapeHtml(row.resultDisplay || row.result || "")}</td>
-          <td>${row.number ? `<span class="pill number">${escapeHtml(row.number)}</span>` : "—"}</td>
+          <td>${row.number ? `<span class="pill ${getNumberClass(row.number)}">${escapeHtml(row.number)}</span>` : "—"}</td>
         </tr>
       `).join("");
     } else {
@@ -1333,7 +1356,7 @@ tbody tr.editing {
           <td>${index + 1}</td>
           <td>${row.position ? `<span class="pill ${row.positionSide === "green" ? "green-tag" : "red-tag"}">${escapeHtml(row.position)}</span>` : "—"}</td>
           <td>${row.finishPosition ? `<span class="pill ${row.finishSide === "green" ? "green-tag" : row.finishSide === "yellow" ? "yellow-tag" : "red-tag"}">${escapeHtml(row.finishPosition === "freiwurf" ? "Freiwurf" : row.finishPosition === "tf" ? "TF" : row.finishPosition)}</span>` : "—"}</td>
-          <td>${row.number ? `<span class="pill number">${escapeHtml(row.number)}</span>` : "—"}</td>
+          <td>${row.number ? `<span class="pill ${getNumberClass(row.number)}">${escapeHtml(row.number)}</span>` : "—"}</td>
         </tr>
       `).join("");
     }
@@ -1404,6 +1427,27 @@ tbody tr.editing {
     else if (value === "schlechte Chance - Tor") data.cell.styles.fillColor = [247, 219, 219];
   }
 
+  function getNumberFillColor(number) {
+    if (number === "6:6") return [255, 255, 255];
+    if (number === "7:6") return [240, 247, 255];
+    if (number === "6:5") return [255, 249, 240];
+    return [255, 255, 255];
+  }
+
+  function applyNumberColor(data) {
+    if (data.section !== "body") return;
+    
+    if (data.table.section === "Angriff" && data.column.index === 4) {
+      const value = String(data.cell.raw || "");
+      data.cell.styles.fillColor = getNumberFillColor(value);
+    }
+    
+    if (data.table.section === "Abwehr" && data.column.index === 3) {
+      const value = String(data.cell.raw || "");
+      data.cell.styles.fillColor = getNumberFillColor(value);
+    }
+  }
+
   function exportPdf() {
     if (!window.jspdf || !window.jspdf.jsPDF) {
       alert("Der PDF-Export konnte nicht geladen werden. Bitte öffne die App einmal mit Internetverbindung und versuche es erneut.");
@@ -1433,12 +1477,8 @@ tbody tr.editing {
 
     const defenseRows = sortEntries("defense").map((row, index) => [
       index + 1,
-      row.positionSide === "green" ? `grün ${row.position || ""}` : `rot ${row.position || ""}`,
-      row.finishSide === "green"
-        ? `grün ${row.finishPosition || ""}`
-        : row.finishSide === "yellow"
-          ? `gelb ${row.finishPosition === "freiwurf" ? "Freiwurf" : row.finishPosition || ""}`
-          : `rot ${row.finishPosition === "tf" ? "TF" : row.finishPosition || ""}`,
+      row.position || "",
+      row.finishPosition === "freiwurf" ? "Freiwurf" : row.finishPosition === "tf" ? "TF" : row.finishPosition || "",
       row.number || ""
     ]);
 
@@ -1460,7 +1500,10 @@ tbody tr.editing {
         fillColor: [230, 242, 241],
         textColor: 20
       },
-      didParseCell: applyResultColor
+      didParseCell: data => {
+        applyResultColor(data);
+        applyNumberColor(data);
+      }
     });
 
     let nextY = doc.lastAutoTable.finalY + 10;
@@ -1488,12 +1531,24 @@ tbody tr.editing {
         textColor: 20
       },
       didParseCell: data => {
-        if (data.section !== "body" || data.column.index !== 1 && data.column.index !== 2) return;
-
-        const raw = String(data.cell.raw || "").trim();
-        if (raw.startsWith("grün")) data.cell.styles.fillColor = [225, 240, 220];
-        else if (raw.startsWith("rot")) data.cell.styles.fillColor = [248, 223, 223];
-        else if (raw.startsWith("gelb")) data.cell.styles.fillColor = [247, 237, 198];
+        if (data.section !== "body") return;
+        
+        if (data.column.index === 1) {
+          const row = defenseRows[data.row.index];
+          const positionSide = sortEntries("defense")[data.row.index]?.positionSide || "";
+          if (positionSide === "green") data.cell.styles.fillColor = [225, 240, 220];
+          else if (positionSide === "red") data.cell.styles.fillColor = [248, 223, 223];
+        }
+        
+        if (data.column.index === 2) {
+          const row = defenseRows[data.row.index];
+          const finishSide = sortEntries("defense")[data.row.index]?.finishSide || "";
+          if (finishSide === "green") data.cell.styles.fillColor = [225, 240, 220];
+          else if (finishSide === "red") data.cell.styles.fillColor = [248, 223, 223];
+          else if (finishSide === "yellow") data.cell.styles.fillColor = [247, 237, 198];
+        }
+        
+        applyNumberColor(data);
       }
     });
 
