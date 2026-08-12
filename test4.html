@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -255,19 +256,11 @@ button {
 }
 
 .section-card.offense {
-  background: linear-gradient(
-    180deg,
-    rgba(13,91,31,.07),
-    rgba(255,255,255,.95) 26%
-  );
+  background: linear-gradient(180deg, rgba(13,91,31,.07), rgba(255,255,255,.95) 26%);
 }
 
 .section-card.defense {
-  background: linear-gradient(
-    180deg,
-    rgba(217,31,38,.07),
-    rgba(255,255,255,.95) 26%
-  );
+  background: linear-gradient(180deg, rgba(217,31,38,.07), rgba(255,255,255,.95) 26%);
 }
 
 .section-head {
@@ -436,20 +429,12 @@ button {
 }
 
 .result-btn.split-green-red {
-  background: linear-gradient(
-    90deg,
-    #dff0d9 0 50%,
-    #f9dfdf 50% 100%
-  );
+  background: linear-gradient(90deg, #dff0d9 0 50%, #f9dfdf 50% 100%);
   border-color: rgba(110,95,95,.35);
 }
 
 .result-btn.split-red-green {
-  background: linear-gradient(
-    90deg,
-    #f9dfdf 0 50%,
-    #dff0d9 50% 100%
-  );
+  background: linear-gradient(90deg, #f9dfdf 0 50%, #dff0d9 50% 100%);
   border-color: rgba(110,95,95,.35);
 }
 
@@ -469,21 +454,13 @@ button {
 }
 
 .result-btn.selected.split-green-red {
-  background: linear-gradient(
-    90deg,
-    rgba(63,125,50,.38) 0 50%,
-    rgba(177,58,58,.34) 50% 100%
-  );
+  background: linear-gradient(90deg, rgba(63,125,50,.38) 0 50%, rgba(177,58,58,.34) 50% 100%);
   border-color: #6f6b60;
   box-shadow: 0 0 0 2px rgba(18,35,20,.08) inset;
 }
 
 .result-btn.selected.split-red-green {
-  background: linear-gradient(
-    90deg,
-    rgba(177,58,58,.34) 0 50%,
-    rgba(63,125,50,.38) 50% 100%
-  );
+  background: linear-gradient(90deg, rgba(177,58,58,.34) 0 50%, rgba(63,125,50,.38) 50% 100%);
   border-color: #6f6b60;
   box-shadow: 0 0 0 2px rgba(18,35,20,.08) inset;
 }
@@ -607,19 +584,11 @@ tbody tr.editing {
 }
 
 .result-cell.split-green-red {
-  background: linear-gradient(
-    90deg,
-    rgba(220,239,214,.82) 0 50%,
-    rgba(247,219,219,.82) 50% 100%
-  );
+  background: linear-gradient(90deg, rgba(220,239,214,.82) 0 50%, rgba(247,219,219,.82) 50% 100%);
 }
 
 .result-cell.split-red-green {
-  background: linear-gradient(
-    90deg,
-    rgba(247,219,219,.82) 0 50%,
-    rgba(220,239,214,.82) 50% 100%
-  );
+  background: linear-gradient(90deg, rgba(247,219,219,.82) 0 50%, rgba(220,239,214,.82) 50% 100%);
 }
 
 .pill {
@@ -750,11 +719,7 @@ tbody tr.editing {
 
       <div class="field">
         <label for="opponent">Gegner</label>
-        <input
-          id="opponent"
-          type="text"
-          placeholder="Gegner eingeben"
-        >
+        <input id="opponent" type="text" placeholder="Gegner eingeben">
       </div>
 
       <div class="field">
@@ -788,22 +753,8 @@ tbody tr.editing {
       </div>
 
       <div class="topbar-actions">
-        <button
-          id="undoBtn"
-          class="utility-btn undo"
-          type="button"
-          aria-label="Rückgängig"
-        >
-          ↶
-        </button>
-
-        <button
-          id="pdfBtn"
-          class="utility-btn primary"
-          type="button"
-        >
-          Export PDF
-        </button>
+        <button id="undoBtn" class="utility-btn undo" type="button" aria-label="Rückgängig">↶</button>
+        <button id="pdfBtn" class="utility-btn primary" type="button">Export PDF</button>
       </div>
     </div>
 
@@ -812,16 +763,12 @@ tbody tr.editing {
       <section class="panel section-card offense">
         <div class="section-head">
           <h2>Offensive Aktionen</h2>
-          <div id="offenseCount" class="entry-count">
-            0 Einträge
-          </div>
+          <div id="offenseCount" class="entry-count">0 Einträge</div>
         </div>
 
         <div class="controls">
-
           <div class="group">
             <h3>Struktur</h3>
-
             <div id="offenseStructureRow1" class="structure-row"></div>
             <div id="offenseStructureRow2" class="structure-row"></div>
             <div id="offenseStructureRow3" class="structure-row"></div>
@@ -829,126 +776,61 @@ tbody tr.editing {
 
           <div class="group">
             <h3>Angegriffene Position</h3>
-            <div
-              id="offensePositionButtons"
-              class="button-grid"
-            ></div>
+            <div id="offensePositionButtons" class="button-grid"></div>
           </div>
 
           <div class="group">
             <h3>Ergebnis</h3>
-            <div
-              id="offenseResultButtons"
-              class="result-grid"
-            ></div>
+            <div id="offenseResultButtons" class="result-grid"></div>
           </div>
 
           <div class="group">
             <h3>Zahl</h3>
-            <div
-              id="offenseNumberButtons"
-              class="button-grid"
-            ></div>
+            <div id="offenseNumberButtons" class="button-grid"></div>
           </div>
 
           <div class="action-row">
-            <button
-              id="offenseResetBtn"
-              class="save-btn"
-              type="button"
-            >
-              Auswahl leeren
-            </button>
-
-            <button
-              id="offenseSaveBtn"
-              class="save-btn primary"
-              type="button"
-            >
-              Offensive Aktion speichern
-            </button>
+            <button id="offenseResetBtn" class="save-btn" type="button">Auswahl leeren</button>
+            <button id="offenseSaveBtn" class="save-btn primary" type="button">Offensive Aktion speichern</button>
           </div>
-
         </div>
       </section>
 
       <section class="panel section-card defense">
         <div class="section-head">
           <h2>Defensive Aktionen</h2>
-          <div id="defenseCount" class="entry-count">
-            0 Einträge
-          </div>
+          <div id="defenseCount" class="entry-count">0 Einträge</div>
         </div>
 
         <div class="controls">
-
           <div class="group">
             <h3>Angegriffene Position</h3>
-
             <div class="stack-grid">
-              <div
-                id="defensePositionGreenButtons"
-                class="button-grid four"
-              ></div>
-
-              <div
-                id="defensePositionRedButtons"
-                class="button-grid four"
-              ></div>
+              <div id="defensePositionGreenButtons" class="button-grid four"></div>
+              <div id="defensePositionRedButtons" class="button-grid four"></div>
             </div>
           </div>
 
           <div class="group">
             <h3>Abschlussposition</h3>
-
             <div class="stack-grid">
-              <div
-                id="defenseFinishGreenButtons"
-                class="button-grid four"
-              ></div>
-
-              <div
-                id="defenseFinishRedButtons"
-                class="button-grid four"
-              ></div>
-
-              <div
-                id="defenseFinishSpecialButtons"
-                class="button-grid two-wide"
-              ></div>
+              <div id="defenseFinishGreenButtons" class="button-grid four"></div>
+              <div id="defenseFinishRedButtons" class="button-grid four"></div>
+              <div id="defenseFinishSpecialButtons" class="button-grid two-wide"></div>
             </div>
           </div>
 
           <div class="group">
             <h3>Zahl</h3>
-
-            <div
-              id="defenseNumberButtons"
-              class="button-grid"
-            ></div>
+            <div id="defenseNumberButtons" class="button-grid"></div>
           </div>
 
           <div class="action-row">
-            <button
-              id="defenseResetBtn"
-              class="save-btn"
-              type="button"
-            >
-              Auswahl leeren
-            </button>
-
-            <button
-              id="defenseSaveBtn"
-              class="save-btn primary"
-              type="button"
-            >
-              Defensive Aktion speichern
-            </button>
+            <button id="defenseResetBtn" class="save-btn" type="button">Auswahl leeren</button>
+            <button id="defenseSaveBtn" class="save-btn primary" type="button">Defensive Aktion speichern</button>
           </div>
-
         </div>
       </section>
-
     </div>
 
     <div class="tables">
@@ -963,53 +845,19 @@ tbody tr.editing {
             <thead>
               <tr>
                 <th style="width:7%">
-                  <button
-                    type="button"
-                    data-table="offense"
-                    data-sort="index"
-                  >
-                    #
-                  </button>
+                  <button type="button" data-table="offense" data-sort="index">#</button>
                 </th>
-
                 <th style="width:23%">
-                  <button
-                    type="button"
-                    data-table="offense"
-                    data-sort="structure"
-                  >
-                    Struktur
-                  </button>
+                  <button type="button" data-table="offense" data-sort="structure">Struktur</button>
                 </th>
-
                 <th style="width:15%">
-                  <button
-                    type="button"
-                    data-table="offense"
-                    data-sort="position"
-                  >
-                    Position
-                  </button>
+                  <button type="button" data-table="offense" data-sort="position">Position</button>
                 </th>
-
                 <th style="width:23%">
-                  <button
-                    type="button"
-                    data-table="offense"
-                    data-sort="result"
-                  >
-                    Ergebnis
-                  </button>
+                  <button type="button" data-table="offense" data-sort="result">Ergebnis</button>
                 </th>
-
                 <th style="width:15%">
-                  <button
-                    type="button"
-                    data-table="offense"
-                    data-sort="number"
-                  >
-                    Zahl
-                  </button>
+                  <button type="button" data-table="offense" data-sort="number">Zahl</button>
                 </th>
               </tr>
             </thead>
@@ -1036,43 +884,16 @@ tbody tr.editing {
             <thead>
               <tr>
                 <th style="width:7%">
-                  <button
-                    type="button"
-                    data-table="defense"
-                    data-sort="index"
-                  >
-                    #
-                  </button>
+                  <button type="button" data-table="defense" data-sort="index">#</button>
                 </th>
-
                 <th style="width:20%">
-                  <button
-                    type="button"
-                    data-table="defense"
-                    data-sort="positionLabel"
-                  >
-                    Position
-                  </button>
+                  <button type="button" data-table="defense" data-sort="positionLabel">Position</button>
                 </th>
-
                 <th style="width:28%">
-                  <button
-                    type="button"
-                    data-table="defense"
-                    data-sort="finishPositionLabel"
-                  >
-                    Abschlussposition
-                  </button>
+                  <button type="button" data-table="defense" data-sort="finishPositionLabel">Abschlussposition</button>
                 </th>
-
                 <th style="width:15%">
-                  <button
-                    type="button"
-                    data-table="defense"
-                    data-sort="number"
-                  >
-                    Zahl
-                  </button>
+                  <button type="button" data-table="defense" data-sort="number">Zahl</button>
                 </th>
               </tr>
             </thead>
@@ -1091,13 +912,8 @@ tbody tr.editing {
 
     <section class="panel notes">
       <label for="notes">Notizen</label>
-
-      <textarea
-        id="notes"
-        placeholder="Notizen zum Spiel eingeben..."
-      ></textarea>
+      <textarea id="notes" placeholder="Notizen zum Spiel eingeben..."></textarea>
     </section>
-
   </section>
 </div>
 
@@ -1137,9 +953,6 @@ tbody tr.editing {
       "Schnelle Mitte"
     ]
   ];
-
-  const offenseStructureOptions =
-    offenseStructureRows.flat();
 
   const positionOptions = [
     "2",
@@ -1215,7 +1028,7 @@ tbody tr.editing {
     }
   ];
 
-  function defaultSelection(domain = "offense") {
+  function defaultSelection(domain) {
     return {
       structure: [],
       position: "",
@@ -1270,110 +1083,66 @@ tbody tr.editing {
     pdfBtn: document.getElementById("pdfBtn"),
     notes: document.getElementById("notes"),
 
-    offenseCount:
-      document.getElementById("offenseCount"),
-
-    defenseCount:
-      document.getElementById("defenseCount"),
-
-    offenseSortInfo:
-      document.getElementById("offenseSortInfo"),
-
-    defenseSortInfo:
-      document.getElementById("defenseSortInfo"),
-
-    offenseTableBody:
-      document.getElementById("offenseTableBody"),
-
-    defenseTableBody:
-      document.getElementById("defenseTableBody"),
+    offenseCount: document.getElementById("offenseCount"),
+    defenseCount: document.getElementById("defenseCount"),
+    offenseSortInfo: document.getElementById("offenseSortInfo"),
+    defenseSortInfo: document.getElementById("defenseSortInfo"),
+    offenseTableBody: document.getElementById("offenseTableBody"),
+    defenseTableBody: document.getElementById("defenseTableBody"),
 
     offenseStructureRow1:
-      document.getElementById(
-        "offenseStructureRow1"
-      ),
+      document.getElementById("offenseStructureRow1"),
 
     offenseStructureRow2:
-      document.getElementById(
-        "offenseStructureRow2"
-      ),
+      document.getElementById("offenseStructureRow2"),
 
     offenseStructureRow3:
-      document.getElementById(
-        "offenseStructureRow3"
-      ),
+      document.getElementById("offenseStructureRow3"),
 
     offensePositionButtons:
-      document.getElementById(
-        "offensePositionButtons"
-      ),
+      document.getElementById("offensePositionButtons"),
 
     offenseResultButtons:
-      document.getElementById(
-        "offenseResultButtons"
-      ),
+      document.getElementById("offenseResultButtons"),
 
     offenseNumberButtons:
-      document.getElementById(
-        "offenseNumberButtons"
-      ),
+      document.getElementById("offenseNumberButtons"),
 
     defensePositionGreenButtons:
-      document.getElementById(
-        "defensePositionGreenButtons"
-      ),
+      document.getElementById("defensePositionGreenButtons"),
 
     defensePositionRedButtons:
-      document.getElementById(
-        "defensePositionRedButtons"
-      ),
+      document.getElementById("defensePositionRedButtons"),
 
     defenseFinishGreenButtons:
-      document.getElementById(
-        "defenseFinishGreenButtons"
-      ),
+      document.getElementById("defenseFinishGreenButtons"),
 
     defenseFinishRedButtons:
-      document.getElementById(
-        "defenseFinishRedButtons"
-      ),
+      document.getElementById("defenseFinishRedButtons"),
 
     defenseFinishSpecialButtons:
-      document.getElementById(
-        "defenseFinishSpecialButtons"
-      ),
+      document.getElementById("defenseFinishSpecialButtons"),
 
     defenseNumberButtons:
-      document.getElementById(
-        "defenseNumberButtons"
-      ),
+      document.getElementById("defenseNumberButtons"),
 
     offenseSaveBtn:
-      document.getElementById(
-        "offenseSaveBtn"
-      ),
+      document.getElementById("offenseSaveBtn"),
 
     defenseSaveBtn:
-      document.getElementById(
-        "defenseSaveBtn"
-      ),
+      document.getElementById("defenseSaveBtn"),
 
     offenseResetBtn:
-      document.getElementById(
-        "offenseResetBtn"
-      ),
+      document.getElementById("offenseResetBtn"),
 
     defenseResetBtn:
-      document.getElementById(
-        "defenseResetBtn"
-      )
+      document.getElementById("defenseResetBtn")
   };
 
   let pressTimer = null;
   let longPressFired = false;
 
-  const currentStore = domain =>
-    state[domain];
+  const currentStore = domain => state[domain];
 
   const clone = value =>
     JSON.parse(JSON.stringify(value));
@@ -1392,9 +1161,7 @@ tbody tr.editing {
 
   function setToday() {
     els.matchDate.value =
-      new Date()
-        .toISOString()
-        .split("T")[0];
+      new Date().toISOString().split("T")[0];
   }
 
   function getDefenseResult(selection) {
@@ -1441,10 +1208,7 @@ tbody tr.editing {
     };
   }
 
-  function normalizeNumberValue(
-    value,
-    domain
-  ) {
+  function normalizeNumberValue(value, domain) {
     if (domain !== "defense") {
       return value || "6:6";
     }
@@ -1462,61 +1226,30 @@ tbody tr.editing {
       .filter(Boolean);
   }
 
-  function buildSupabaseRow(
-    domain,
-    payload
-  ) {
+  function buildSupabaseRow(domain, payload) {
     return {
-      match_opponent:
-        state.meta.opponent,
-
-      match_date:
-        state.meta.matchDate,
-
+      match_opponent: state.meta.opponent,
+      match_date: state.meta.matchDate,
       side: domain,
-
-      structure:
-        payload.structure,
-
-      attack_position:
-        payload.position,
-
-      finish_position:
-        payload.finishPosition,
-
-      position_side:
-        payload.positionSide,
-
-      finish_side:
-        payload.finishSide,
-
-      number_relation:
-        payload.number,
-
-      result:
-        payload.result,
-
-      result_display:
-        payload.resultDisplay,
-
-      result_group:
-        payload.group,
-
-      created_order:
-        payload.createdOrder
+      structure: payload.structure,
+      attack_position: payload.position,
+      finish_position: payload.finishPosition,
+      position_side: payload.positionSide,
+      finish_side: payload.finishSide,
+      number_relation: payload.number,
+      result: payload.result,
+      result_display: payload.resultDisplay,
+      result_group: payload.group,
+      created_order: payload.createdOrder
     };
   }
 
-  function normalizeRow(
-    row,
-    fallback = {}
-  ) {
+  function normalizeRow(row, fallback = {}) {
     const domain =
       row.side || fallback.domain || "offense";
 
     return {
       ...row,
-
       id: row.id,
 
       createdOrder:
@@ -1577,14 +1310,8 @@ tbody tr.editing {
       await supabase
         .from("match_actions")
         .select("*")
-        .eq(
-          "match_opponent",
-          state.meta.opponent
-        )
-        .eq(
-          "match_date",
-          state.meta.matchDate
-        )
+        .eq("match_opponent", state.meta.opponent)
+        .eq("match_date", state.meta.matchDate)
         .order("created_order", {
           ascending: true
         });
@@ -1602,9 +1329,7 @@ tbody tr.editing {
 
     state.offense.entries =
       data
-        .filter(
-          row => row.side === "offense"
-        )
+        .filter(row => row.side === "offense")
         .map(row =>
           normalizeRow(row, {
             domain: "offense"
@@ -1613,9 +1338,7 @@ tbody tr.editing {
 
     state.defense.entries =
       data
-        .filter(
-          row => row.side === "defense"
-        )
+        .filter(row => row.side === "defense")
         .map(row => {
           const normalized =
             normalizeRow(row, {
@@ -1653,19 +1376,11 @@ tbody tr.editing {
         });
   }
 
-  async function insertEntry(
-    domain,
-    payload
-  ) {
+  async function insertEntry(domain, payload) {
     const { data, error } =
       await supabase
         .from("match_actions")
-        .insert(
-          buildSupabaseRow(
-            domain,
-            payload
-          )
-        )
+        .insert(buildSupabaseRow(domain, payload))
         .select("*")
         .single();
 
@@ -1679,20 +1394,11 @@ tbody tr.editing {
     });
   }
 
-  async function updateEntry(
-    id,
-    domain,
-    payload
-  ) {
+  async function updateEntry(id, domain, payload) {
     const { data, error } =
       await supabase
         .from("match_actions")
-        .update(
-          buildSupabaseRow(
-            domain,
-            payload
-          )
-        )
+        .update(buildSupabaseRow(domain, payload))
         .eq("id", id)
         .select("*")
         .single();
@@ -1718,6 +1424,7 @@ tbody tr.editing {
       throw error;
     }
   }
+
   function renderButtons(
     mount,
     items,
@@ -1835,7 +1542,29 @@ tbody tr.editing {
     }
 
     if (type === "number") {
-      selection.number = value;
+      if (domain === "defense") {
+        if (!Array.isArray(selection.number)) {
+          selection.number =
+            selection.number
+              ? [selection.number]
+              : [];
+        }
+
+        if (selection.number.includes(value)) {
+          selection.number =
+            selection.number.filter(
+              item => item !== value
+            );
+        } else if (selection.number.length < 2) {
+          selection.number.push(value);
+        } else {
+          alert(
+            "Es können höchstens zwei Werte ausgewählt werden."
+          );
+        }
+      } else {
+        selection.number = value;
+      }
     }
 
     if (type === "result") {
@@ -1898,7 +1627,18 @@ tbody tr.editing {
         }
 
         if (type === "number") {
-          selected = value === selection.number;
+          if (domain === "defense") {
+            const numbers =
+              Array.isArray(selection.number)
+                ? selection.number
+                : selection.number
+                  ? [selection.number]
+                  : [];
+
+            selected = numbers.includes(value);
+          } else {
+            selected = value === selection.number;
+          }
         }
 
         if (type === "result") {
@@ -1915,13 +1655,14 @@ tbody tr.editing {
   function clearSelection(domain) {
     const store = currentStore(domain);
 
-    store.selection = defaultSelection();
+    store.selection =
+      defaultSelection(domain);
+
     store.editingId = null;
 
     updateSelectedButtons(domain);
     renderTable(domain);
   }
-
   function validate(domain) {
     const selection =
       currentStore(domain).selection;
@@ -1947,6 +1688,13 @@ tbody tr.editing {
       return false;
     }
 
+    const defenseNumbers =
+      Array.isArray(selection.number)
+        ? selection.number
+        : selection.number
+          ? [selection.number]
+          : [];
+
     if (
       domain === "defense" &&
       (
@@ -1954,7 +1702,7 @@ tbody tr.editing {
         !selection.finishPosition ||
         !selection.positionSide ||
         !selection.finishSide ||
-        !selection.number
+        defenseNumbers.length === 0
       )
     ) {
       alert(
@@ -1977,6 +1725,13 @@ tbody tr.editing {
         entry => entry.id === store.editingId
       );
 
+    const structures =
+      Array.isArray(selection.structure)
+        ? selection.structure
+        : selection.structure
+          ? [selection.structure]
+          : [];
+
     let result = selection.result;
     let resultDisplay = selection.resultDisplay;
     let group = selection.group;
@@ -1991,12 +1746,20 @@ tbody tr.editing {
       group = defenseResult.group;
     }
 
-    const structures =
-      Array.isArray(selection.structure)
-        ? selection.structure
-        : selection.structure
-          ? [selection.structure]
-          : [];
+    let numberValue;
+
+    if (domain === "defense") {
+      const numbers =
+        Array.isArray(selection.number)
+          ? selection.number
+          : selection.number
+            ? [selection.number]
+            : [];
+
+      numberValue = numbers.join(" + ");
+    } else {
+      numberValue = selection.number || "6:6";
+    }
 
     return {
       structure:
@@ -2021,7 +1784,7 @@ tbody tr.editing {
           ? selection.finishSide
           : "",
 
-      number: selection.number || "6:6",
+      number: numberValue,
       result,
       resultDisplay,
       group,
@@ -2089,6 +1852,7 @@ tbody tr.editing {
       renderTable("defense");
     } catch (error) {
       console.error(error);
+
       alert(
         error.message ||
         "Fehler beim Speichern."
@@ -2120,47 +1884,33 @@ tbody tr.editing {
       }
 
       if (action.type === "edit") {
+        const before = action.before;
+
+        const restoredPayload = {
+          structure: before.structure || "",
+          position: before.position || "",
+          finishPosition: before.finishPosition || "",
+          positionSide: before.positionSide || "",
+          finishSide: before.finishSide || "",
+          number: Array.isArray(before.number)
+            ? before.number.join(" + ")
+            : before.number || "6:6",
+          result: before.result || "",
+          resultDisplay: before.resultDisplay || "",
+          group: before.group || "",
+          createdOrder: before.createdOrder
+        };
+
         const restored =
           await updateEntry(
-            action.before.id,
+            before.id,
             action.domain,
-            {
-              structure:
-                action.before.structure || "",
-
-              position:
-                action.before.position || "",
-
-              finishPosition:
-                action.before.finishPosition || "",
-
-              positionSide:
-                action.before.positionSide || "",
-
-              finishSide:
-                action.before.finishSide || "",
-
-              number:
-                action.before.number || "6:6",
-
-              result:
-                action.before.result || "",
-
-              resultDisplay:
-                action.before.resultDisplay || "",
-
-              group:
-                action.before.group || "",
-
-              createdOrder:
-                action.before.createdOrder
-            }
+            restoredPayload
           );
 
         const index =
           store.entries.findIndex(
-            entry =>
-              entry.id === action.before.id
+            entry => entry.id === before.id
           );
 
         if (index !== -1) {
@@ -2173,6 +1923,7 @@ tbody tr.editing {
       renderTable("defense");
     } catch (error) {
       console.error(error);
+
       alert(
         error.message ||
         "Fehler beim Rückgängigmachen."
@@ -2182,7 +1933,7 @@ tbody tr.editing {
 
   function getSortValue(row, key) {
     if (key === "index") {
-      return row.createdOrder || 0;
+      return Number(row.createdOrder) || 0;
     }
 
     if (key === "structure") {
@@ -2202,7 +1953,9 @@ tbody tr.editing {
     }
 
     if (key === "number") {
-      return row.number || "";
+      return Array.isArray(row.number)
+        ? row.number.join(" + ")
+        : row.number || "";
     }
 
     if (key === "result") {
@@ -2239,8 +1992,8 @@ tbody tr.editing {
 
       if (comparison === 0) {
         comparison =
-          (a.createdOrder || 0) -
-          (b.createdOrder || 0);
+          (Number(a.createdOrder) || 0) -
+          (Number(b.createdOrder) || 0);
       }
 
       return comparison * factor;
@@ -2281,13 +2034,64 @@ tbody tr.editing {
       return "number-65";
     }
 
+    if (number === "Tempo") {
+      return "number-tempo";
+    }
+
     return "number";
+  }
+
+  function getNumberDisplay(row) {
+    if (Array.isArray(row.number)) {
+      return row.number
+        .map(number => {
+          return `
+            <span class="pill ${getNumberClass(number)}">
+              ${escapeHtml(number)}
+            </span>
+          `;
+        })
+        .join(" ");
+    }
+
+    if (row.number) {
+      return `
+        <span class="pill ${
+          getNumberClass(row.number)
+        }">
+          ${escapeHtml(row.number)}
+        </span>
+      `;
+    }
+
+    return "—";
+  }
+
+  function renderStructureDisplay(value) {
+    if (!value) {
+      return "—";
+    }
+
+    return String(value)
+      .split(" + ")
+      .filter(Boolean)
+      .map(structure => {
+        return `
+          <span class="pill structure">
+            ${escapeHtml(structure)}
+          </span>
+        `;
+      })
+      .join(" ");
   }
 
   function renderTable(domain) {
     const store = currentStore(domain);
     const rows = sortEntries(domain);
-    const body = els[`${domain}TableBody`];
+
+    const body =
+      els[`${domain}TableBody`];
+
     const countElement =
       els[`${domain}Count`];
 
@@ -2325,7 +2129,7 @@ tbody tr.editing {
 
     if (domain === "offense") {
       body.innerHTML = rows
-        .map((row, index) => `
+        .map(row => `
           <tr
             data-domain="offense"
             data-id="${row.id}"
@@ -2335,18 +2139,16 @@ tbody tr.editing {
                 : ""
             }"
           >
-            <td>${index + 1}</td>
+            <td>
+              ${escapeHtml(
+                row.createdOrder ?? "—"
+              )}
+            </td>
 
             <td>
-              ${
+              ${renderStructureDisplay(
                 row.structure
-                  ? `
-                    <span class="pill structure">
-                      ${escapeHtml(row.structure)}
-                    </span>
-                  `
-                  : "—"
-              }
+              )}
             </td>
 
             <td>
@@ -2372,24 +2174,14 @@ tbody tr.editing {
             </td>
 
             <td>
-              ${
-                row.number
-                  ? `
-                    <span class="pill ${
-                      getNumberClass(row.number)
-                    }">
-                      ${escapeHtml(row.number)}
-                    </span>
-                  `
-                  : "—"
-              }
+              ${getNumberDisplay(row)}
             </td>
           </tr>
         `)
         .join("");
     } else {
       body.innerHTML = rows
-        .map((row, index) => `
+        .map(row => `
           <tr
             data-domain="defense"
             data-id="${row.id}"
@@ -2399,7 +2191,11 @@ tbody tr.editing {
                 : ""
             }"
           >
-            <td>${index + 1}</td>
+            <td>
+              ${escapeHtml(
+                row.createdOrder ?? "—"
+              )}
+            </td>
 
             <td>
               ${
@@ -2442,17 +2238,7 @@ tbody tr.editing {
             </td>
 
             <td>
-              ${
-                row.number
-                  ? `
-                    <span class="pill ${
-                      getNumberClass(row.number)
-                    }">
-                      ${escapeHtml(row.number)}
-                    </span>
-                  `
-                  : "—"
-              }
+              ${getNumberDisplay(row)}
             </td>
           </tr>
         `)
@@ -2463,7 +2249,8 @@ tbody tr.editing {
   }
 
   function addLongPressListeners(domain) {
-    const body = els[`${domain}TableBody`];
+    const body =
+      els[`${domain}TableBody`];
 
     body
       .querySelectorAll("tr[data-id]")
@@ -2542,22 +2329,34 @@ tbody tr.editing {
 
     store.editingId = entry.id;
 
-    const structureValues =
+    const structures =
       entry.structure
         ? String(entry.structure)
             .split(" + ")
             .filter(Boolean)
         : [];
 
+    const numbers =
+      domain === "defense"
+        ? normalizeNumberValue(
+            entry.number,
+            "defense"
+          )
+        : entry.number || "6:6";
+
     store.selection = {
-      structure: structureValues,
+      structure: structures,
       position: entry.position || "",
-      finishPosition: entry.finishPosition || "",
-      positionSide: entry.positionSide || "",
-      finishSide: entry.finishSide || "",
-      number: entry.number || "6:6",
+      finishPosition:
+        entry.finishPosition || "",
+      positionSide:
+        entry.positionSide || "",
+      finishSide:
+        entry.finishSide || "",
+      number: numbers,
       result: entry.result || "",
-      resultDisplay: entry.resultDisplay || "",
+      resultDisplay:
+        entry.resultDisplay || "",
       group: entry.group || ""
     };
 
@@ -2621,6 +2420,10 @@ tbody tr.editing {
       return [255, 249, 240];
     }
 
+    if (number === "Tempo") {
+      return [247, 237, 198];
+    }
+
     return [255, 255, 255];
   }
 
@@ -2633,424 +2436,19 @@ tbody tr.editing {
       data.table.section === "Angriff" &&
       data.column.index === 4
     ) {
-      const value =
-        String(data.cell.raw || "");
-
       data.cell.styles.fillColor =
-        getNumberFillColor(value);
+        getNumberFillColor(
+          String(data.cell.raw || "")
+        );
     }
 
     if (
       data.table.section === "Abwehr" &&
       data.column.index === 3
     ) {
-      const value =
-        String(data.cell.raw || "");
-
       data.cell.styles.fillColor =
-        getNumberFillColor(value);
-    }
-  }
-
-  function exportPdf() {
-    if (
-      !window.jspdf ||
-      !window.jspdf.jsPDF
-    ) {
-      alert(
-        "Der PDF-Export konnte nicht geladen werden. " +
-        "Bitte öffne die App einmal mit Internetverbindung " +
-        "und versuche es erneut."
-      );
-      return;
-    }
-
-    const { jsPDF } = window.jspdf;
-
-    const doc = new jsPDF({
-      orientation: "landscape",
-      unit: "mm",
-      format: "a4"
-    });
-
-    if (typeof doc.autoTable !== "function") {
-      alert(
-        "Das PDF-Tabellenmodul konnte nicht geladen werden. " +
-        "Bitte öffne die App mit Internetverbindung " +
-        "und versuche es erneut."
-      );
-      return;
-    }
-
-    doc.setFontSize(16);
-
-    doc.text(
-      `Kollektive Statistik vs ${
-        state.meta.opponent
-      }`,
-      14,
-      14
-    );
-
-    doc.setFontSize(10);
-
-    doc.text(
-      `Datum: ${
-        formatDate(state.meta.matchDate)
-      }`,
-      14,
-      21
-    );
-
-    const offenseRows =
-      sortEntries("offense").map(
-        (row, index) => [
-          index + 1,
-          row.structure || "",
-          row.position || "",
-          row.resultDisplay ||
-            row.result ||
-            "",
-          row.number || ""
-        ]
-      );
-
-    const defenseRows =
-      sortEntries("defense").map(
-        (row, index) => [
-          index + 1,
-          row.position || "",
-          row.finishPosition === "freiwurf"
-            ? "Freiwurf"
-            : row.finishPosition === "tf"
-              ? "TF"
-              : row.finishPosition || "",
-          row.number || ""
-        ]
-      );
-
-    doc.setFontSize(12);
-    doc.text("Angriff", 14, 30);
-
-    doc.autoTable({
-      head: [[
-        "#",
-        "Struktur",
-        "Position",
-        "Ergebnis",
-        "Zahl"
-      ]],
-
-      body:
-        offenseRows.length
-          ? offenseRows
-          : [["", "Keine Einträge", "", "", ""]],
-
-      startY: 33,
-      theme: "grid",
-
-      styles: {
-        fontSize: 7.5,
-        cellPadding: 2,
-        lineWidth: .2,
-        lineColor: [140, 140, 140]
-      },
-
-      headStyles: {
-        fillColor: [230, 242, 241],
-        textColor: 20
-      },
-
-      didParseCell: data => {
-        applyResultColor(data);
-        applyNumberColor(data);
-      }
-    });
-
-    let nextY =
-      doc.lastAutoTable.finalY + 10;
-
-    if (nextY > 170) {
-      doc.addPage();
-      nextY = 18;
-    }
-
-    doc.setFontSize(12);
-    doc.text("Abwehr", 14, nextY);
-
-    doc.autoTable({
-      head: [[
-        "#",
-        "Position",
-        "Abschlussposition",
-        "Zahl"
-      ]],
-
-      body:
-        defenseRows.length
-          ? defenseRows
-          : [["", "Keine Einträge", "", ""]],
-
-      startY: nextY + 3,
-      theme: "grid",
-
-      styles: {
-        fontSize: 7.5,
-        cellPadding: 2,
-        lineWidth: .2,
-        lineColor: [140, 140, 140]
-      },
-
-      headStyles: {
-        fillColor: [248, 232, 233],
-        textColor: 20
-      },
-
-      didParseCell: data => {
-        if (data.section !== "body") {
-          return;
-        }
-
-        if (data.column.index === 1) {
-          const positionSide =
-            sortEntries("defense")[
-              data.row.index
-            ]?.positionSide || "";
-
-          if (positionSide === "green") {
-            data.cell.styles.fillColor =
-              [225, 240, 220];
-          } else if (positionSide === "red") {
-            data.cell.styles.fillColor =
-              [248, 223, 223];
-          }
-        }
-
-        if (data.column.index === 2) {
-          const finishSide =
-            sortEntries("defense")[
-              data.row.index
-            ]?.finishSide || "";
-
-          if (finishSide === "green") {
-            data.cell.styles.fillColor =
-              [225, 240, 220];
-          } else if (finishSide === "red") {
-            data.cell.styles.fillColor =
-              [248, 223, 223];
-          } else if (finishSide === "yellow") {
-            data.cell.styles.fillColor =
-              [247, 237, 198];
-          }
-        }
-
-        applyNumberColor(data);
-      }
-    });
-
-    const noteText =
-      els.notes.value.trim();
-
-    if (noteText) {
-      let noteY =
-        doc.lastAutoTable.finalY + 10;
-
-      if (noteY > 180) {
-        doc.addPage();
-        noteY = 20;
-      }
-
-      doc.setFontSize(11);
-      doc.text("Notizen:", 14, noteY);
-
-      doc.setFontSize(10);
-
-      const lines =
-        doc.splitTextToSize(
-          noteText,
-          255
+        getNumberFillColor(
+          String(data.cell.raw || "")
         );
-
-      doc.text(
-        lines,
-        14,
-        noteY + 6
-      );
     }
-
-    const safeOpponent =
-      state.meta.opponent
-        .replace(/[^\wäöüÄÖÜß-]+/g, "_")
-        .replace(/^_+|_+$/g, "");
-
-    doc.save(
-      `Kollektive_Statistik_vs_${
-        safeOpponent || "Gegner"
-      }.pdf`
-    );
   }
-
-  function startApp() {
-    const opponent =
-      els.opponent.value.trim();
-
-    const matchDate =
-      els.matchDate.value;
-
-    if (!opponent || !matchDate) {
-      alert(
-        "Bitte Gegner und Datum eintragen."
-      );
-      return;
-    }
-
-    state.meta = {
-      opponent,
-      matchDate
-    };
-
-    els.headline.textContent =
-      `Statistik vs ${opponent}`;
-
-    els.topMeta.textContent =
-      formatDate(matchDate);
-
-    els.setup.classList.add("hidden");
-    els.workspace.classList.remove("hidden");
-
-    loadMatchActions().then(() => {
-      renderTable("offense");
-      renderTable("defense");
-      updateSelectedButtons("offense");
-      updateSelectedButtons("defense");
-    });
-  }
-
-  document
-    .querySelectorAll("th button[data-table]")
-    .forEach(button => {
-      button.addEventListener("click", () => {
-        setSort(
-          button.dataset.table,
-          button.dataset.sort
-        );
-      });
-    });
-
-  els.startBtn.addEventListener(
-    "click",
-    startApp
-  );
-
-  els.undoBtn.addEventListener(
-    "click",
-    undoLast
-  );
-
-  els.pdfBtn.addEventListener(
-    "click",
-    exportPdf
-  );
-
-  els.offenseSaveBtn.addEventListener(
-    "click",
-    () => saveEntry("offense")
-  );
-
-  els.defenseSaveBtn.addEventListener(
-    "click",
-    () => saveEntry("defense")
-  );
-
-  els.offenseResetBtn.addEventListener(
-    "click",
-    () => clearSelection("offense")
-  );
-
-  els.defenseResetBtn.addEventListener(
-    "click",
-    () => clearSelection("defense")
-  );
-
-  renderButtons(
-    els.offenseStructureButtons,
-    offenseStructureOptions,
-    "structure",
-    "offense"
-  );
-
-  renderButtons(
-    els.offensePositionButtons,
-    positionOptions,
-    "position",
-    "offense"
-  );
-
-  renderButtons(
-    els.offenseResultButtons,
-    offenseResults,
-    "result",
-    "offense"
-  );
-
-  renderButtons(
-    els.offenseNumberButtons,
-    numberOptions,
-    "number",
-    "offense"
-  );
-
-  renderButtons(
-    els.defensePositionGreenButtons,
-    positionOptions,
-    "position",
-    "defense",
-    "green"
-  );
-
-  renderButtons(
-    els.defensePositionRedButtons,
-    positionOptions,
-    "position",
-    "defense",
-    "red"
-  );
-
-  renderButtons(
-    els.defenseFinishGreenButtons,
-    defenseFinishOptions,
-    "finishPosition",
-    "defense",
-    "green"
-  );
-
-  renderButtons(
-    els.defenseFinishRedButtons,
-    defenseFinishOptions,
-    "finishPosition",
-    "defense",
-    "red"
-  );
-
-  renderButtons(
-    els.defenseFinishSpecialButtons,
-    defenseFinishSpecialOptions,
-    "finishPosition",
-    "defense"
-  );
-
-  renderButtons(
-    els.defenseNumberButtons,
-    numberOptions,
-    "number",
-    "defense"
-  );
-
-  updateSelectedButtons("offense");
-  updateSelectedButtons("defense");
-  setToday();
-})();
-</script>
-
-</body>
-</html>
