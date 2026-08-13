@@ -470,7 +470,6 @@ tbody tr.editing { background: #e7f0ff; }
     ["3/4 -> 2", "3/4 -> 5", "3/4"],
     ["1. Welle", "2. Welle", "3. Welle", "Schnelle Mitte"]
   ];
-
   const positionOptions = ["2", "3", "4", "5"];
   const halfOptions = [
     { key: "1.hz", display: "1. HZ" },
@@ -527,8 +526,8 @@ tbody tr.editing { background: #e7f0ff; }
   const state = {
     meta: { opponent: "", matchDate: "" },
     undoStack: [],
-    offense: { entries: [], editingId: null, selection: defaultSelection("offense"), sort: { key: "index", dir: "desc" }, filter: { key: "", value: "" } },
-    defense: { entries: [], editingId: null, selection: defaultSelection("defense"), sort: { key: "index", dir: "desc" }, filter: { key: "", value: "" } }
+    offense: { entries: [], editingId: null, selection: defaultSelection("offense"), sort: { key: "index", dir: "desc" }, filter: { key: "", value: "", values: [] } },
+    defense: { entries: [], editingId: null, selection: defaultSelection("defense"), sort: { key: "index", dir: "desc" }, filter: { key: "", value: "", values: [] } }
   };
 
   const els = {
@@ -641,9 +640,14 @@ tbody tr.editing { background: #e7f0ff; }
     if (type === "number") {
       if (domain === "defense") {
         if (!Array.isArray(selection.number)) selection.number = selection.number ? [selection.number] : ["6:6"];
-        if (selection.number.includes(value)) { selection.number = selection.number.filter(item => item !== value); if (selection.number.length === 0) selection.number = ["6:6"]; }
-        else if (selection.number.length < 2) selection.number.push(value);
-        else alert("Es können höchstens zwei Werte ausgewählt werden.");
+        if (selection.number.includes(value)) {
+          selection.number = selection.number.filter(item => item !== value);
+          if (selection.number.length === 0) selection.number = ["6:6"];
+        } else if (selection.number.length < 3) {
+          selection.number.push(value);
+        } else {
+          alert("Es können höchstens drei Werte ausgewählt werden.");
+        }
       } else selection.number = value;
     }
     if (type === "result") { selection.result = value; selection.resultDisplay = display; selection.group = group; }
@@ -761,15 +765,15 @@ tbody tr.editing { background: #e7f0ff; }
   function renderStructureDisplay(value) { if (!value) return "—"; return String(value).split(" + ").filter(Boolean).map(structure => `<span class="pill structure">${escapeHtml(structure)}</span>`).join(" "); }
   function getFilteredRows(domain) {
     const rows = sortEntries(domain);
-    const { key, value } = currentStore(domain).filter;
-    if (!key || !value) return rows;
+    const filter = currentStore(domain).filter;
+    if (!filter.key || !filter.values?.length) return rows;
     return rows.filter(row => {
-      if (key === "structure") return String(row.structure || "").split(" + ").includes(value);
-      if (key === "position") return row.position === value;
-      if (key === "half") return getHalfDisplay(row.half || "1.hz") === value;
-      if (key === "number") return (Array.isArray(row.number) ? row.number : [row.number]).includes(value);
-      if (key === "result") return (row.resultDisplay || row.result || "") === value;
-      if (key === "finishPosition") return (row.finishPosition === "freiwurf" ? "Freiwurf" : row.finishPosition === "tf" ? "TF" : row.finishPosition || "") === value;
+      if (filter.key === "structure") return filter.values.some(value => String(row.structure || "").split(" + ").includes(value));
+      if (filter.key === "position") return filter.values.includes(row.position);
+      if (filter.key === "half") return filter.values.includes(getHalfDisplay(row.half || "1.hz"));
+      if (filter.key === "number") return filter.values.some(value => (Array.isArray(row.number) ? row.number : [row.number]).includes(value));
+      if (filter.key === "result") return filter.values.includes(row.resultDisplay || row.result || "");
+      if (filter.key === "finishPosition") return filter.values.includes(row.finishPosition === "freiwurf" ? "Freiwurf" : row.finishPosition === "tf" ? "TF" : row.finishPosition || "");
       return true;
     });
   }
@@ -782,10 +786,12 @@ tbody tr.editing { background: #e7f0ff; }
     keyEl.innerHTML = `<option value="">Kein Filter</option>` + Object.entries(cfg).map(([key, spec]) => `<option value="${escapeHtml(key)}" ${store.filter.key === key ? "selected" : ""}>${escapeHtml(spec.label)}</option>`).join("");
     const activeKey = store.filter.key;
     const values = activeKey ? cfg[activeKey].values : [];
-    if (!activeKey) { valueEl.innerHTML = `<option value="">—</option>`; valueEl.disabled = true; return; }
+    if (!activeKey) { valueEl.innerHTML = `<option value="">—</option>`; valueEl.disabled = true; store.filter.values = []; return; }
     valueEl.disabled = false;
-    valueEl.innerHTML = `<option value="">${escapeHtml(cfg[activeKey].label)} wählen</option>` + values.map(v => `<option value="${escapeHtml(v)}" ${store.filter.value === v ? "selected" : ""}>${escapeHtml(v)}</option>`).join("");
-    if (store.filter.value && !values.includes(store.filter.value)) store.filter.value = "";
+    valueEl.multiple = false;
+    valueEl.size = 1;
+    valueEl.innerHTML = `<option value="">${escapeHtml(cfg[activeKey].label)} wählen</option>` + values.map(v => `<option value="${escapeHtml(v)}" ${store.filter.values[0] === v ? "selected" : ""}>${escapeHtml(v)}</option>`).join("");
+    if (store.filter.values.length && !values.some(v => store.filter.values[0] === v)) store.filter.values = [];
   }
 
   function renderTable(domain) {
@@ -796,7 +802,7 @@ tbody tr.editing { background: #e7f0ff; }
     const countElement = els[`${domain}Count`];
     const sortInfo = els[`${domain}SortInfo`];
     countElement.textContent = `${store.entries.length} Einträge`;
-    sortInfo.textContent = `${store.sort.key} ${store.sort.dir === "asc" ? "↑" : "↓"}` + (store.filter.key && store.filter.value ? ` · Filter: ${FILTER_OPTIONS[domain][store.filter.key].label} = ${store.filter.value}` : "");
+    sortInfo.textContent = `${store.sort.key} ${store.sort.dir === "asc" ? "↑" : "↓"}` + (store.filter.key && store.filter.values?.length ? ` · Filter: ${FILTER_OPTIONS[domain][store.filter.key].label} = ${store.filter.values.join(", ")}` : "");
     if (!rows.length) {
       body.innerHTML = `<tr><td colspan="${domain === "offense" ? 6 : 5}" class="empty">Noch keine ${domain === "offense" ? "offensiven" : "defensiven"} Einträge.</td></tr>`;
       return;
@@ -872,9 +878,9 @@ tbody tr.editing { background: #e7f0ff; }
     doc.save(`Kollektive_Statistik_vs_${safeOpponent || "Gegner"}.pdf`);
   }
 
-  function applyFilter(domain, key, value) { const store = currentStore(domain); store.filter.key = key; store.filter.value = value; renderTable(domain); }
-  function resetFilter(domain) { const store = currentStore(domain); store.filter.key = ""; store.filter.value = ""; renderTable(domain); }
-  function setFilterKey(domain, key) { const store = currentStore(domain); store.filter.key = key; store.filter.value = key ? defaultFilterValue(domain, key) : ""; renderTable(domain); }
+  function applyFilter(domain, key, value) { const store = currentStore(domain); store.filter.key = key; store.filter.values = value ? [value] : []; renderTable(domain); }
+  function resetFilter(domain) { const store = currentStore(domain); store.filter.key = ""; store.filter.values = []; renderTable(domain); }
+  function setFilterKey(domain, key) { const store = currentStore(domain); store.filter.key = key; store.filter.values = key ? [defaultFilterValue(domain, key)] : []; renderTable(domain); }
 
   function startApp() {
     const opponent = els.opponent.value.trim(); const matchDate = els.matchDate.value;
