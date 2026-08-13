@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -330,7 +329,6 @@ button {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--space-3);
 }
-
 .structure-row + .structure-row {
   margin-top: var(--space-3);
 }
@@ -429,12 +427,20 @@ button {
 }
 
 .result-btn.split-green-red {
-  background: linear-gradient(90deg, #dff0d9 0 50%, #f9dfdf 50% 100%);
+  background: linear-gradient(
+    90deg,
+    #dff0d9 0 50%,
+    #f9dfdf 50% 100%
+  );
   border-color: rgba(110,95,95,.35);
 }
 
 .result-btn.split-red-green {
-  background: linear-gradient(90deg, #f9dfdf 0 50%, #dff0d9 50% 100%);
+  background: linear-gradient(
+    90deg,
+    #f9dfdf 0 50%,
+    #dff0d9 50% 100%
+  );
   border-color: rgba(110,95,95,.35);
 }
 
@@ -454,13 +460,21 @@ button {
 }
 
 .result-btn.selected.split-green-red {
-  background: linear-gradient(90deg, rgba(63,125,50,.38) 0 50%, rgba(177,58,58,.34) 50% 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(63,125,50,.38) 0 50%,
+    rgba(177,58,58,.34) 50% 100%
+  );
   border-color: #6f6b60;
   box-shadow: 0 0 0 2px rgba(18,35,20,.08) inset;
 }
 
 .result-btn.selected.split-red-green {
-  background: linear-gradient(90deg, rgba(177,58,58,.34) 0 50%, rgba(63,125,50,.38) 50% 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(177,58,58,.34) 0 50%,
+    rgba(63,125,50,.38) 50% 100%
+  );
   border-color: #6f6b60;
   box-shadow: 0 0 0 2px rgba(18,35,20,.08) inset;
 }
@@ -584,11 +598,19 @@ tbody tr.editing {
 }
 
 .result-cell.split-green-red {
-  background: linear-gradient(90deg, rgba(220,239,214,.82) 0 50%, rgba(247,219,219,.82) 50% 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(220,239,214,.82) 0 50%,
+    rgba(247,219,219,.82) 50% 100%
+  );
 }
 
 .result-cell.split-red-green {
-  background: linear-gradient(90deg, rgba(247,219,219,.82) 0 50%, rgba(220,239,214,.82) 50% 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(247,219,219,.82) 0 50%,
+    rgba(220,239,214,.82) 50% 100%
+  );
 }
 
 .pill {
@@ -668,13 +690,69 @@ tbody tr.editing {
   color: var(--muted);
 }
 
-@media (max-width: 1100px) {
+/*
+  Standardmäßig bleiben offensive und defensive Aktionen
+  nebeneinander, solange ausreichend Querformat-Breite
+  vorhanden ist.
+*/
+@media (max-width: 1100px) and (orientation: landscape) {
+  .app {
+    max-width: none;
+    padding: var(--space-4);
+  }
+
   .dual-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+
+  .section-card {
+    min-width: 0;
+    padding: var(--space-4);
+  }
+
+  .choice-btn,
+  .result-btn {
+    min-width: 0;
+    font-size: .86rem;
+    padding: .45rem .3rem;
+  }
+
+  .button-grid {
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+  }
+
+  .button-grid.four {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .result-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 760px) {
+/*
+  Spezieller Fallback für das iPad-Modell A1893
+  im Querformat. Die Orientierung ist entscheidend;
+  im Hochformat darf die bisherige Stapelung erhalten bleiben.
+*/
+@media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
+  and (orientation: landscape) {
+  .dual-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .section-card {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 760px) and (orientation: portrait) {
   .app {
     padding: var(--space-4);
   }
@@ -719,7 +797,11 @@ tbody tr.editing {
 
       <div class="field">
         <label for="opponent">Gegner</label>
-        <input id="opponent" type="text" placeholder="Gegner eingeben">
+        <input
+          id="opponent"
+          type="text"
+          placeholder="Gegner eingeben"
+        >
       </div>
 
       <div class="field">
@@ -753,8 +835,22 @@ tbody tr.editing {
       </div>
 
       <div class="topbar-actions">
-        <button id="undoBtn" class="utility-btn undo" type="button" aria-label="Rückgängig">↶</button>
-        <button id="pdfBtn" class="utility-btn primary" type="button">Export PDF</button>
+        <button
+          id="undoBtn"
+          class="utility-btn undo"
+          type="button"
+          aria-label="Rückgängig"
+        >
+          ↶
+        </button>
+
+        <button
+          id="pdfBtn"
+          class="utility-btn primary"
+          type="button"
+        >
+          Export PDF
+        </button>
       </div>
     </div>
 
@@ -763,35 +859,74 @@ tbody tr.editing {
       <section class="panel section-card offense">
         <div class="section-head">
           <h2>Offensive Aktionen</h2>
-          <div id="offenseCount" class="entry-count">0 Einträge</div>
+          <div id="offenseCount" class="entry-count">
+            0 Einträge
+          </div>
         </div>
 
         <div class="controls">
           <div class="group">
             <h3>Struktur</h3>
-            <div id="offenseStructureRow1" class="structure-row"></div>
-            <div id="offenseStructureRow2" class="structure-row"></div>
-            <div id="offenseStructureRow3" class="structure-row"></div>
+
+            <div
+              id="offenseStructureRow1"
+              class="structure-row"
+            ></div>
+
+            <div
+              id="offenseStructureRow2"
+              class="structure-row"
+            ></div>
+
+            <div
+              id="offenseStructureRow3"
+              class="structure-row"
+            ></div>
           </div>
 
           <div class="group">
             <h3>Angegriffene Position</h3>
-            <div id="offensePositionButtons" class="button-grid"></div>
+
+            <div
+              id="offensePositionButtons"
+              class="button-grid"
+            ></div>
           </div>
 
           <div class="group">
             <h3>Ergebnis</h3>
-            <div id="offenseResultButtons" class="result-grid"></div>
+
+            <div
+              id="offenseResultButtons"
+              class="result-grid"
+            ></div>
           </div>
 
           <div class="group">
             <h3>Zahl</h3>
-            <div id="offenseNumberButtons" class="button-grid"></div>
+
+            <div
+              id="offenseNumberButtons"
+              class="button-grid"
+            ></div>
           </div>
 
           <div class="action-row">
-            <button id="offenseResetBtn" class="save-btn" type="button">Auswahl leeren</button>
-            <button id="offenseSaveBtn" class="save-btn primary" type="button">Offensive Aktion speichern</button>
+            <button
+              id="offenseResetBtn"
+              class="save-btn"
+              type="button"
+            >
+              Auswahl leeren
+            </button>
+
+            <button
+              id="offenseSaveBtn"
+              class="save-btn primary"
+              type="button"
+            >
+              Offensive Aktion speichern
+            </button>
           </div>
         </div>
       </section>
@@ -799,41 +934,81 @@ tbody tr.editing {
       <section class="panel section-card defense">
         <div class="section-head">
           <h2>Defensive Aktionen</h2>
-          <div id="defenseCount" class="entry-count">0 Einträge</div>
+
+          <div id="defenseCount" class="entry-count">
+            0 Einträge
+          </div>
         </div>
 
         <div class="controls">
           <div class="group">
             <h3>Angegriffene Position</h3>
+
             <div class="stack-grid">
-              <div id="defensePositionGreenButtons" class="button-grid four"></div>
-              <div id="defensePositionRedButtons" class="button-grid four"></div>
+              <div
+                id="defensePositionGreenButtons"
+                class="button-grid four"
+              ></div>
+
+              <div
+                id="defensePositionRedButtons"
+                class="button-grid four"
+              ></div>
             </div>
           </div>
 
           <div class="group">
             <h3>Abschlussposition</h3>
+
             <div class="stack-grid">
-              <div id="defenseFinishGreenButtons" class="button-grid four"></div>
-              <div id="defenseFinishRedButtons" class="button-grid four"></div>
-              <div id="defenseFinishSpecialButtons" class="button-grid two-wide"></div>
+              <div
+                id="defenseFinishGreenButtons"
+                class="button-grid four"
+              ></div>
+
+              <div
+                id="defenseFinishRedButtons"
+                class="button-grid four"
+              ></div>
+
+              <div
+                id="defenseFinishSpecialButtons"
+                class="button-grid two-wide"
+              ></div>
             </div>
           </div>
 
           <div class="group">
             <h3>Zahl</h3>
-            <div id="defenseNumberButtons" class="button-grid"></div>
+
+            <div
+              id="defenseNumberButtons"
+              class="button-grid"
+            ></div>
           </div>
 
           <div class="action-row">
-            <button id="defenseResetBtn" class="save-btn" type="button">Auswahl leeren</button>
-            <button id="defenseSaveBtn" class="save-btn primary" type="button">Defensive Aktion speichern</button>
+            <button
+              id="defenseResetBtn"
+              class="save-btn"
+              type="button"
+            >
+              Auswahl leeren
+            </button>
+
+            <button
+              id="defenseSaveBtn"
+              class="save-btn primary"
+              type="button"
+            >
+              Defensive Aktion speichern
+            </button>
           </div>
         </div>
       </section>
     </div>
-
     <div class="tables">
+
       <section class="panel table-card offense">
         <div class="table-tools">
           <h2>Angriff</h2>
@@ -845,19 +1020,53 @@ tbody tr.editing {
             <thead>
               <tr>
                 <th style="width:7%">
-                  <button type="button" data-table="offense" data-sort="index">#</button>
+                  <button
+                    type="button"
+                    data-table="offense"
+                    data-sort="index"
+                  >
+                    #
+                  </button>
                 </th>
+
                 <th style="width:23%">
-                  <button type="button" data-table="offense" data-sort="structure">Struktur</button>
+                  <button
+                    type="button"
+                    data-table="offense"
+                    data-sort="structure"
+                  >
+                    Struktur
+                  </button>
                 </th>
+
                 <th style="width:15%">
-                  <button type="button" data-table="offense" data-sort="position">Position</button>
+                  <button
+                    type="button"
+                    data-table="offense"
+                    data-sort="position"
+                  >
+                    Position
+                  </button>
                 </th>
+
                 <th style="width:23%">
-                  <button type="button" data-table="offense" data-sort="result">Ergebnis</button>
+                  <button
+                    type="button"
+                    data-table="offense"
+                    data-sort="result"
+                  >
+                    Ergebnis
+                  </button>
                 </th>
+
                 <th style="width:15%">
-                  <button type="button" data-table="offense" data-sort="number">Zahl</button>
+                  <button
+                    type="button"
+                    data-table="offense"
+                    data-sort="number"
+                  >
+                    Zahl
+                  </button>
                 </th>
               </tr>
             </thead>
@@ -884,16 +1093,43 @@ tbody tr.editing {
             <thead>
               <tr>
                 <th style="width:7%">
-                  <button type="button" data-table="defense" data-sort="index">#</button>
+                  <button
+                    type="button"
+                    data-table="defense"
+                    data-sort="index"
+                  >
+                    #
+                  </button>
                 </th>
+
                 <th style="width:20%">
-                  <button type="button" data-table="defense" data-sort="positionLabel">Position</button>
+                  <button
+                    type="button"
+                    data-table="defense"
+                    data-sort="positionLabel"
+                  >
+                    Position
+                  </button>
                 </th>
+
                 <th style="width:28%">
-                  <button type="button" data-table="defense" data-sort="finishPositionLabel">Abschlussposition</button>
+                  <button
+                    type="button"
+                    data-table="defense"
+                    data-sort="finishPositionLabel"
+                  >
+                    Abschlussposition
+                  </button>
                 </th>
+
                 <th style="width:15%">
-                  <button type="button" data-table="defense" data-sort="number">Zahl</button>
+                  <button
+                    type="button"
+                    data-table="defense"
+                    data-sort="number"
+                  >
+                    Zahl
+                  </button>
                 </th>
               </tr>
             </thead>
@@ -912,7 +1148,11 @@ tbody tr.editing {
 
     <section class="panel notes">
       <label for="notes">Notizen</label>
-      <textarea id="notes" placeholder="Notizen zum Spiel eingeben..."></textarea>
+
+      <textarea
+        id="notes"
+        placeholder="Notizen zum Spiel eingeben..."
+      ></textarea>
     </section>
   </section>
 </div>
@@ -1035,7 +1275,16 @@ tbody tr.editing {
       finishPosition: "",
       positionSide: "",
       finishSide: "",
-      number: domain === "defense" ? [] : "6:6",
+
+      /*
+        Auch defensive Aktionen starten jetzt mit 6:6.
+        Die Auswahl bleibt trotzdem ein Array, damit
+        weiterhin bis zu zwei Werte möglich sind.
+      */
+      number: domain === "defense"
+        ? ["6:6"]
+        : "6:6",
+
       result: "",
       resultDisplay: "",
       group: ""
@@ -1214,11 +1463,13 @@ tbody tr.editing {
     }
 
     if (Array.isArray(value)) {
-      return value;
+      return value.length
+        ? value
+        : ["6:6"];
     }
 
     if (!value) {
-      return [];
+      return ["6:6"];
     }
 
     return String(value)
@@ -1424,7 +1675,6 @@ tbody tr.editing {
       throw error;
     }
   }
-
   function renderButtons(
     mount,
     items,
@@ -1547,7 +1797,7 @@ tbody tr.editing {
           selection.number =
             selection.number
               ? [selection.number]
-              : [];
+              : ["6:6"];
         }
 
         if (selection.number.includes(value)) {
@@ -1555,6 +1805,14 @@ tbody tr.editing {
             selection.number.filter(
               item => item !== value
             );
+
+          /*
+            Nach dem Abwählen des letzten Werts bleibt
+            6:6 der Standardwert.
+          */
+          if (selection.number.length === 0) {
+            selection.number = ["6:6"];
+          }
         } else if (selection.number.length < 2) {
           selection.number.push(value);
         } else {
@@ -1633,7 +1891,7 @@ tbody tr.editing {
                 ? selection.number
                 : selection.number
                   ? [selection.number]
-                  : [];
+                  : ["6:6"];
 
             selected = numbers.includes(value);
           } else {
@@ -1663,6 +1921,7 @@ tbody tr.editing {
     updateSelectedButtons(domain);
     renderTable(domain);
   }
+
   function validate(domain) {
     const selection =
       currentStore(domain).selection;
@@ -1685,6 +1944,7 @@ tbody tr.editing {
       alert(
         "Bitte mindestens eine Struktur, Zahl und Ergebnis auswählen."
       );
+
       return false;
     }
 
@@ -1693,20 +1953,25 @@ tbody tr.editing {
         ? selection.number
         : selection.number
           ? [selection.number]
-          : [];
+          : ["6:6"];
 
+    /*
+      Die angegriffene Position ist bei defensiven
+      Aktionen jetzt optional. Deshalb wird hier
+      weder position noch positionSide verlangt.
+    */
     if (
       domain === "defense" &&
       (
         !selection.finishPosition ||
-        !selection.positionSide ||
         !selection.finishSide ||
         defenseNumbers.length === 0
       )
     ) {
       alert(
-        "Bitte angegriffene Position, Abschlussposition und Zahl auswählen."
+        "Bitte Abschlussposition und Zahl auswählen."
       );
+
       return false;
     }
 
@@ -1753,7 +2018,7 @@ tbody tr.editing {
           ? selection.number
           : selection.number
             ? [selection.number]
-            : [];
+            : ["6:6"];
 
       numberValue = numbers.join(" + ");
     } else {
@@ -1766,7 +2031,10 @@ tbody tr.editing {
           ? structures.join(" + ")
           : "",
 
-      position: selection.position,
+      /*
+        Bei der Defensive darf position leer sein.
+      */
+      position: selection.position || "",
 
       finishPosition:
         domain === "defense"
@@ -1849,6 +2117,48 @@ tbody tr.editing {
       clearSelection(domain);
       renderTable("offense");
       renderTable("defense");
+
+      /*
+        Sanftes Hochspringen nach dem Speichern.
+        requestAnimationFrame sorgt dafür, dass die
+        aktualisierte Oberfläche zuerst gerendert wird.
+        Der iPad-Fallback verwendet zusätzlich focus().
+      */
+      requestAnimationFrame(() => {
+        const target =
+          document.getElementById("workspace");
+
+        if (!target) {
+          return;
+        }
+
+        try {
+          target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        } catch (error) {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
+        }
+
+        setTimeout(() => {
+          if (
+            typeof target.focus === "function"
+          ) {
+            target.setAttribute(
+              "tabindex",
+              "-1"
+            );
+
+            target.focus({
+              preventScroll: true
+            });
+          }
+        }, 120);
+      });
     } catch (error) {
       console.error(error);
 
@@ -1866,6 +2176,7 @@ tbody tr.editing {
       alert(
         "Es gibt keine Aktion zum Rückgängigmachen."
       );
+
       return;
     }
 
@@ -2055,9 +2366,7 @@ tbody tr.editing {
 
     if (row.number) {
       return `
-        <span class="pill ${
-          getNumberClass(row.number)
-        }">
+        <span class="pill ${getNumberClass(row.number)}">
           ${escapeHtml(row.number)}
         </span>
       `;
@@ -2362,9 +2671,15 @@ tbody tr.editing {
     updateSelectedButtons(domain);
     renderTable(domain);
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
+    requestAnimationFrame(() => {
+      try {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      } catch (error) {
+        window.scrollTo(0, 0);
+      }
     });
   }
 
@@ -2451,7 +2766,8 @@ tbody tr.editing {
         );
     }
   }
-    function exportPdf() {
+
+  function exportPdf() {
     if (
       !window.jspdf ||
       !window.jspdf.jsPDF
@@ -2461,6 +2777,7 @@ tbody tr.editing {
         "Bitte öffne die App einmal mit Internetverbindung " +
         "und versuche es erneut."
       );
+
       return;
     }
 
@@ -2478,6 +2795,7 @@ tbody tr.editing {
         "Bitte öffne die App mit Internetverbindung " +
         "und versuche es erneut."
       );
+
       return;
     }
 
@@ -2694,6 +3012,7 @@ tbody tr.editing {
       alert(
         "Bitte Gegner und Datum eintragen."
       );
+
       return;
     }
 
