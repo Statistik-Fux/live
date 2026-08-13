@@ -38,20 +38,9 @@
   --yellow-strong: #a97900;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 body {
   min-height: 100vh;
   font-family: Arial, sans-serif;
@@ -62,27 +51,10 @@ body {
     linear-gradient(180deg, rgba(13,91,31,.04), rgba(243,245,240,1) 26%),
     var(--bg);
 }
-
-button,
-input,
-textarea {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-.hidden {
-  display: none !important;
-}
-
-.app {
-  max-width: 1360px;
-  margin: 0 auto;
-  padding: var(--space-5);
-}
-
+button, input, textarea { font: inherit; }
+button { cursor: pointer; }
+.hidden { display: none !important; }
+.app { max-width: 1360px; margin: 0 auto; padding: var(--space-5); }
 .panel {
   width: 100%;
   border: 1px solid var(--border);
@@ -91,7 +63,6 @@ button {
   box-shadow: var(--shadow-md);
   backdrop-filter: blur(10px);
 }
-
 .setup {
   max-width: 760px;
   margin: 6vh auto 0;
@@ -99,7 +70,6 @@ button {
   position: relative;
   overflow: hidden;
 }
-
 .setup::before {
   content: "";
   position: absolute;
@@ -109,7 +79,6 @@ button {
     linear-gradient(135deg, rgba(13,91,31,.03), rgba(217,31,38,.02));
   pointer-events: none;
 }
-
 .setup-grid {
   display: grid;
   gap: var(--space-5);
@@ -119,7 +88,6 @@ button {
   position: relative;
   z-index: 1;
 }
-
 .logo-setup {
   width: 100%;
   min-height: 320px;
@@ -127,21 +95,13 @@ button {
   background: url("logo.png.JPG") center/contain no-repeat;
   opacity: .8;
 }
-
-.field,
-.notes {
-  text-align: center;
-}
-
-.field label,
-.notes label {
+.field, .notes { text-align: center; }
+.field label, .notes label {
   display: block;
   font-weight: 700;
   margin-bottom: var(--space-2);
 }
-
-.field input,
-.notes textarea {
+.field input, .notes textarea {
   width: min(100%, 360px);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
@@ -149,36 +109,23 @@ button {
   background: #fff;
   color: var(--text);
 }
-
-.notes textarea {
-  width: min(100%, 700px);
-}
-
-.field input:focus,
-.notes textarea:focus {
+.notes textarea { width: min(100%, 700px); }
+.field input:focus, .notes textarea:focus {
   outline: 2px solid rgba(13,91,31,.15);
   border-color: var(--primary);
 }
-
-.start-btn,
-.save-btn,
-.utility-btn {
+.start-btn, .save-btn, .utility-btn {
   min-height: 52px;
   border-radius: var(--radius-md);
   border: 1px solid transparent;
   font-weight: 700;
 }
-
 .start-btn {
   min-width: 160px;
   color: #fff;
   background: linear-gradient(90deg, var(--primary), var(--primary-2));
 }
-
-.workspace {
-  margin-top: var(--space-5);
-}
-
+.workspace { margin-top: var(--space-5); }
 .topbar {
   display: flex;
   justify-content: space-between;
@@ -188,14 +135,7 @@ button {
   margin-bottom: var(--space-5);
   background: linear-gradient(90deg, rgba(255,255,255,.98), rgba(245,247,243,.98));
 }
-
-.brand-stack {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  min-width: 0;
-}
-
+.brand-stack { display: flex; align-items: center; gap: var(--space-4); min-width: 0; }
 .brand-logo {
   width: 92px;
   height: 92px;
@@ -206,146 +146,42 @@ button {
   border: 1px solid rgba(18,35,20,.08);
   box-shadow: var(--shadow-sm);
 }
-
-.topbar h1 {
-  margin: 0;
-  font-size: var(--text-xl);
-}
-
-.topbar-meta {
-  color: var(--muted);
-  font-size: var(--text-sm);
-  margin-top: var(--space-2);
-}
-
-.topbar-actions {
-  display: flex;
-  gap: var(--space-3);
-  flex-wrap: wrap;
-}
-
+.topbar h1 { margin: 0; font-size: var(--text-xl); }
+.topbar-meta { color: var(--muted); font-size: var(--text-sm); margin-top: var(--space-2); }
+.topbar-actions { display: flex; gap: var(--space-3); flex-wrap: wrap; }
 .utility-btn {
   background: #fff;
   border-color: var(--border);
   padding: .8rem 1rem;
   color: #000;
 }
-
-.utility-btn.primary {
-  color: #fff;
-  background: var(--primary);
-  border-color: var(--primary);
-}
-
-.utility-btn.undo {
-  width: 52px;
-  padding: 0;
-}
-
-.dual-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-5);
-}
-
-.section-card {
-  padding: var(--space-5);
-  position: relative;
-  overflow: hidden;
-}
-
-.section-card.offense {
-  background: linear-gradient(180deg, rgba(13,91,31,.07), rgba(255,255,255,.95) 26%);
-}
-
-.section-card.defense {
-  background: linear-gradient(180deg, rgba(217,31,38,.07), rgba(255,255,255,.95) 26%);
-}
-
-.section-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--space-3);
-  margin-bottom: var(--space-4);
-}
-
-.section-head h2 {
-  margin: 0;
-  font-size: var(--text-lg);
-}
-
-.entry-count {
-  border-radius: 999px;
-  padding: .35rem .75rem;
-  font-size: var(--text-sm);
-  font-weight: 700;
-}
-
-.offense .entry-count {
-  background: rgba(13,91,31,.12);
-  color: var(--primary);
-}
-
-.defense .entry-count {
-  background: rgba(217,31,38,.12);
-  color: var(--fox-red-dark);
-}
-
-.controls {
-  display: grid;
-  gap: var(--space-4);
-}
-
+.utility-btn.primary { color: #fff; background: var(--primary); border-color: var(--primary); }
+.utility-btn.undo { width: 52px; padding: 0; }
+.dual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
+.section-card { padding: var(--space-5); position: relative; overflow: hidden; }
+.section-card.offense { background: linear-gradient(180deg, rgba(13,91,31,.07), rgba(255,255,255,.95) 26%); }
+.section-card.defense { background: linear-gradient(180deg, rgba(217,31,38,.07), rgba(255,255,255,.95) 26%); }
+.section-head { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); }
+.section-head h2 { margin: 0; font-size: var(--text-lg); }
+.entry-count { border-radius: 999px; padding: .35rem .75rem; font-size: var(--text-sm); font-weight: 700; }
+.offense .entry-count { background: rgba(13,91,31,.12); color: var(--primary); }
+.defense .entry-count { background: rgba(217,31,38,.12); color: var(--fox-red-dark); }
+.controls { display: grid; gap: var(--space-4); }
 .group {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   background: rgba(255,255,255,.94);
   padding: var(--space-4);
 }
-
-.group h3 {
-  margin: 0 0 var(--space-3);
-  font-size: var(--text-base);
-  color: #000;
-}
-
-.button-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
-  gap: var(--space-3);
-}
-
-.button-grid.four {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.button-grid.two-wide {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.structure-row {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--space-3);
-}
-.structure-row + .structure-row {
-  margin-top: var(--space-3);
-}
-
-.stack-grid {
-  display: grid;
-  gap: var(--space-3);
-}
-
-.result-grid {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: var(--space-2);
-}
-
-.choice-btn,
-.result-btn {
+.group h3 { margin: 0 0 var(--space-3); font-size: var(--text-base); color: #000; }
+.button-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(92px, 1fr)); gap: var(--space-3); }
+.button-grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.button-grid.two-wide { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.structure-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); }
+.structure-row + .structure-row { margin-top: var(--space-3); }
+.stack-grid { display: grid; gap: var(--space-3); }
+.result-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--space-2); }
+.choice-btn, .result-btn {
   min-height: 46px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
@@ -354,579 +190,166 @@ button {
   padding: .5rem .45rem;
   font-size: .94rem;
   color: #111;
-  transition:
-    transform .14s ease,
-    border-color .14s ease,
-    background-color .14s ease,
-    box-shadow .14s ease;
+  transition: transform .14s ease, border-color .14s ease, background-color .14s ease, box-shadow .14s ease;
 }
-
-.choice-btn:active,
-.result-btn:active,
-.save-btn:active,
-.utility-btn:active,
-.start-btn:active {
-  transform: scale(.985);
-}
-
+.choice-btn:active, .result-btn:active, .save-btn:active, .utility-btn:active, .start-btn:active { transform: scale(.985); }
 .choice-btn.selected {
   background: rgba(13,91,31,.12);
   border-color: var(--primary);
   box-shadow: 0 0 0 2px rgba(13,91,31,.08) inset;
 }
-
 .defense .choice-btn.selected {
   background: rgba(217,31,38,.1);
   border-color: var(--fox-red);
   box-shadow: 0 0 0 2px rgba(217,31,38,.08) inset;
 }
-
-.choice-btn.green-variant {
-  background: linear-gradient(180deg, #e7f5e2, #dbefd4);
-  border-color: rgba(63,125,50,.28);
-}
-
-.choice-btn.red-variant {
-  background: linear-gradient(180deg, #fae5e5, #f6d8d8);
-  border-color: rgba(177,58,58,.28);
-}
-
-.choice-btn.yellow-variant {
-  background: linear-gradient(180deg, #f7edc6, #f1e2a4);
-  border-color: rgba(169,121,0,.35);
-}
-
-.choice-btn.green-variant.selected {
-  background: rgba(63,125,50,.28);
-  border-color: var(--green-strong);
-}
-
-.choice-btn.red-variant.selected {
-  background: rgba(177,58,58,.28);
-  border-color: var(--red-strong);
-}
-
-.choice-btn.yellow-variant.selected {
-  background: rgba(169,121,0,.28);
-  border-color: var(--yellow-strong);
-}
-
-.result-btn.green {
-  background: linear-gradient(180deg, #dff0d9, #d2e9cb);
-  border-color: rgba(63,125,50,.3);
-}
-
-.result-btn.red {
-  background: linear-gradient(180deg, #f9dfdf, #f4caca);
-  border-color: rgba(177,58,58,.3);
-}
-
-.result-btn.yellow {
-  background: linear-gradient(180deg, #f7edc6, #f1e2a4);
-  border-color: rgba(169,121,0,.35);
-}
-
-.result-btn.split-green-red {
-  background: linear-gradient(
-    90deg,
-    #dff0d9 0 50%,
-    #f9dfdf 50% 100%
-  );
-  border-color: rgba(110,95,95,.35);
-}
-
-.result-btn.split-red-green {
-  background: linear-gradient(
-    90deg,
-    #f9dfdf 0 50%,
-    #dff0d9 50% 100%
-  );
-  border-color: rgba(110,95,95,.35);
-}
-
-.result-btn.selected.green {
-  background: rgba(63,125,50,.28);
-  border-color: var(--green-strong);
-}
-
-.result-btn.selected.red {
-  background: rgba(177,58,58,.28);
-  border-color: var(--red-strong);
-}
-
-.result-btn.selected.yellow {
-  background: rgba(169,121,0,.28);
-  border-color: var(--yellow-strong);
-}
-
+.choice-btn.green-variant { background: linear-gradient(180deg, #e7f5e2, #dbefd4); border-color: rgba(63,125,50,.28); }
+.choice-btn.red-variant { background: linear-gradient(180deg, #fae5e5, #f6d8d8); border-color: rgba(177,58,58,.28); }
+.choice-btn.yellow-variant { background: linear-gradient(180deg, #f7edc6, #f1e2a4); border-color: rgba(169,121,0,.35); }
+.choice-btn.green-variant.selected { background: rgba(63,125,50,.28); border-color: var(--green-strong); }
+.choice-btn.red-variant.selected { background: rgba(177,58,58,.28); border-color: var(--red-strong); }
+.choice-btn.yellow-variant.selected { background: rgba(169,121,0,.28); border-color: var(--yellow-strong); }
+.result-btn.green { background: linear-gradient(180deg, #dff0d9, #d2e9cb); border-color: rgba(63,125,50,.3); }
+.result-btn.red { background: linear-gradient(180deg, #f9dfdf, #f4caca); border-color: rgba(177,58,58,.3); }
+.result-btn.yellow { background: linear-gradient(180deg, #f7edc6, #f1e2a4); border-color: rgba(169,121,0,.35); }
+.result-btn.split-green-red { background: linear-gradient(90deg, #dff0d9 0 50%, #f9dfdf 50% 100%); border-color: rgba(110,95,95,.35); }
+.result-btn.split-red-green { background: linear-gradient(90deg, #f9dfdf 0 50%, #dff0d9 50% 100%); border-color: rgba(110,95,95,.35); }
+.result-btn.selected.green { background: rgba(63,125,50,.28); border-color: var(--green-strong); }
+.result-btn.selected.red { background: rgba(177,58,58,.28); border-color: var(--red-strong); }
+.result-btn.selected.yellow { background: rgba(169,121,0,.28); border-color: var(--yellow-strong); }
 .result-btn.selected.split-green-red {
-  background: linear-gradient(
-    90deg,
-    rgba(63,125,50,.38) 0 50%,
-    rgba(177,58,58,.34) 50% 100%
-  );
+  background: linear-gradient(90deg, rgba(63,125,50,.38) 0 50%, rgba(177,58,58,.34) 50% 100%);
   border-color: #6f6b60;
   box-shadow: 0 0 0 2px rgba(18,35,20,.08) inset;
 }
-
 .result-btn.selected.split-red-green {
-  background: linear-gradient(
-    90deg,
-    rgba(177,58,58,.34) 0 50%,
-    rgba(63,125,50,.38) 50% 100%
-  );
+  background: linear-gradient(90deg, rgba(177,58,58,.34) 0 50%, rgba(63,125,50,.38) 50% 100%);
   border-color: #6f6b60;
   box-shadow: 0 0 0 2px rgba(18,35,20,.08) inset;
 }
-
-.action-row {
-  display: flex;
-  gap: var(--space-3);
-  flex-wrap: wrap;
-}
-
-.save-btn {
-  flex: 1;
-  min-width: 180px;
-  background: #fff;
-  border-color: var(--border);
-  color: #000;
-}
-
-.save-btn.primary {
-  background: var(--primary);
-  color: #fff;
-  border-color: var(--primary);
-}
-
-.defense .save-btn.primary {
-  background: var(--fox-red);
-  border-color: var(--fox-red);
-}
-
-.tables {
-  display: grid;
-  gap: var(--space-5);
-  margin-top: var(--space-5);
-}
-
-.table-card {
-  padding: var(--space-5);
-  position: relative;
-  overflow: hidden;
-}
-
-.table-card.offense {
-  border-top: 8px solid var(--primary);
-}
-
-.table-card.defense {
-  border-top: 8px solid var(--fox-red);
-}
-
-.table-tools {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--space-3);
-  margin-bottom: var(--space-4);
-  flex-wrap: wrap;
-}
-
-.table-tools h2 {
-  margin: 0;
-  color: #000;
-}
-
-.table-wrap {
-  overflow: auto;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  background: #fff;
-}
-
-table {
-  width: 100%;
-  table-layout: fixed;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  padding: .82rem .72rem;
-  border-bottom: 1px solid rgba(40,37,29,.09);
-  text-align: left;
-  vertical-align: top;
-  word-break: break-word;
-}
-
-th {
-  position: sticky;
-  top: 0;
-  background: var(--surface-2);
-  z-index: 1;
-  color: #000;
-}
-
-th button {
-  border: 0;
-  padding: 0;
-  background: transparent;
-  font: inherit;
-  font-weight: 700;
-  color: #000;
-}
-
-tbody tr:hover {
-  background: #faf8f3;
-}
-
-tbody tr.editing {
-  background: #e7f0ff;
-}
-
-.result-cell.green {
-  background: rgba(220,239,214,.82);
-}
-
-.result-cell.red {
-  background: rgba(247,219,219,.82);
-}
-
-.result-cell.yellow {
-  background: rgba(247,237,198,.88);
-}
-
-.result-cell.split-green-red {
-  background: linear-gradient(
-    90deg,
-    rgba(220,239,214,.82) 0 50%,
-    rgba(247,219,219,.82) 50% 100%
-  );
-}
-
-.result-cell.split-red-green {
-  background: linear-gradient(
-    90deg,
-    rgba(247,219,219,.82) 0 50%,
-    rgba(220,239,214,.82) 50% 100%
-  );
-}
-
-.pill {
-  display: inline-flex;
-  align-items: center;
-  border-radius: 999px;
-  padding: .2rem .55rem;
-  background: #eee;
-  font-size: var(--text-sm);
-  font-weight: 700;
-}
-
-.pill.position {
-  background: #eef0f7;
-  color: #33406b;
-}
-
-.pill.structure {
-  background: #e7f4ea;
-  color: #19502a;
-}
-
-.pill.number {
-  background: #f2edf8;
-  color: #53306f;
-}
-
-.pill.number-66 {
-  background: #ffffff;
-  color: #53306f;
-  border: 1px solid #e0e0e0;
-}
-
-.pill.number-76 {
-  background: #f0f7ff;
-  color: #53306f;
-}
-
-.pill.number-65 {
-  background: #fff9f0;
-  color: #53306f;
-}
-
-.pill.number-tempo {
-  background: #f7edc6;
-  color: #7b5c00;
-}
-
-.pill.green-tag {
-  background: #e1f0dc;
-  color: #1b5c26;
-}
-
-.pill.red-tag {
-  background: #f8dfdf;
-  color: #8d2424;
-}
-
-.pill.yellow-tag {
-  background: #f7edc6;
-  color: #7b5c00;
-}
-
-.notes {
-  padding: var(--space-5);
-  margin-top: var(--space-5);
-}
-
-.notes textarea {
-  min-height: 110px;
-  resize: vertical;
-}
-
-.empty {
-  padding: var(--space-8);
-  text-align: center;
-  color: var(--muted);
-}
-
-/*
-  Standardmäßig bleiben offensive und defensive Aktionen
-  nebeneinander, solange ausreichend Querformat-Breite
-  vorhanden ist.
-*/
+.action-row { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+.save-btn { flex: 1; min-width: 180px; background: #fff; border-color: var(--border); color: #000; }
+.save-btn.primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+.defense .save-btn.primary { background: var(--fox-red); border-color: var(--fox-red); }
+.tables { display: grid; gap: var(--space-5); margin-top: var(--space-5); }
+.table-card { padding: var(--space-5); position: relative; overflow: hidden; }
+.table-card.offense { border-top: 8px solid var(--primary); }
+.table-card.defense { border-top: 8px solid var(--fox-red); }
+.table-tools { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); flex-wrap: wrap; }
+.table-tools h2 { margin: 0; color: #000; }
+.table-wrap { overflow: auto; border: 1px solid var(--border); border-radius: var(--radius-lg); background: #fff; }
+table { width: 100%; table-layout: fixed; border-collapse: collapse; }
+th, td { padding: .82rem .72rem; border-bottom: 1px solid rgba(40,37,29,.09); text-align: left; vertical-align: top; word-break: break-word; }
+th { position: sticky; top: 0; background: var(--surface-2); z-index: 1; color: #000; }
+th button { border: 0; padding: 0; background: transparent; font: inherit; font-weight: 700; color: #000; }
+tbody tr:hover { background: #faf8f3; }
+tbody tr.editing { background: #e7f0ff; }
+.result-cell.green { background: rgba(220,239,214,.82); }
+.result-cell.red { background: rgba(247,219,219,.82); }
+.result-cell.yellow { background: rgba(247,237,198,.88); }
+.result-cell.split-green-red { background: linear-gradient(90deg, rgba(220,239,214,.82) 0 50%, rgba(247,219,219,.82) 50% 100%); }
+.result-cell.split-red-green { background: linear-gradient(90deg, rgba(247,219,219,.82) 0 50%, rgba(220,239,214,.82) 50% 100%); }
+.pill { display: inline-flex; align-items: center; border-radius: 999px; padding: .2rem .55rem; background: #eee; font-size: var(--text-sm); font-weight: 700; }
+.pill.position { background: #eef0f7; color: #33406b; }
+.pill.structure { background: #e7f4ea; color: #19502a; }
+.pill.number { background: #f2edf8; color: #53306f; }
+.pill.number-66 { background: #ffffff; color: #53306f; border: 1px solid #e0e0e0; }
+.pill.number-76 { background: #f0f7ff; color: #53306f; }
+.pill.number-65 { background: #fff9f0; color: #53306f; }
+.pill.number-tempo { background: #f7edc6; color: #7b5c00; }
+.pill.green-tag { background: #e1f0dc; color: #1b5c26; }
+.pill.red-tag { background: #f8dfdf; color: #8d2424; }
+.pill.yellow-tag { background: #f7edc6; color: #7b5c00; }
+.notes { padding: var(--space-5); margin-top: var(--space-5); }
+.notes textarea { min-height: 110px; resize: vertical; }
+.empty { padding: var(--space-8); text-align: center; color: var(--muted); }
 @media (max-width: 1100px) and (orientation: landscape) {
-  .app {
-    max-width: none;
-    padding: var(--space-4);
-  }
-
-  .dual-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: var(--space-4);
-  }
-
-  .section-card {
-    min-width: 0;
-    padding: var(--space-4);
-  }
-
-  .choice-btn,
-  .result-btn {
-    min-width: 0;
-    font-size: .86rem;
-    padding: .45rem .3rem;
-  }
-
-  .button-grid {
-    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-  }
-
-  .button-grid.four {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .result-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+  .app { max-width: none; padding: var(--space-4); }
+  .dual-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-4); }
+  .section-card { min-width: 0; padding: var(--space-4); }
+  .choice-btn, .result-btn { min-width: 0; font-size: .86rem; padding: .45rem .3rem; }
+  .button-grid { grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); }
+  .button-grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .result-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
-
-/*
-  Spezieller Fallback für das iPad-Modell A1893
-  im Querformat. Die Orientierung ist entscheidend;
-  im Hochformat darf die bisherige Stapelung erhalten bleiben.
-*/
-@media only screen
-  and (min-device-width: 768px)
-  and (max-device-width: 1024px)
-  and (orientation: landscape) {
-  .dual-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    align-items: start;
-  }
-
-  .section-card {
-    width: 100%;
-    min-width: 0;
-  }
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+  .dual-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+  .section-card { width: 100%; min-width: 0; }
 }
-
 @media (max-width: 760px) and (orientation: portrait) {
-  .app {
-    padding: var(--space-4);
-  }
-
-  .setup,
-  .section-card,
-  .table-card,
-  .notes,
-  .topbar {
-    padding: var(--space-4);
-  }
-
-  .topbar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .brand-stack {
-    align-items: flex-start;
-  }
-
-  .button-grid,
-  .button-grid.four,
-  .button-grid.two-wide,
-  .structure-row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .result-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  .app { padding: var(--space-4); }
+  .setup, .section-card, .table-card, .notes, .topbar { padding: var(--space-4); }
+  .topbar { flex-direction: column; align-items: stretch; }
+  .brand-stack { align-items: flex-start; }
+  .button-grid, .button-grid.four, .button-grid.two-wide, .structure-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .result-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 </style>
 </head>
-
 <body>
 <div class="app">
-
   <section id="setup" class="panel setup">
     <div class="setup-grid">
       <div class="logo-setup"></div>
-
       <div class="field">
         <label for="opponent">Gegner</label>
-        <input
-          id="opponent"
-          type="text"
-          placeholder="Gegner eingeben"
-        >
+        <input id="opponent" type="text" placeholder="Gegner eingeben">
       </div>
-
       <div class="field">
         <label for="matchDate">Datum</label>
         <input id="matchDate" type="date">
       </div>
-
-      <button id="startBtn" class="start-btn" type="button">
-        Start
-      </button>
+      <button id="startBtn" class="start-btn" type="button">Start</button>
     </div>
   </section>
 
   <section id="workspace" class="workspace hidden">
-
     <div class="panel topbar">
       <div class="brand-stack">
-        <img
-          id="brandLogo"
-          src="./logo.png.JPG"
-          alt="Logo"
-          class="brand-logo"
-          width="72"
-          height="72"
-        >
-
+        <img id="brandLogo" src="./logo.png.JPG" alt="Logo" class="brand-logo" width="72" height="72">
         <div>
           <h1 id="headline">Statistik</h1>
           <div id="topMeta" class="topbar-meta"></div>
         </div>
       </div>
-
       <div class="topbar-actions">
-        <button
-          id="undoBtn"
-          class="utility-btn undo"
-          type="button"
-          aria-label="Rückgängig"
-        >
-          ↶
-        </button>
-
-        <button
-          id="pdfBtn"
-          class="utility-btn primary"
-          type="button"
-        >
-          Export PDF
-        </button>
+        <button id="undoBtn" class="utility-btn undo" type="button" aria-label="Rückgängig">↶</button>
+        <button id="pdfBtn" class="utility-btn primary" type="button">Export PDF</button>
       </div>
     </div>
 
     <div class="dual-grid">
-
       <section class="panel section-card offense">
         <div class="section-head">
           <h2>Offensive Aktionen</h2>
-          <div id="offenseCount" class="entry-count">
-            0 Einträge
-          </div>
+          <div id="offenseCount" class="entry-count">0 Einträge</div>
         </div>
-
         <div class="controls">
           <div class="group">
             <h3>Struktur</h3>
-
-            <div
-              id="offenseStructureRow1"
-              class="structure-row"
-            ></div>
-
-            <div
-              id="offenseStructureRow2"
-              class="structure-row"
-            ></div>
-
-            <div
-              id="offenseStructureRow3"
-              class="structure-row"
-            ></div>
+            <div id="offenseStructureRow1" class="structure-row"></div>
+            <div id="offenseStructureRow2" class="structure-row"></div>
+            <div id="offenseStructureRow3" class="structure-row"></div>
           </div>
-
           <div class="group">
             <h3>Angegriffene Position</h3>
-
-            <div
-              id="offensePositionButtons"
-              class="button-grid"
-            ></div>
+            <div id="offensePositionButtons" class="button-grid"></div>
           </div>
-
+          <div class="group">
+            <h3>Halbzeit</h3>
+            <div id="offenseHalfButtons" class="button-grid two-wide"></div>
+          </div>
           <div class="group">
             <h3>Ergebnis</h3>
-
-            <div
-              id="offenseResultButtons"
-              class="result-grid"
-            ></div>
+            <div id="offenseResultButtons" class="result-grid"></div>
           </div>
-
           <div class="group">
             <h3>Zahl</h3>
-
-            <div
-              id="offenseNumberButtons"
-              class="button-grid"
-            ></div>
+            <div id="offenseNumberButtons" class="button-grid"></div>
           </div>
-
           <div class="action-row">
-            <button
-              id="offenseResetBtn"
-              class="save-btn"
-              type="button"
-            >
-              Auswahl leeren
-            </button>
-
-            <button
-              id="offenseSaveBtn"
-              class="save-btn primary"
-              type="button"
-            >
-              Offensive Aktion speichern
-            </button>
+            <button id="offenseResetBtn" class="save-btn" type="button">Auswahl leeren</button>
+            <button id="offenseSaveBtn" class="save-btn primary" type="button">Offensive Aktion speichern</button>
           </div>
         </div>
       </section>
@@ -934,150 +357,65 @@ tbody tr.editing {
       <section class="panel section-card defense">
         <div class="section-head">
           <h2>Defensive Aktionen</h2>
-
-          <div id="defenseCount" class="entry-count">
-            0 Einträge
-          </div>
+          <div id="defenseCount" class="entry-count">0 Einträge</div>
         </div>
-
         <div class="controls">
           <div class="group">
             <h3>Angegriffene Position</h3>
-
             <div class="stack-grid">
-              <div
-                id="defensePositionGreenButtons"
-                class="button-grid four"
-              ></div>
-
-              <div
-                id="defensePositionRedButtons"
-                class="button-grid four"
-              ></div>
+              <div id="defensePositionGreenButtons" class="button-grid four"></div>
+              <div id="defensePositionRedButtons" class="button-grid four"></div>
             </div>
           </div>
-
           <div class="group">
             <h3>Abschlussposition</h3>
-
             <div class="stack-grid">
-              <div
-                id="defenseFinishGreenButtons"
-                class="button-grid four"
-              ></div>
-
-              <div
-                id="defenseFinishRedButtons"
-                class="button-grid four"
-              ></div>
-
-              <div
-                id="defenseFinishSpecialButtons"
-                class="button-grid two-wide"
-              ></div>
+              <div id="defenseFinishGreenButtons" class="button-grid four"></div>
+              <div id="defenseFinishRedButtons" class="button-grid four"></div>
+              <div id="defenseFinishSpecialButtons" class="button-grid two-wide"></div>
             </div>
           </div>
-
+          <div class="group">
+            <h3>Halbzeit</h3>
+            <div id="defenseHalfButtons" class="button-grid two-wide"></div>
+          </div>
           <div class="group">
             <h3>Zahl</h3>
-
-            <div
-              id="defenseNumberButtons"
-              class="button-grid"
-            ></div>
+            <div id="defenseNumberButtons" class="button-grid"></div>
           </div>
-
           <div class="action-row">
-            <button
-              id="defenseResetBtn"
-              class="save-btn"
-              type="button"
-            >
-              Auswahl leeren
-            </button>
-
-            <button
-              id="defenseSaveBtn"
-              class="save-btn primary"
-              type="button"
-            >
-              Defensive Aktion speichern
-            </button>
+            <button id="defenseResetBtn" class="save-btn" type="button">Auswahl leeren</button>
+            <button id="defenseSaveBtn" class="save-btn primary" type="button">Defensive Aktion speichern</button>
           </div>
         </div>
       </section>
     </div>
-    <div class="tables">
 
+    <div class="tables">
       <section class="panel table-card offense">
         <div class="table-tools">
           <h2>Angriff</h2>
+          <div>
+            <label for="offenseFilterKey"><strong>Filter</strong></label>
+            <select id="offenseFilterKey"></select>
+            <select id="offenseFilterValue"></select>
+            <button id="offenseFilterReset" type="button" class="utility-btn">Zurücksetzen</button>
+          </div>
           <div id="offenseSortInfo"></div>
         </div>
-
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th style="width:7%">
-                  <button
-                    type="button"
-                    data-table="offense"
-                    data-sort="index"
-                  >
-                    #
-                  </button>
-                </th>
-
-                <th style="width:23%">
-                  <button
-                    type="button"
-                    data-table="offense"
-                    data-sort="structure"
-                  >
-                    Struktur
-                  </button>
-                </th>
-
-                <th style="width:15%">
-                  <button
-                    type="button"
-                    data-table="offense"
-                    data-sort="position"
-                  >
-                    Position
-                  </button>
-                </th>
-
-                <th style="width:23%">
-                  <button
-                    type="button"
-                    data-table="offense"
-                    data-sort="result"
-                  >
-                    Ergebnis
-                  </button>
-                </th>
-
-                <th style="width:15%">
-                  <button
-                    type="button"
-                    data-table="offense"
-                    data-sort="number"
-                  >
-                    Zahl
-                  </button>
-                </th>
+                <th style="width:7%"><button type="button" data-table="offense" data-sort="index">#</button></th>
+                <th style="width:18%"><button type="button" data-table="offense" data-sort="structure">Struktur</button></th>
+                <th style="width:12%"><button type="button" data-table="offense" data-sort="position">Position</button></th>
+                <th style="width:12%"><button type="button" data-table="offense" data-sort="half">Halbzeit</button></th>
+                <th style="width:23%"><button type="button" data-table="offense" data-sort="result">Ergebnis</button></th>
+                <th style="width:12%"><button type="button" data-table="offense" data-sort="number">Zahl</button></th>
               </tr>
             </thead>
-
-            <tbody id="offenseTableBody">
-              <tr>
-                <td colspan="5" class="empty">
-                  Noch keine offensiven Einträge.
-                </td>
-              </tr>
-            </tbody>
+            <tbody id="offenseTableBody"><tr><td colspan="6" class="empty">Noch keine offensiven Einträge.</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -1085,62 +423,26 @@ tbody tr.editing {
       <section class="panel table-card defense">
         <div class="table-tools">
           <h2>Abwehr</h2>
+          <div>
+            <label for="defenseFilterKey"><strong>Filter</strong></label>
+            <select id="defenseFilterKey"></select>
+            <select id="defenseFilterValue"></select>
+            <button id="defenseFilterReset" type="button" class="utility-btn">Zurücksetzen</button>
+          </div>
           <div id="defenseSortInfo"></div>
         </div>
-
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th style="width:7%">
-                  <button
-                    type="button"
-                    data-table="defense"
-                    data-sort="index"
-                  >
-                    #
-                  </button>
-                </th>
-
-                <th style="width:20%">
-                  <button
-                    type="button"
-                    data-table="defense"
-                    data-sort="positionLabel"
-                  >
-                    Position
-                  </button>
-                </th>
-
-                <th style="width:28%">
-                  <button
-                    type="button"
-                    data-table="defense"
-                    data-sort="finishPositionLabel"
-                  >
-                    Abschlussposition
-                  </button>
-                </th>
-
-                <th style="width:15%">
-                  <button
-                    type="button"
-                    data-table="defense"
-                    data-sort="number"
-                  >
-                    Zahl
-                  </button>
-                </th>
+                <th style="width:7%"><button type="button" data-table="defense" data-sort="index">#</button></th>
+                <th style="width:18%"><button type="button" data-table="defense" data-sort="positionLabel">Position</button></th>
+                <th style="width:20%"><button type="button" data-table="defense" data-sort="finishPositionLabel">Abschlussposition</button></th>
+                <th style="width:12%"><button type="button" data-table="defense" data-sort="half">Halbzeit</button></th>
+                <th style="width:12%"><button type="button" data-table="defense" data-sort="number">Zahl</button></th>
               </tr>
             </thead>
-
-            <tbody id="defenseTableBody">
-              <tr>
-                <td colspan="4" class="empty">
-                  Noch keine defensiven Einträge.
-                </td>
-              </tr>
-            </tbody>
+            <tbody id="defenseTableBody"><tr><td colspan="5" class="empty">Noch keine defensiven Einträge.</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -1148,125 +450,64 @@ tbody tr.editing {
 
     <section class="panel notes">
       <label for="notes">Notizen</label>
-
-      <textarea
-        id="notes"
-        placeholder="Notizen zum Spiel eingeben..."
-      ></textarea>
+      <textarea id="notes" placeholder="Notizen zum Spiel eingeben..."></textarea>
     </section>
   </section>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autoTable.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 (() => {
-  const SUPABASE_URL =
-    "https://lyrqevymateeftoqxbua.supabase.co";
-
-  const SUPABASE_ANON_KEY =
-    "sb_publishable_JRYstud4CcOx7sC27GQlYQ_xziqf5df";
-
-  const supabase = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-  );
+  const SUPABASE_URL = "https://lyrqevymateeftoqxbua.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_JRYstud4CcOx7sC27GQlYQ_xziqf5df";
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   const offenseStructureRows = [
-    [
-      "Kreis breit 1/2",
-      "Kreis breit 5/6",
-      "2/3",
-      "4/5"
-    ],
-    [
-      "3/4 -> 2",
-      "3/4 -> 5",
-      "3/4"
-    ],
-    [
-      "1. Welle",
-      "2. Welle",
-      "3. Welle",
-      "Schnelle Mitte"
-    ]
+    ["Kreis breit 1/2", "Kreis breit 5/6", "2/3", "4/5"],
+    ["3/4 -> 2", "3/4 -> 5", "3/4"],
+    ["1. Welle", "2. Welle", "3. Welle", "Schnelle Mitte"]
   ];
 
-  const positionOptions = [
-    "2",
-    "3",
-    "4",
-    "5"
+  const positionOptions = ["2", "3", "4", "5"];
+  const halfOptions = [
+    { key: "1.hz", display: "1. HZ" },
+    { key: "2.hz", display: "2. HZ" }
   ];
-
-  const defenseFinishOptions = [
-    "Außen",
-    "Kreis/DBR breit",
-    "Kreis/DBR zentral",
-    "Fernwurf",
-    "7m"
-  ];
-
+  const defenseFinishOptions = ["Außen", "Kreis/DBR breit", "Kreis/DBR zentral", "Fernwurf", "7m"];
   const defenseFinishSpecialOptions = [
-    {
-      key: "freiwurf",
-      display: "Freiwurf",
-      variant: "yellow"
-    },
-    {
-      key: "tf",
-      display: "TF",
-      variant: "red"
-    }
+    { key: "freiwurf", display: "Freiwurf", variant: "yellow" },
+    { key: "tf", display: "TF", variant: "red" }
   ];
-
-  const offenseNumberOptions = [
-    "6:6",
-    "6:5",
-    "7:6"
-  ];
-
-  const defenseNumberOptions = [
-    "6:6",
-    "6:5",
-    "7:6",
-    "Tempo"
-  ];
-
+  const offenseNumberOptions = ["6:6", "6:5", "7:6"];
+  const defenseNumberOptions = ["6:6", "6:5", "7:6", "Tempo"];
   const offenseResults = [
-    {
-      key: "gute_chance_tor",
-      display: "gute Chance - Tor",
-      group: "green"
-    },
-    {
-      key: "gute_chance_kein_tor",
-      display: "gute Chance - kein Tor",
-      group: "split-green-red"
-    },
-    {
-      key: "freiwurf",
-      display: "Freiwurf",
-      group: "yellow"
-    },
-    {
-      key: "tf",
-      display: "TF",
-      group: "red"
-    },
-    {
-      key: "schlechte_chance_kein_tor",
-      display: "schlechte Chance - kein Tor",
-      group: "red"
-    },
-    {
-      key: "schlechte_chance_tor",
-      display: "schlechte Chance - Tor",
-      group: "split-red-green"
-    }
+    { key: "gute_chance_tor", display: "gute Chance - Tor", group: "green" },
+    { key: "gute_chance_kein_tor", display: "gute Chance - kein Tor", group: "split-green-red" },
+    { key: "freiwurf", display: "Freiwurf", group: "yellow" },
+    { key: "tf", display: "TF", group: "red" },
+    { key: "schlechte_chance_kein_tor", display: "schlechte Chance - kein Tor", group: "red" },
+    { key: "schlechte_chance_tor", display: "schlechte Chance - Tor", group: "split-red-green" }
   ];
+
+  const FILTER_OPTIONS = {
+    offense: {
+      structure: { label: "Struktur", values: offenseStructureRows.flat() },
+      position: { label: "angegriffene Position", values: positionOptions },
+      half: { label: "Halbzeit", values: halfOptions.map(o => o.display) },
+      number: { label: "Zahl", values: offenseNumberOptions },
+      result: { label: "Ergebnis", values: offenseResults.map(o => o.display) }
+    },
+    defense: {
+      position: { label: "angegriffene Position", values: positionOptions },
+      finishPosition: { label: "Abschlussposition", values: defenseFinishOptions.concat(defenseFinishSpecialOptions.map(o => o.display)) },
+      half: { label: "Halbzeit", values: halfOptions.map(o => o.display) },
+      number: { label: "Zahl", values: defenseNumberOptions },
+      result: { label: "Ergebnis", values: ["Erfolg", "Misserfolg", "Freiwurf", "TF"] }
+    }
+  };
 
   function defaultSelection(domain) {
     return {
@@ -1275,16 +516,8 @@ tbody tr.editing {
       finishPosition: "",
       positionSide: "",
       finishSide: "",
-
-      /*
-        Auch defensive Aktionen starten jetzt mit 6:6.
-        Die Auswahl bleibt trotzdem ein Array, damit
-        weiterhin bis zu zwei Werte möglich sind.
-      */
-      number: domain === "defense"
-        ? ["6:6"]
-        : "6:6",
-
+      half: sessionStorage.getItem(`half-default-${domain}`) || "1.hz",
+      number: domain === "defense" ? ["6:6"] : "6:6",
       result: "",
       resultDisplay: "",
       group: ""
@@ -1292,189 +525,37 @@ tbody tr.editing {
   }
 
   const state = {
-    meta: {
-      opponent: "",
-      matchDate: ""
-    },
-
+    meta: { opponent: "", matchDate: "" },
     undoStack: [],
-
-    offense: {
-      entries: [],
-      editingId: null,
-      selection: defaultSelection("offense"),
-      sort: {
-        key: "index",
-        dir: "desc"
-      }
-    },
-
-    defense: {
-      entries: [],
-      editingId: null,
-      selection: defaultSelection("defense"),
-      sort: {
-        key: "index",
-        dir: "desc"
-      }
-    }
+    offense: { entries: [], editingId: null, selection: defaultSelection("offense"), sort: { key: "index", dir: "desc" }, filter: { key: "", value: "" } },
+    defense: { entries: [], editingId: null, selection: defaultSelection("defense"), sort: { key: "index", dir: "desc" }, filter: { key: "", value: "" } }
   };
 
   const els = {
-    setup: document.getElementById("setup"),
-    workspace: document.getElementById("workspace"),
-    opponent: document.getElementById("opponent"),
-    matchDate: document.getElementById("matchDate"),
-    startBtn: document.getElementById("startBtn"),
-    headline: document.getElementById("headline"),
-    topMeta: document.getElementById("topMeta"),
-    undoBtn: document.getElementById("undoBtn"),
-    pdfBtn: document.getElementById("pdfBtn"),
-    notes: document.getElementById("notes"),
-
-    offenseCount: document.getElementById("offenseCount"),
-    defenseCount: document.getElementById("defenseCount"),
-    offenseSortInfo: document.getElementById("offenseSortInfo"),
-    defenseSortInfo: document.getElementById("defenseSortInfo"),
-    offenseTableBody: document.getElementById("offenseTableBody"),
-    defenseTableBody: document.getElementById("defenseTableBody"),
-
-    offenseStructureRow1:
-      document.getElementById("offenseStructureRow1"),
-
-    offenseStructureRow2:
-      document.getElementById("offenseStructureRow2"),
-
-    offenseStructureRow3:
-      document.getElementById("offenseStructureRow3"),
-
-    offensePositionButtons:
-      document.getElementById("offensePositionButtons"),
-
-    offenseResultButtons:
-      document.getElementById("offenseResultButtons"),
-
-    offenseNumberButtons:
-      document.getElementById("offenseNumberButtons"),
-
-    defensePositionGreenButtons:
-      document.getElementById("defensePositionGreenButtons"),
-
-    defensePositionRedButtons:
-      document.getElementById("defensePositionRedButtons"),
-
-    defenseFinishGreenButtons:
-      document.getElementById("defenseFinishGreenButtons"),
-
-    defenseFinishRedButtons:
-      document.getElementById("defenseFinishRedButtons"),
-
-    defenseFinishSpecialButtons:
-      document.getElementById("defenseFinishSpecialButtons"),
-
-    defenseNumberButtons:
-      document.getElementById("defenseNumberButtons"),
-
-    offenseSaveBtn:
-      document.getElementById("offenseSaveBtn"),
-
-    defenseSaveBtn:
-      document.getElementById("defenseSaveBtn"),
-
-    offenseResetBtn:
-      document.getElementById("offenseResetBtn"),
-
-    defenseResetBtn:
-      document.getElementById("defenseResetBtn")
+    setup: document.getElementById("setup"), workspace: document.getElementById("workspace"), opponent: document.getElementById("opponent"), matchDate: document.getElementById("matchDate"), startBtn: document.getElementById("startBtn"), headline: document.getElementById("headline"), topMeta: document.getElementById("topMeta"), undoBtn: document.getElementById("undoBtn"), pdfBtn: document.getElementById("pdfBtn"), notes: document.getElementById("notes"), offenseCount: document.getElementById("offenseCount"), defenseCount: document.getElementById("defenseCount"), offenseSortInfo: document.getElementById("offenseSortInfo"), defenseSortInfo: document.getElementById("defenseSortInfo"), offenseTableBody: document.getElementById("offenseTableBody"), defenseTableBody: document.getElementById("defenseTableBody"), offenseStructureRow1: document.getElementById("offenseStructureRow1"), offenseStructureRow2: document.getElementById("offenseStructureRow2"), offenseStructureRow3: document.getElementById("offenseStructureRow3"), offensePositionButtons: document.getElementById("offensePositionButtons"), offenseHalfButtons: document.getElementById("offenseHalfButtons"), offenseResultButtons: document.getElementById("offenseResultButtons"), offenseNumberButtons: document.getElementById("offenseNumberButtons"), defensePositionGreenButtons: document.getElementById("defensePositionGreenButtons"), defensePositionRedButtons: document.getElementById("defensePositionRedButtons"), defenseFinishGreenButtons: document.getElementById("defenseFinishGreenButtons"), defenseFinishRedButtons: document.getElementById("defenseFinishRedButtons"), defenseFinishSpecialButtons: document.getElementById("defenseFinishSpecialButtons"), defenseHalfButtons: document.getElementById("defenseHalfButtons"), defenseNumberButtons: document.getElementById("defenseNumberButtons"), offenseSaveBtn: document.getElementById("offenseSaveBtn"), defenseSaveBtn: document.getElementById("defenseSaveBtn"), offenseResetBtn: document.getElementById("offenseResetBtn"), defenseResetBtn: document.getElementById("defenseResetBtn"), offenseFilterKey: document.getElementById("offenseFilterKey"), offenseFilterValue: document.getElementById("offenseFilterValue"), offenseFilterReset: document.getElementById("offenseFilterReset"), defenseFilterKey: document.getElementById("defenseFilterKey"), defenseFilterValue: document.getElementById("defenseFilterValue"), defenseFilterReset: document.getElementById("defenseFilterReset")
   };
 
   let pressTimer = null;
   let longPressFired = false;
-
   const currentStore = domain => state[domain];
+  const clone = value => JSON.parse(JSON.stringify(value));
+  const escapeHtml = value => String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
+  const formatDate = value => new Date(`${value}T00:00:00`).toLocaleDateString("de-DE");
 
-  const clone = value =>
-    JSON.parse(JSON.stringify(value));
-
-  const escapeHtml = value =>
-    String(value ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-
-  const formatDate = value =>
-    new Date(`${value}T00:00:00`)
-      .toLocaleDateString("de-DE");
-
-  function setToday() {
-    els.matchDate.value =
-      new Date().toISOString().split("T")[0];
-  }
+  function setToday() { els.matchDate.value = new Date().toISOString().split("T")[0]; }
+  function setHalfDefault(domain, halfValue) { sessionStorage.setItem(`half-default-${domain}`, halfValue); }
+  function getHalfDisplay(value) { return value === "2.hz" ? "2. HZ" : "1. HZ"; }
+  function normalizeHalfValue(value) { return value === "2. HZ" || value === "2.hz" ? "2.hz" : "1.hz"; }
+  function defaultFilterValue(domain, key) { const cfg = FILTER_OPTIONS[domain]?.[key]; return cfg?.values?.[0] || ""; }
+  function normalizeNumberValue(value, domain) { if (domain !== "defense") return value || "6:6"; if (Array.isArray(value)) return value.length ? value : ["6:6"]; if (!value) return ["6:6"]; return String(value).split(" + ").filter(Boolean); }
 
   function getDefenseResult(selection) {
-    const specialFreeThrow =
-      selection.finishPosition === "freiwurf" &&
-      selection.finishSide === "yellow";
-
-    const specialTechnical =
-      selection.finishPosition === "tf" &&
-      selection.finishSide === "red";
-
-    if (specialFreeThrow) {
-      return {
-        result: "freiwurf",
-        resultDisplay: "Freiwurf",
-        group: "yellow"
-      };
-    }
-
-    if (specialTechnical) {
-      return {
-        result: "tf",
-        resultDisplay: "TF",
-        group: "red"
-      };
-    }
-
-    const success =
-      selection.positionSide === "green" &&
-      selection.finishSide === "green";
-
-    return {
-      result: success
-        ? "defense_success"
-        : "defense_fail",
-
-      resultDisplay: success
-        ? "Erfolg"
-        : "Misserfolg",
-
-      group: success
-        ? "green"
-        : "red"
-    };
-  }
-
-  function normalizeNumberValue(value, domain) {
-    if (domain !== "defense") {
-      return value || "6:6";
-    }
-
-    if (Array.isArray(value)) {
-      return value.length
-        ? value
-        : ["6:6"];
-    }
-
-    if (!value) {
-      return ["6:6"];
-    }
-
-    return String(value)
-      .split(" + ")
-      .filter(Boolean);
+    const specialFreeThrow = selection.finishPosition === "freiwurf" && selection.finishSide === "yellow";
+    const specialTechnical = selection.finishPosition === "tf" && selection.finishSide === "red";
+    if (specialFreeThrow) return { result: "freiwurf", resultDisplay: "Freiwurf", group: "yellow" };
+    if (specialTechnical) return { result: "tf", resultDisplay: "TF", group: "red" };
+    const success = selection.positionSide === "green" && selection.finishSide === "green";
+    return { result: success ? "defense_success" : "defense_fail", resultDisplay: success ? "Erfolg" : "Misserfolg", group: success ? "green" : "red" };
   }
 
   function buildSupabaseRow(domain, payload) {
@@ -1487,6 +568,7 @@ tbody tr.editing {
       finish_position: payload.finishPosition,
       position_side: payload.positionSide,
       finish_side: payload.finishSide,
+      half: payload.half,
       number_relation: payload.number,
       result: payload.result,
       result_display: payload.resultDisplay,
@@ -1496,1677 +578,337 @@ tbody tr.editing {
   }
 
   function normalizeRow(row, fallback = {}) {
-    const domain =
-      row.side || fallback.domain || "offense";
-
+    const domain = row.side || fallback.domain || "offense";
     return {
       ...row,
       id: row.id,
-
-      createdOrder:
-        row.created_order ??
-        fallback.createdOrder,
-
-      structure:
-        row.structure ??
-        fallback.structure ??
-        "",
-
-      position:
-        row.attack_position ??
-        fallback.position ??
-        "",
-
-      finishPosition:
-        row.finish_position ??
-        fallback.finishPosition ??
-        "",
-
-      positionSide:
-        row.position_side ??
-        fallback.positionSide ??
-        "",
-
-      finishSide:
-        row.finish_side ??
-        fallback.finishSide ??
-        "",
-
-      number:
-        normalizeNumberValue(
-          row.number_relation ??
-          fallback.number,
-          domain
-        ),
-
-      result:
-        row.result ??
-        fallback.result ??
-        "",
-
-      resultDisplay:
-        row.result_display ??
-        fallback.resultDisplay ??
-        "",
-
-      group:
-        row.result_group ??
-        fallback.group ??
-        ""
+      createdOrder: row.created_order ?? fallback.createdOrder,
+      structure: row.structure ?? fallback.structure ?? "",
+      position: row.attack_position ?? fallback.position ?? "",
+      finishPosition: row.finish_position ?? fallback.finishPosition ?? "",
+      positionSide: row.position_side ?? fallback.positionSide ?? "",
+      finishSide: row.finish_side ?? fallback.finishSide ?? "",
+      half: normalizeHalfValue(row.half ?? fallback.half ?? "1.hz"),
+      number: normalizeNumberValue(row.number_relation ?? fallback.number, domain),
+      result: row.result ?? fallback.result ?? "",
+      resultDisplay: row.result_display ?? fallback.resultDisplay ?? "",
+      group: row.result_group ?? fallback.group ?? ""
     };
   }
 
   async function loadMatchActions() {
-    const { data, error } =
-      await supabase
-        .from("match_actions")
-        .select("*")
-        .eq("match_opponent", state.meta.opponent)
-        .eq("match_date", state.meta.matchDate)
-        .order("created_order", {
-          ascending: true
-        });
-
-    if (error) {
-      console.error(error);
-
-      alert(
-        error.message ||
-        "Fehler beim Laden der Spieldaten."
-      );
-
-      return;
-    }
-
-    state.offense.entries =
-      data
-        .filter(row => row.side === "offense")
-        .map(row =>
-          normalizeRow(row, {
-            domain: "offense"
-          })
-        );
-
-    state.defense.entries =
-      data
-        .filter(row => row.side === "defense")
-        .map(row => {
-          const normalized =
-            normalizeRow(row, {
-              domain: "defense"
-            });
-
-          if (!normalized.result) {
-            const success =
-              normalized.positionSide === "green" &&
-              normalized.finishSide === "green";
-
-            normalized.result =
-              success
-                ? "defense_success"
-                : "defense_fail";
-
-            normalized.resultDisplay =
-              success
-                ? "Erfolg"
-                : normalized.finishPosition === "freiwurf"
-                  ? "Freiwurf"
-                  : normalized.finishPosition === "tf"
-                    ? "TF"
-                    : "Misserfolg";
-
-            normalized.group =
-              normalized.finishPosition === "freiwurf"
-                ? "yellow"
-                : success
-                  ? "green"
-                  : "red";
-          }
-
-          return normalized;
-        });
+    const { data, error } = await supabase.from("match_actions").select("*").eq("match_opponent", state.meta.opponent).eq("match_date", state.meta.matchDate).order("created_order", { ascending: true });
+    if (error) { console.error(error); alert(error.message || "Fehler beim Laden der Spieldaten."); return; }
+    state.offense.entries = data.filter(row => row.side === "offense").map(row => normalizeRow(row, { domain: "offense" }));
+    state.defense.entries = data.filter(row => row.side === "defense").map(row => { const normalized = normalizeRow(row, { domain: "defense" }); if (!normalized.result) { const success = normalized.positionSide === "green" && normalized.finishSide === "green"; normalized.result = success ? "defense_success" : "defense_fail"; normalized.resultDisplay = success ? "Erfolg" : normalized.finishPosition === "freiwurf" ? "Freiwurf" : normalized.finishPosition === "tf" ? "TF" : "Misserfolg"; normalized.group = normalized.finishPosition === "freiwurf" ? "yellow" : success ? "green" : "red"; } return normalized; });
   }
 
-  async function insertEntry(domain, payload) {
-    const { data, error } =
-      await supabase
-        .from("match_actions")
-        .insert(buildSupabaseRow(domain, payload))
-        .select("*")
-        .single();
+  async function insertEntry(domain, payload) { const { data, error } = await supabase.from("match_actions").insert(buildSupabaseRow(domain, payload)).select("*").single(); if (error) throw error; return normalizeRow(data, { ...payload, domain }); }
+  async function updateEntry(id, domain, payload) { const { data, error } = await supabase.from("match_actions").update(buildSupabaseRow(domain, payload)).eq("id", id).select("*").single(); if (error) throw error; return normalizeRow(data, { ...payload, domain }); }
+  async function deleteEntry(id) { const { error } = await supabase.from("match_actions").delete().eq("id", id); if (error) throw error; }
 
-    if (error) {
-      throw error;
-    }
-
-    return normalizeRow(data, {
-      ...payload,
-      domain
-    });
-  }
-
-  async function updateEntry(id, domain, payload) {
-    const { data, error } =
-      await supabase
-        .from("match_actions")
-        .update(buildSupabaseRow(domain, payload))
-        .eq("id", id)
-        .select("*")
-        .single();
-
-    if (error) {
-      throw error;
-    }
-
-    return normalizeRow(data, {
-      ...payload,
-      domain
-    });
-  }
-
-  async function deleteEntry(id) {
-    const { error } =
-      await supabase
-        .from("match_actions")
-        .delete()
-        .eq("id", id);
-
-    if (error) {
-      throw error;
-    }
-  }
-  function renderButtons(
-    mount,
-    items,
-    type,
-    domain,
-    variant = ""
-  ) {
+  function renderButtons(mount, items, type, domain, variant = "") {
     mount.innerHTML = "";
-
     items.forEach(item => {
-      const value =
-        typeof item === "string"
-          ? item
-          : item.key;
-
-      const label =
-        typeof item === "string"
-          ? item
-          : item.display;
-
-      const itemVariant =
-        typeof item === "string"
-          ? variant
-          : item.variant || variant;
-
-      const group =
-        typeof item === "string"
-          ? ""
-          : item.group || "";
-
-      const button =
-        document.createElement("button");
-
+      const value = typeof item === "string" ? item : item.key;
+      const label = typeof item === "string" ? item : item.display;
+      const itemVariant = typeof item === "string" ? variant : item.variant || variant;
+      const group = typeof item === "string" ? "" : item.group || "";
+      const button = document.createElement("button");
       button.type = "button";
       button.dataset.value = value;
       button.dataset.type = type;
       button.dataset.domain = domain;
-
-      if (itemVariant) {
-        button.dataset.variant = itemVariant;
-      }
-
-      button.className =
-        type === "result"
-          ? `result-btn ${group}`
-          : `choice-btn ${
-              itemVariant
-                ? `${itemVariant}-variant`
-                : ""
-            }`;
-
+      if (itemVariant) button.dataset.variant = itemVariant;
+      button.className = type === "result" ? `result-btn ${group}` : `choice-btn ${itemVariant ? `${itemVariant}-variant` : ""}`;
       button.textContent = label;
-
-      button.addEventListener("click", () => {
-        handleSelection(
-          domain,
-          type,
-          value,
-          group,
-          label,
-          itemVariant
-        );
-      });
-
+      button.addEventListener("click", () => handleSelection(domain, type, value, group, label, itemVariant));
       mount.appendChild(button);
     });
   }
 
-  function handleSelection(
-    domain,
-    type,
-    value,
-    group,
-    display,
-    variant
-  ) {
+  function handleSelection(domain, type, value, group, display, variant) {
     const store = currentStore(domain);
     const selection = store.selection;
-
     if (type === "structure") {
-      if (!Array.isArray(selection.structure)) {
-        selection.structure = selection.structure
-          ? [selection.structure]
-          : [];
-      }
-
-      if (selection.structure.includes(value)) {
-        selection.structure =
-          selection.structure.filter(
-            item => item !== value
-          );
-      } else if (selection.structure.length < 2) {
-        selection.structure.push(value);
-      } else {
-        alert(
-          "Es können höchstens zwei Strukturen ausgewählt werden."
-        );
-      }
+      if (!Array.isArray(selection.structure)) selection.structure = selection.structure ? [selection.structure] : [];
+      if (selection.structure.includes(value)) selection.structure = selection.structure.filter(item => item !== value);
+      else if (selection.structure.length < 2) selection.structure.push(value);
+      else alert("Es können höchstens zwei Strukturen ausgewählt werden.");
     }
-
-    if (type === "position") {
-      selection.position = value;
-
-      if (domain === "defense") {
-        selection.positionSide = variant;
-      }
-    }
-
-    if (type === "finishPosition") {
-      selection.finishPosition = value;
-
-      if (domain === "defense") {
-        selection.finishSide = variant;
-      }
-    }
-
+    if (type === "position") { selection.position = value; if (domain === "defense") selection.positionSide = variant; }
+    if (type === "finishPosition") { selection.finishPosition = value; if (domain === "defense") selection.finishSide = variant; }
     if (type === "number") {
       if (domain === "defense") {
-        if (!Array.isArray(selection.number)) {
-          selection.number =
-            selection.number
-              ? [selection.number]
-              : ["6:6"];
-        }
-
-        if (selection.number.includes(value)) {
-          selection.number =
-            selection.number.filter(
-              item => item !== value
-            );
-
-          /*
-            Nach dem Abwählen des letzten Werts bleibt
-            6:6 der Standardwert.
-          */
-          if (selection.number.length === 0) {
-            selection.number = ["6:6"];
-          }
-        } else if (selection.number.length < 2) {
-          selection.number.push(value);
-        } else {
-          alert(
-            "Es können höchstens zwei Werte ausgewählt werden."
-          );
-        }
-      } else {
-        selection.number = value;
-      }
+        if (!Array.isArray(selection.number)) selection.number = selection.number ? [selection.number] : ["6:6"];
+        if (selection.number.includes(value)) { selection.number = selection.number.filter(item => item !== value); if (selection.number.length === 0) selection.number = ["6:6"]; }
+        else if (selection.number.length < 2) selection.number.push(value);
+        else alert("Es können höchstens zwei Werte ausgewählt werden.");
+      } else selection.number = value;
     }
-
-    if (type === "result") {
-      selection.result = value;
-      selection.resultDisplay = display;
-      selection.group = group;
-    }
-
-    if (domain === "defense") {
-      const result = getDefenseResult(selection);
-
-      selection.result = result.result;
-      selection.resultDisplay = result.resultDisplay;
-      selection.group = result.group;
-    }
-
+    if (type === "result") { selection.result = value; selection.resultDisplay = display; selection.group = group; }
+    if (type === "half") { selection.half = value; setHalfDefault(domain, value); }
+    if (domain === "defense") { const result = getDefenseResult(selection); selection.result = result.result; selection.resultDisplay = result.resultDisplay; selection.group = result.group; }
     updateSelectedButtons(domain);
   }
 
   function updateSelectedButtons(domain) {
     const store = currentStore(domain);
     const selection = store.selection;
-
-    document
-      .querySelectorAll(
-        `button[data-domain="${domain}"]`
-      )
-      .forEach(button => {
-        const type = button.dataset.type;
-        const value = button.dataset.value;
-        const variant =
-          button.dataset.variant || "";
-
-        let selected = false;
-
-        if (type === "structure") {
-          const structures =
-            Array.isArray(selection.structure)
-              ? selection.structure
-              : selection.structure
-                ? [selection.structure]
-                : [];
-
-          selected = structures.includes(value);
-        }
-
-        if (type === "position") {
-          selected =
-            value === selection.position &&
-            (
-              domain !== "defense" ||
-              variant === selection.positionSide
-            );
-        }
-
-        if (type === "finishPosition") {
-          selected =
-            value === selection.finishPosition &&
-            variant === selection.finishSide;
-        }
-
-        if (type === "number") {
-          if (domain === "defense") {
-            const numbers =
-              Array.isArray(selection.number)
-                ? selection.number
-                : selection.number
-                  ? [selection.number]
-                  : ["6:6"];
-
-            selected = numbers.includes(value);
-          } else {
-            selected = value === selection.number;
-          }
-        }
-
-        if (type === "result") {
-          selected = value === selection.result;
-        }
-
-        button.classList.toggle(
-          "selected",
-          selected
-        );
-      });
+    document.querySelectorAll(`button[data-domain="${domain}"]`).forEach(button => {
+      const type = button.dataset.type;
+      const value = button.dataset.value;
+      const variant = button.dataset.variant || "";
+      let selected = false;
+      if (type === "structure") {
+        const structures = Array.isArray(selection.structure) ? selection.structure : selection.structure ? [selection.structure] : [];
+        selected = structures.includes(value);
+      }
+      if (type === "position") selected = value === selection.position && (domain !== "defense" || variant === selection.positionSide);
+      if (type === "finishPosition") selected = value === selection.finishPosition && variant === selection.finishSide;
+      if (type === "number") {
+        if (domain === "defense") { const numbers = Array.isArray(selection.number) ? selection.number : selection.number ? [selection.number] : ["6:6"]; selected = numbers.includes(value); }
+        else selected = value === selection.number;
+      }
+      if (type === "result") selected = value === selection.result;
+      if (type === "half") selected = value === selection.half;
+      button.classList.toggle("selected", selected);
+    });
   }
 
-  function clearSelection(domain) {
-    const store = currentStore(domain);
-
-    store.selection =
-      defaultSelection(domain);
-
-    store.editingId = null;
-
-    updateSelectedButtons(domain);
-    renderTable(domain);
-  }
-
+  function clearSelection(domain) { const store = currentStore(domain); store.selection = defaultSelection(domain); store.editingId = null; updateSelectedButtons(domain); renderTable(domain); }
   function validate(domain) {
-    const selection =
-      currentStore(domain).selection;
-
-    const structures =
-      Array.isArray(selection.structure)
-        ? selection.structure
-        : selection.structure
-          ? [selection.structure]
-          : [];
-
-    if (
-      domain === "offense" &&
-      (
-        structures.length === 0 ||
-        !selection.number ||
-        !selection.result
-      )
-    ) {
-      alert(
-        "Bitte mindestens eine Struktur, Zahl und Ergebnis auswählen."
-      );
-
-      return false;
-    }
-
-    const defenseNumbers =
-      Array.isArray(selection.number)
-        ? selection.number
-        : selection.number
-          ? [selection.number]
-          : ["6:6"];
-
-    /*
-      Die angegriffene Position ist bei defensiven
-      Aktionen jetzt optional. Deshalb wird hier
-      weder position noch positionSide verlangt.
-    */
-    if (
-      domain === "defense" &&
-      (
-        !selection.finishPosition ||
-        !selection.finishSide ||
-        defenseNumbers.length === 0
-      )
-    ) {
-      alert(
-        "Bitte Abschlussposition und Zahl auswählen."
-      );
-
-      return false;
-    }
-
+    const selection = currentStore(domain).selection;
+    const structures = Array.isArray(selection.structure) ? selection.structure : selection.structure ? [selection.structure] : [];
+    if (domain === "offense" && (structures.length === 0 || !selection.number || !selection.result || !selection.half)) { alert("Bitte mindestens eine Struktur, Halbzeit, Zahl und Ergebnis auswählen."); return false; }
+    const defenseNumbers = Array.isArray(selection.number) ? selection.number : selection.number ? [selection.number] : ["6:6"];
+    if (domain === "defense" && (!selection.finishPosition || !selection.finishSide || defenseNumbers.length === 0 || !selection.half)) { alert("Bitte Halbzeit, Abschlussposition und Zahl auswählen."); return false; }
     return true;
   }
 
   function createPayload(domain) {
-    const selection =
-      currentStore(domain).selection;
-
+    const selection = currentStore(domain).selection;
     const store = currentStore(domain);
-
-    const existing =
-      store.entries.find(
-        entry => entry.id === store.editingId
-      );
-
-    const structures =
-      Array.isArray(selection.structure)
-        ? selection.structure
-        : selection.structure
-          ? [selection.structure]
-          : [];
-
-    let result = selection.result;
-    let resultDisplay = selection.resultDisplay;
-    let group = selection.group;
-
-    if (domain === "defense") {
-      const defenseResult =
-        getDefenseResult(selection);
-
-      result = defenseResult.result;
-      resultDisplay =
-        defenseResult.resultDisplay;
-      group = defenseResult.group;
-    }
-
+    const existing = store.entries.find(entry => entry.id === store.editingId);
+    const structures = Array.isArray(selection.structure) ? selection.structure : selection.structure ? [selection.structure] : [];
+    let result = selection.result; let resultDisplay = selection.resultDisplay; let group = selection.group;
+    if (domain === "defense") { const defenseResult = getDefenseResult(selection); result = defenseResult.result; resultDisplay = defenseResult.resultDisplay; group = defenseResult.group; }
     let numberValue;
-
-    if (domain === "defense") {
-      const numbers =
-        Array.isArray(selection.number)
-          ? selection.number
-          : selection.number
-            ? [selection.number]
-            : ["6:6"];
-
-      numberValue = numbers.join(" + ");
-    } else {
-      numberValue = selection.number || "6:6";
-    }
-
+    if (domain === "defense") { const numbers = Array.isArray(selection.number) ? selection.number : selection.number ? [selection.number] : ["6:6"]; numberValue = numbers.join(" + "); }
+    else numberValue = selection.number || "6:6";
     return {
-      structure:
-        domain === "offense"
-          ? structures.join(" + ")
-          : "",
-
-      /*
-        Bei der Defensive darf position leer sein.
-      */
+      structure: domain === "offense" ? structures.join(" + ") : "",
       position: selection.position || "",
-
-      finishPosition:
-        domain === "defense"
-          ? selection.finishPosition
-          : "",
-
-      positionSide:
-        domain === "defense"
-          ? selection.positionSide
-          : "",
-
-      finishSide:
-        domain === "defense"
-          ? selection.finishSide
-          : "",
-
+      finishPosition: domain === "defense" ? selection.finishPosition : "",
+      positionSide: domain === "defense" ? selection.positionSide : "",
+      finishSide: domain === "defense" ? selection.finishSide : "",
+      half: selection.half || "1.hz",
       number: numberValue,
       result,
       resultDisplay,
       group,
-
-      createdOrder:
-        existing
-          ? existing.createdOrder
-          : store.entries.length + 1
+      createdOrder: existing ? existing.createdOrder : store.entries.length + 1
     };
   }
 
   async function saveEntry(domain) {
-    if (!validate(domain)) {
-      return;
-    }
-
+    if (!validate(domain)) return;
     const store = currentStore(domain);
     const payload = createPayload(domain);
     const editing = Boolean(store.editingId);
-
     try {
       if (editing) {
-        const existing =
-          store.entries.find(
-            entry => entry.id === store.editingId
-          );
-
+        const existing = store.entries.find(entry => entry.id === store.editingId);
         const before = clone(existing);
-
-        const updated =
-          await updateEntry(
-            existing.id,
-            domain,
-            payload
-          );
-
-        const index =
-          store.entries.findIndex(
-            entry => entry.id === existing.id
-          );
-
+        const updated = await updateEntry(existing.id, domain, payload);
+        const index = store.entries.findIndex(entry => entry.id === existing.id);
         store.entries[index] = updated;
-
-        state.undoStack.push({
-          type: "edit",
-          domain,
-          before,
-          after: clone(updated)
-        });
+        state.undoStack.push({ type: "edit", domain, before, after: clone(updated) });
       } else {
-        const inserted =
-          await insertEntry(domain, payload);
-
+        const inserted = await insertEntry(domain, payload);
         store.entries.push(inserted);
-
-        state.undoStack.push({
-          type: "add",
-          domain,
-          entry: clone(inserted)
-        });
+        state.undoStack.push({ type: "add", domain, entry: clone(inserted) });
       }
-
       clearSelection(domain);
       renderTable("offense");
       renderTable("defense");
-
-      /*
-        Sanftes Hochspringen nach dem Speichern.
-        requestAnimationFrame sorgt dafür, dass die
-        aktualisierte Oberfläche zuerst gerendert wird.
-        Der iPad-Fallback verwendet zusätzlich focus().
-      */
       requestAnimationFrame(() => {
-        const target =
-          document.getElementById("workspace");
-
-        if (!target) {
-          return;
-        }
-
-        try {
-          target.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
-        } catch (error) {
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-          });
-        }
-
-        setTimeout(() => {
-          if (
-            typeof target.focus === "function"
-          ) {
-            target.setAttribute(
-              "tabindex",
-              "-1"
-            );
-
-            target.focus({
-              preventScroll: true
-            });
-          }
-        }, 120);
+        const target = document.getElementById("workspace");
+        if (!target) return;
+        try { target.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (error) { window.scrollTo({ top: 0, behavior: "smooth" }); }
+        setTimeout(() => { if (typeof target.focus === "function") { target.setAttribute("tabindex", "-1"); target.focus({ preventScroll: true }); } }, 120);
       });
-    } catch (error) {
-      console.error(error);
-
-      alert(
-        error.message ||
-        "Fehler beim Speichern."
-      );
-    }
+    } catch (error) { console.error(error); alert(error.message || "Fehler beim Speichern."); }
   }
 
-  async function undoLast() {
-    const action = state.undoStack.pop();
-
-    if (!action) {
-      alert(
-        "Es gibt keine Aktion zum Rückgängigmachen."
-      );
-
-      return;
-    }
-
-    const store =
-      currentStore(action.domain);
-
-    try {
-      if (action.type === "add") {
-        await deleteEntry(action.entry.id);
-
-        store.entries =
-          store.entries.filter(
-            entry => entry.id !== action.entry.id
-          );
-      }
-
-      if (action.type === "edit") {
-        const before = action.before;
-
-        const restoredPayload = {
-          structure: before.structure || "",
-          position: before.position || "",
-          finishPosition: before.finishPosition || "",
-          positionSide: before.positionSide || "",
-          finishSide: before.finishSide || "",
-          number: Array.isArray(before.number)
-            ? before.number.join(" + ")
-            : before.number || "6:6",
-          result: before.result || "",
-          resultDisplay: before.resultDisplay || "",
-          group: before.group || "",
-          createdOrder: before.createdOrder
-        };
-
-        const restored =
-          await updateEntry(
-            before.id,
-            action.domain,
-            restoredPayload
-          );
-
-        const index =
-          store.entries.findIndex(
-            entry => entry.id === before.id
-          );
-
-        if (index !== -1) {
-          store.entries[index] = restored;
-        }
-      }
-
-      clearSelection(action.domain);
-      renderTable("offense");
-      renderTable("defense");
-    } catch (error) {
-      console.error(error);
-
-      alert(
-        error.message ||
-        "Fehler beim Rückgängigmachen."
-      );
-    }
-  }
+  async function undoLast() { const action = state.undoStack.pop(); if (!action) { alert("Es gibt keine Aktion zum Rückgängigmachen."); return; } const store = currentStore(action.domain); try { if (action.type === "add") { await deleteEntry(action.entry.id); store.entries = store.entries.filter(entry => entry.id !== action.entry.id); } if (action.type === "edit") { const before = action.before; const restoredPayload = { structure: before.structure || "", position: before.position || "", finishPosition: before.finishPosition || "", positionSide: before.positionSide || "", finishSide: before.finishSide || "", half: before.half || "1.hz", number: Array.isArray(before.number) ? before.number.join(" + ") : before.number || "6:6", result: before.result || "", resultDisplay: before.resultDisplay || "", group: before.group || "", createdOrder: before.createdOrder }; const restored = await updateEntry(before.id, action.domain, restoredPayload); const index = store.entries.findIndex(entry => entry.id === before.id); if (index !== -1) store.entries[index] = restored; } clearSelection(action.domain); renderTable("offense"); renderTable("defense"); } catch (error) { console.error(error); alert(error.message || "Fehler beim Rückgängigmachen."); } }
 
   function getSortValue(row, key) {
-    if (key === "index") {
-      return Number(row.createdOrder) || 0;
-    }
-
-    if (key === "structure") {
-      return row.structure || "";
-    }
-
-    if (key === "position") {
-      return row.position || "";
-    }
-
-    if (key === "positionLabel") {
-      return `${row.positionSide || ""} ${row.position || ""}`;
-    }
-
-    if (key === "finishPositionLabel") {
-      return `${row.finishSide || ""} ${row.finishPosition || ""}`;
-    }
-
-    if (key === "number") {
-      return Array.isArray(row.number)
-        ? row.number.join(" + ")
-        : row.number || "";
-    }
-
-    if (key === "result") {
-      return row.resultDisplay || row.result || "";
-    }
-
+    if (key === "index") return Number(row.createdOrder) || 0;
+    if (key === "structure") return row.structure || "";
+    if (key === "position") return row.position || "";
+    if (key === "positionLabel") return `${row.positionSide || ""} ${row.position || ""}`;
+    if (key === "finishPositionLabel") return `${row.finishSide || ""} ${row.finishPosition || ""}`;
+    if (key === "number") return Array.isArray(row.number) ? row.number.join(" + ") : row.number || "";
+    if (key === "result") return row.resultDisplay || row.result || "";
+    if (key === "half") return getHalfDisplay(row.half || "1.hz");
     return "";
   }
-
-  function sortEntries(domain) {
-    const store = currentStore(domain);
-    const rows = [...store.entries];
-    const { key, dir } = store.sort;
-    const factor = dir === "asc" ? 1 : -1;
-
-    rows.sort((a, b) => {
-      const valueA = getSortValue(a, key);
-      const valueB = getSortValue(b, key);
-
-      let comparison;
-
-      if (
-        typeof valueA === "number" &&
-        typeof valueB === "number"
-      ) {
-        comparison = valueA - valueB;
-      } else {
-        comparison =
-          String(valueA).localeCompare(
-            String(valueB),
-            "de"
-          );
-      }
-
-      if (comparison === 0) {
-        comparison =
-          (Number(a.createdOrder) || 0) -
-          (Number(b.createdOrder) || 0);
-      }
-
-      return comparison * factor;
+  function sortEntries(domain) { const store = currentStore(domain); const rows = [...store.entries]; const { key, dir } = store.sort; const factor = dir === "asc" ? 1 : -1; rows.sort((a, b) => { const valueA = getSortValue(a, key); const valueB = getSortValue(b, key); let comparison; if (typeof valueA === "number" && typeof valueB === "number") comparison = valueA - valueB; else comparison = String(valueA).localeCompare(String(valueB), "de"); if (comparison === 0) comparison = (Number(a.createdOrder) || 0) - (Number(b.createdOrder) || 0); return comparison * factor; }); return rows; }
+  function setSort(domain, key) { const store = currentStore(domain); if (store.sort.key === key) store.sort.dir = store.sort.dir === "asc" ? "desc" : "asc"; else { store.sort.key = key; store.sort.dir = key === "index" ? "desc" : "asc"; } renderTable(domain); }
+  function getNumberClass(number) { if (number === "6:6") return "number-66"; if (number === "7:6") return "number-76"; if (number === "6:5") return "number-65"; if (number === "Tempo") return "number-tempo"; return "number"; }
+  function getNumberDisplay(row) { if (Array.isArray(row.number)) return row.number.map(number => `<span class="pill ${getNumberClass(number)}">${escapeHtml(number)}</span>`).join(" "); if (row.number) return `<span class="pill ${getNumberClass(row.number)}">${escapeHtml(row.number)}</span>`; return "—"; }
+  function renderStructureDisplay(value) { if (!value) return "—"; return String(value).split(" + ").filter(Boolean).map(structure => `<span class="pill structure">${escapeHtml(structure)}</span>`).join(" "); }
+  function getFilteredRows(domain) {
+    const rows = sortEntries(domain);
+    const { key, value } = currentStore(domain).filter;
+    if (!key || !value) return rows;
+    return rows.filter(row => {
+      if (key === "structure") return String(row.structure || "").split(" + ").includes(value);
+      if (key === "position") return row.position === value;
+      if (key === "half") return getHalfDisplay(row.half || "1.hz") === value;
+      if (key === "number") return (Array.isArray(row.number) ? row.number : [row.number]).includes(value);
+      if (key === "result") return (row.resultDisplay || row.result || "") === value;
+      if (key === "finishPosition") return (row.finishPosition === "freiwurf" ? "Freiwurf" : row.finishPosition === "tf" ? "TF" : row.finishPosition || "") === value;
+      return true;
     });
-
-    return rows;
   }
 
-  function setSort(domain, key) {
+  function renderFilterControls(domain) {
+    const keyEl = els[`${domain}FilterKey`];
+    const valueEl = els[`${domain}FilterValue`];
     const store = currentStore(domain);
-
-    if (store.sort.key === key) {
-      store.sort.dir =
-        store.sort.dir === "asc"
-          ? "desc"
-          : "asc";
-    } else {
-      store.sort.key = key;
-      store.sort.dir =
-        key === "index"
-          ? "desc"
-          : "asc";
-    }
-
-    renderTable(domain);
-  }
-
-  function getNumberClass(number) {
-    if (number === "6:6") {
-      return "number-66";
-    }
-
-    if (number === "7:6") {
-      return "number-76";
-    }
-
-    if (number === "6:5") {
-      return "number-65";
-    }
-
-    if (number === "Tempo") {
-      return "number-tempo";
-    }
-
-    return "number";
-  }
-
-  function getNumberDisplay(row) {
-    if (Array.isArray(row.number)) {
-      return row.number
-        .map(number => {
-          return `
-            <span class="pill ${getNumberClass(number)}">
-              ${escapeHtml(number)}
-            </span>
-          `;
-        })
-        .join(" ");
-    }
-
-    if (row.number) {
-      return `
-        <span class="pill ${getNumberClass(row.number)}">
-          ${escapeHtml(row.number)}
-        </span>
-      `;
-    }
-
-    return "—";
-  }
-
-  function renderStructureDisplay(value) {
-    if (!value) {
-      return "—";
-    }
-
-    return String(value)
-      .split(" + ")
-      .filter(Boolean)
-      .map(structure => {
-        return `
-          <span class="pill structure">
-            ${escapeHtml(structure)}
-          </span>
-        `;
-      })
-      .join(" ");
+    const cfg = FILTER_OPTIONS[domain];
+    keyEl.innerHTML = `<option value="">Kein Filter</option>` + Object.entries(cfg).map(([key, spec]) => `<option value="${escapeHtml(key)}" ${store.filter.key === key ? "selected" : ""}>${escapeHtml(spec.label)}</option>`).join("");
+    const activeKey = store.filter.key;
+    const values = activeKey ? cfg[activeKey].values : [];
+    if (!activeKey) { valueEl.innerHTML = `<option value="">—</option>`; valueEl.disabled = true; return; }
+    valueEl.disabled = false;
+    valueEl.innerHTML = `<option value="">${escapeHtml(cfg[activeKey].label)} wählen</option>` + values.map(v => `<option value="${escapeHtml(v)}" ${store.filter.value === v ? "selected" : ""}>${escapeHtml(v)}</option>`).join("");
+    if (store.filter.value && !values.includes(store.filter.value)) store.filter.value = "";
   }
 
   function renderTable(domain) {
     const store = currentStore(domain);
-    const rows = sortEntries(domain);
-
-    const body =
-      els[`${domain}TableBody`];
-
-    const countElement =
-      els[`${domain}Count`];
-
-    const sortInfo =
-      els[`${domain}SortInfo`];
-
-    countElement.textContent =
-      `${store.entries.length} Einträge`;
-
-    sortInfo.textContent =
-      `${store.sort.key} ${
-        store.sort.dir === "asc"
-          ? "↑"
-          : "↓"
-      }`;
-
+    renderFilterControls(domain);
+    const rows = getFilteredRows(domain);
+    const body = els[`${domain}TableBody`];
+    const countElement = els[`${domain}Count`];
+    const sortInfo = els[`${domain}SortInfo`];
+    countElement.textContent = `${store.entries.length} Einträge`;
+    sortInfo.textContent = `${store.sort.key} ${store.sort.dir === "asc" ? "↑" : "↓"}` + (store.filter.key && store.filter.value ? ` · Filter: ${FILTER_OPTIONS[domain][store.filter.key].label} = ${store.filter.value}` : "");
     if (!rows.length) {
-      body.innerHTML = `
-        <tr>
-          <td
-            colspan="${domain === "offense" ? 5 : 4}"
-            class="empty"
-          >
-            Noch keine ${
-              domain === "offense"
-                ? "offensiven"
-                : "defensiven"
-            } Einträge.
-          </td>
-        </tr>
-      `;
-
+      body.innerHTML = `<tr><td colspan="${domain === "offense" ? 6 : 5}" class="empty">Noch keine ${domain === "offense" ? "offensiven" : "defensiven"} Einträge.</td></tr>`;
       return;
     }
-
     if (domain === "offense") {
-      body.innerHTML = rows
-        .map(row => `
-          <tr
-            data-domain="offense"
-            data-id="${row.id}"
-            class="${
-              store.editingId === row.id
-                ? "editing"
-                : ""
-            }"
-          >
-            <td>
-              ${escapeHtml(
-                row.createdOrder ?? "—"
-              )}
-            </td>
-
-            <td>
-              ${renderStructureDisplay(
-                row.structure
-              )}
-            </td>
-
-            <td>
-              ${
-                row.position
-                  ? `
-                    <span class="pill position">
-                      ${escapeHtml(row.position)}
-                    </span>
-                  `
-                  : "—"
-              }
-            </td>
-
-            <td class="result-cell ${
-              row.group || ""
-            }">
-              ${escapeHtml(
-                row.resultDisplay ||
-                row.result ||
-                ""
-              )}
-            </td>
-
-            <td>
-              ${getNumberDisplay(row)}
-            </td>
-          </tr>
-        `)
-        .join("");
+      body.innerHTML = rows.map(row => `
+        <tr data-domain="offense" data-id="${row.id}" class="${store.editingId === row.id ? "editing" : ""}">
+          <td>${escapeHtml(row.createdOrder ?? "—")}</td>
+          <td>${renderStructureDisplay(row.structure)}</td>
+          <td>${row.position ? `<span class="pill position">${escapeHtml(row.position)}</span>` : "—"}</td>
+          <td>${row.half ? `<span class="pill structure">${escapeHtml(getHalfDisplay(row.half))}</span>` : "—"}</td>
+          <td class="result-cell ${row.group || ""}">${escapeHtml(row.resultDisplay || row.result || "")}</td>
+          <td>${getNumberDisplay(row)}</td>
+        </tr>`).join("");
     } else {
-      body.innerHTML = rows
-        .map(row => `
-          <tr
-            data-domain="defense"
-            data-id="${row.id}"
-            class="${
-              store.editingId === row.id
-                ? "editing"
-                : ""
-            }"
-          >
-            <td>
-              ${escapeHtml(
-                row.createdOrder ?? "—"
-              )}
-            </td>
-
-            <td>
-              ${
-                row.position
-                  ? `
-                    <span class="pill ${
-                      row.positionSide === "green"
-                        ? "green-tag"
-                        : "red-tag"
-                    }">
-                      ${escapeHtml(row.position)}
-                    </span>
-                  `
-                  : "—"
-              }
-            </td>
-
-            <td>
-              ${
-                row.finishPosition
-                  ? `
-                    <span class="pill ${
-                      row.finishSide === "green"
-                        ? "green-tag"
-                        : row.finishSide === "yellow"
-                          ? "yellow-tag"
-                          : "red-tag"
-                    }">
-                      ${escapeHtml(
-                        row.finishPosition === "freiwurf"
-                          ? "Freiwurf"
-                          : row.finishPosition === "tf"
-                            ? "TF"
-                            : row.finishPosition
-                      )}
-                    </span>
-                  `
-                  : "—"
-              }
-            </td>
-
-            <td>
-              ${getNumberDisplay(row)}
-            </td>
-          </tr>
-        `)
-        .join("");
+      body.innerHTML = rows.map(row => `
+        <tr data-domain="defense" data-id="${row.id}" class="${store.editingId === row.id ? "editing" : ""}">
+          <td>${escapeHtml(row.createdOrder ?? "—")}</td>
+          <td>${row.position ? `<span class="pill ${row.positionSide === "green" ? "green-tag" : "red-tag"}">${escapeHtml(row.position)}</span>` : "—"}</td>
+          <td>${row.finishPosition ? `<span class="pill ${row.finishSide === "green" ? "green-tag" : row.finishSide === "yellow" ? "yellow-tag" : "red-tag"}">${escapeHtml(row.finishPosition === "freiwurf" ? "Freiwurf" : row.finishPosition === "tf" ? "TF" : row.finishPosition)}</span>` : "—"}</td>
+          <td>${row.half ? `<span class="pill structure">${escapeHtml(getHalfDisplay(row.half))}</span>` : "—"}</td>
+          <td>${getNumberDisplay(row)}</td>
+        </tr>`).join("");
     }
-
     addLongPressListeners(domain);
   }
 
   function addLongPressListeners(domain) {
-    const body =
-      els[`${domain}TableBody`];
-
-    body
-      .querySelectorAll("tr[data-id]")
-      .forEach(row => {
-        const id = row.dataset.id;
-
-        row.addEventListener(
-          "mousedown",
-          () => startLongPress(domain, id)
-        );
-
-        row.addEventListener(
-          "mouseup",
-          () => {
-            if (!longPressFired) {
-              stopLongPress();
-            }
-          }
-        );
-
-        row.addEventListener(
-          "mouseleave",
-          stopLongPress
-        );
-
-        row.addEventListener(
-          "touchstart",
-          event => {
-            startLongPress(domain, id);
-            event.preventDefault();
-          },
-          { passive: false }
-        );
-
-        row.addEventListener(
-          "touchend",
-          event => {
-            stopLongPress();
-            event.preventDefault();
-          },
-          { passive: false }
-        );
-
-        row.addEventListener(
-          "touchcancel",
-          stopLongPress
-        );
-      });
-  }
-
-  function startLongPress(domain, id) {
-    stopLongPress();
-    longPressFired = false;
-
-    pressTimer = setTimeout(() => {
-      longPressFired = true;
-      loadForEdit(domain, id);
-    }, 550);
-  }
-
-  function stopLongPress() {
-    clearTimeout(pressTimer);
-  }
-
-  function loadForEdit(domain, id) {
-    const store = currentStore(domain);
-
-    const entry =
-      store.entries.find(
-        row => String(row.id) === String(id)
-      );
-
-    if (!entry) {
-      return;
-    }
-
-    store.editingId = entry.id;
-
-    const structures =
-      entry.structure
-        ? String(entry.structure)
-            .split(" + ")
-            .filter(Boolean)
-        : [];
-
-    const numbers =
-      domain === "defense"
-        ? normalizeNumberValue(
-            entry.number,
-            "defense"
-          )
-        : entry.number || "6:6";
-
-    store.selection = {
-      structure: structures,
-      position: entry.position || "",
-      finishPosition:
-        entry.finishPosition || "",
-      positionSide:
-        entry.positionSide || "",
-      finishSide:
-        entry.finishSide || "",
-      number: numbers,
-      result: entry.result || "",
-      resultDisplay:
-        entry.resultDisplay || "",
-      group: entry.group || ""
-    };
-
-    updateSelectedButtons(domain);
-    renderTable(domain);
-
-    requestAnimationFrame(() => {
-      try {
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        });
-      } catch (error) {
-        window.scrollTo(0, 0);
-      }
+    const body = els[`${domain}TableBody`];
+    body.querySelectorAll("tr[data-id]").forEach(row => {
+      const id = row.dataset.id;
+      row.addEventListener("mousedown", () => startLongPress(domain, id));
+      row.addEventListener("mouseup", () => { if (!longPressFired) stopLongPress(); });
+      row.addEventListener("mouseleave", stopLongPress);
+      row.addEventListener("touchstart", event => { startLongPress(domain, id); event.preventDefault(); }, { passive: false });
+      row.addEventListener("touchend", event => { stopLongPress(); event.preventDefault(); }, { passive: false });
+      row.addEventListener("touchcancel", stopLongPress);
     });
   }
-
-  function applyResultColor(data) {
-    if (
-      data.section !== "body" ||
-      data.column.index !== 3
-    ) {
-      return;
-    }
-
-    const value =
-      String(data.cell.raw || "");
-
-    if (value === "Freiwurf") {
-      data.cell.styles.fillColor =
-        [247, 237, 198];
-    } else if (value === "TF") {
-      data.cell.styles.fillColor =
-        [247, 219, 219];
-    } else if (value === "gute Chance - Tor") {
-      data.cell.styles.fillColor =
-        [220, 239, 214];
-    } else if (
-      value === "schlechte Chance - kein Tor"
-    ) {
-      data.cell.styles.fillColor =
-        [220, 239, 214];
-    } else if (
-      value === "gute Chance - kein Tor"
-    ) {
-      data.cell.styles.fillColor =
-        [220, 239, 214];
-    } else if (
-      value === "schlechte Chance - Tor"
-    ) {
-      data.cell.styles.fillColor =
-        [247, 219, 219];
-    }
-  }
-
-  function getNumberFillColor(number) {
-    if (number === "6:6") {
-      return [255, 255, 255];
-    }
-
-    if (number === "7:6") {
-      return [240, 247, 255];
-    }
-
-    if (number === "6:5") {
-      return [255, 249, 240];
-    }
-
-    if (number === "Tempo") {
-      return [247, 237, 198];
-    }
-
-    return [255, 255, 255];
-  }
-
-  function applyNumberColor(data) {
-    if (data.section !== "body") {
-      return;
-    }
-
-    if (
-      data.table.section === "Angriff" &&
-      data.column.index === 4
-    ) {
-      data.cell.styles.fillColor =
-        getNumberFillColor(
-          String(data.cell.raw || "")
-        );
-    }
-
-    if (
-      data.table.section === "Abwehr" &&
-      data.column.index === 3
-    ) {
-      data.cell.styles.fillColor =
-        getNumberFillColor(
-          String(data.cell.raw || "")
-        );
-    }
+  function startLongPress(domain, id) { stopLongPress(); longPressFired = false; pressTimer = setTimeout(() => { longPressFired = true; loadForEdit(domain, id); }, 550); }
+  function stopLongPress() { clearTimeout(pressTimer); }
+  function loadForEdit(domain, id) {
+    const store = currentStore(domain);
+    const entry = store.entries.find(row => String(row.id) === String(id));
+    if (!entry) return;
+    store.editingId = entry.id;
+    const structures = entry.structure ? String(entry.structure).split(" + ").filter(Boolean) : [];
+    const numbers = domain === "defense" ? normalizeNumberValue(entry.number, "defense") : entry.number || "6:6";
+    store.selection = { structure: structures, position: entry.position || "", finishPosition: entry.finishPosition || "", positionSide: entry.positionSide || "", finishSide: entry.finishSide || "", half: normalizeHalfValue(entry.half || "1.hz"), number: numbers, result: entry.result || "", resultDisplay: entry.resultDisplay || "", group: entry.group || "" };
+    updateSelectedButtons(domain); renderTable(domain); requestAnimationFrame(() => { try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (error) { window.scrollTo(0, 0); } });
   }
 
   function exportPdf() {
-    if (
-      !window.jspdf ||
-      !window.jspdf.jsPDF
-    ) {
-      alert(
-        "Der PDF-Export konnte nicht geladen werden. " +
-        "Bitte öffne die App einmal mit Internetverbindung " +
-        "und versuche es erneut."
-      );
-
-      return;
-    }
-
+    if (!window.jspdf || !window.jspdf.jsPDF) { alert("Der PDF-Export konnte nicht geladen werden. Bitte öffne die App einmal mit Internetverbindung und versuche es erneut."); return; }
     const { jsPDF } = window.jspdf;
-
-    const doc = new jsPDF({
-      orientation: "landscape",
-      unit: "mm",
-      format: "a4"
-    });
-
-    if (typeof doc.autoTable !== "function") {
-      alert(
-        "Das PDF-Tabellenmodul konnte nicht geladen werden. " +
-        "Bitte öffne die App mit Internetverbindung " +
-        "und versuche es erneut."
-      );
-
-      return;
-    }
-
-    doc.setFontSize(16);
-
-    doc.text(
-      `Kollektive Statistik vs ${state.meta.opponent}`,
-      14,
-      14
-    );
-
-    doc.setFontSize(10);
-
-    doc.text(
-      `Datum: ${formatDate(state.meta.matchDate)}`,
-      14,
-      21
-    );
-
-    const offenseRows =
-      sortEntries("offense").map(row => [
-        row.createdOrder || "",
-        row.structure || "",
-        row.position || "",
-        row.resultDisplay || row.result || "",
-        Array.isArray(row.number)
-          ? row.number.join(" + ")
-          : row.number || ""
-      ]);
-
-    const defenseRows =
-      sortEntries("defense").map(row => [
-        row.createdOrder || "",
-        row.position || "",
-        row.finishPosition === "freiwurf"
-          ? "Freiwurf"
-          : row.finishPosition === "tf"
-            ? "TF"
-            : row.finishPosition || "",
-        Array.isArray(row.number)
-          ? row.number.join(" + ")
-          : row.number || ""
-      ]);
-
-    doc.setFontSize(12);
-    doc.text("Angriff", 14, 30);
-
-    doc.autoTable({
-      head: [[
-        "#",
-        "Struktur",
-        "Position",
-        "Ergebnis",
-        "Zahl"
-      ]],
-
-      body: offenseRows.length
-        ? offenseRows
-        : [["", "Keine Einträge", "", "", ""]],
-
-      startY: 33,
-      theme: "grid",
-
-      styles: {
-        fontSize: 7.5,
-        cellPadding: 2,
-        lineWidth: .2,
-        lineColor: [140, 140, 140]
-      },
-
-      headStyles: {
-        fillColor: [230, 242, 241],
-        textColor: 20
-      },
-
-      didParseCell: data => {
-        applyResultColor(data);
-        applyNumberColor(data);
-      }
-    });
-
-    let nextY =
-      doc.lastAutoTable.finalY + 10;
-
-    if (nextY > 170) {
-      doc.addPage();
-      nextY = 18;
-    }
-
-    doc.setFontSize(12);
-    doc.text("Abwehr", 14, nextY);
-
-    doc.autoTable({
-      head: [[
-        "#",
-        "Position",
-        "Abschlussposition",
-        "Zahl"
-      ]],
-
-      body: defenseRows.length
-        ? defenseRows
-        : [["", "Keine Einträge", "", ""]],
-
-      startY: nextY + 3,
-      theme: "grid",
-
-      styles: {
-        fontSize: 7.5,
-        cellPadding: 2,
-        lineWidth: .2,
-        lineColor: [140, 140, 140]
-      },
-
-      headStyles: {
-        fillColor: [248, 232, 233],
-        textColor: 20
-      },
-
-      didParseCell: data => {
-        if (data.section !== "body") {
-          return;
-        }
-
-        if (data.column.index === 1) {
-          const row =
-            sortEntries("defense")[data.row.index];
-
-          const positionSide =
-            row?.positionSide || "";
-
-          if (positionSide === "green") {
-            data.cell.styles.fillColor =
-              [225, 240, 220];
-          } else if (positionSide === "red") {
-            data.cell.styles.fillColor =
-              [248, 223, 223];
-          }
-        }
-
-        if (data.column.index === 2) {
-          const row =
-            sortEntries("defense")[data.row.index];
-
-          const finishSide =
-            row?.finishSide || "";
-
-          if (finishSide === "green") {
-            data.cell.styles.fillColor =
-              [225, 240, 220];
-          } else if (finishSide === "red") {
-            data.cell.styles.fillColor =
-              [248, 223, 223];
-          } else if (finishSide === "yellow") {
-            data.cell.styles.fillColor =
-              [247, 237, 198];
-          }
-        }
-
-        applyNumberColor(data);
-      }
-    });
-
-    const noteText =
-      els.notes.value.trim();
-
+    const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
+    if (typeof doc.autoTable !== "function") { alert("Das PDF-Tabellenmodul konnte nicht geladen werden. Bitte öffne die App mit Internetverbindung und versuche es erneut."); return; }
+    doc.setFontSize(16); doc.text(`Kollektive Statistik vs ${state.meta.opponent}`, 14, 14); doc.setFontSize(10); doc.text(`Datum: ${formatDate(state.meta.matchDate)}`, 14, 21);
+    const offenseRows = sortEntries("offense").map(row => [row.createdOrder || "", row.structure || "", row.position || "", getHalfDisplay(row.half || "1.hz"), row.resultDisplay || row.result || "", Array.isArray(row.number) ? row.number.join(" + ") : row.number || ""]);
+    const defenseRows = sortEntries("defense").map(row => [row.createdOrder || "", row.position || "", row.finishPosition === "freiwurf" ? "Freiwurf" : row.finishPosition === "tf" ? "TF" : row.finishPosition || "", getHalfDisplay(row.half || "1.hz"), Array.isArray(row.number) ? row.number.join(" + ") : row.number || ""]);
+    doc.setFontSize(12); doc.text("Angriff", 14, 30);
+    doc.autoTable({ head: [["#", "Struktur", "Position", "Halbzeit", "Ergebnis", "Zahl"]], body: offenseRows.length ? offenseRows : [["", "Keine Einträge", "", "", "", ""]], startY: 33, theme: "grid", styles: { fontSize: 7.5, cellPadding: 2, lineWidth: .2, lineColor: [140, 140, 140] }, headStyles: { fillColor: [230, 242, 241], textColor: 20 } });
+    let nextY = doc.lastAutoTable.finalY + 10; if (nextY > 170) { doc.addPage(); nextY = 18; }
+    doc.setFontSize(12); doc.text("Abwehr", 14, nextY);
+    doc.autoTable({ head: [["#", "Position", "Abschlussposition", "Halbzeit", "Zahl"]], body: defenseRows.length ? defenseRows : [["", "Keine Einträge", "", "", ""]], startY: nextY + 3, theme: "grid", styles: { fontSize: 7.5, cellPadding: 2, lineWidth: .2, lineColor: [140, 140, 140] }, headStyles: { fillColor: [248, 232, 233], textColor: 20 } });
+    const noteText = els.notes.value.trim();
     if (noteText) {
-      let noteY =
-        doc.lastAutoTable.finalY + 10;
-
-      if (noteY > 180) {
-        doc.addPage();
-        noteY = 20;
-      }
-
-      doc.setFontSize(11);
-      doc.text("Notizen:", 14, noteY);
-
-      doc.setFontSize(10);
-
-      const lines =
-        doc.splitTextToSize(
-          noteText,
-          255
-        );
-
-      doc.text(
-        lines,
-        14,
-        noteY + 6
-      );
+      let noteY = doc.lastAutoTable.finalY + 10;
+      if (noteY > 180) { doc.addPage(); noteY = 20; }
+      doc.setFontSize(11); doc.text("Notizen:", 14, noteY); doc.setFontSize(10); doc.text(doc.splitTextToSize(noteText, 255), 14, noteY + 6);
     }
-
-    const safeOpponent =
-      state.meta.opponent
-        .replace(/[^\wäöüÄÖÜß-]+/g, "_")
-        .replace(/^_+|_+$/g, "");
-
-    doc.save(
-      `Kollektive_Statistik_vs_${
-        safeOpponent || "Gegner"
-      }.pdf`
-    );
+    const safeOpponent = state.meta.opponent.replace(/[^\wäöüÄÖÜß-]+/g, "_").replace(/^_+|_+$/g, "");
+    doc.save(`Kollektive_Statistik_vs_${safeOpponent || "Gegner"}.pdf`);
   }
+
+  function applyFilter(domain, key, value) { const store = currentStore(domain); store.filter.key = key; store.filter.value = value; renderTable(domain); }
+  function resetFilter(domain) { const store = currentStore(domain); store.filter.key = ""; store.filter.value = ""; renderTable(domain); }
+  function setFilterKey(domain, key) { const store = currentStore(domain); store.filter.key = key; store.filter.value = key ? defaultFilterValue(domain, key) : ""; renderTable(domain); }
 
   function startApp() {
-    const opponent =
-      els.opponent.value.trim();
-
-    const matchDate =
-      els.matchDate.value;
-
-    if (!opponent || !matchDate) {
-      alert(
-        "Bitte Gegner und Datum eintragen."
-      );
-
-      return;
-    }
-
-    state.meta = {
-      opponent,
-      matchDate
-    };
-
-    els.headline.textContent =
-      `Statistik vs ${opponent}`;
-
-    els.topMeta.textContent =
-      formatDate(matchDate);
-
-    els.setup.classList.add("hidden");
-    els.workspace.classList.remove("hidden");
-
-    loadMatchActions().then(() => {
-      renderTable("offense");
-      renderTable("defense");
-      updateSelectedButtons("offense");
-      updateSelectedButtons("defense");
-    });
+    const opponent = els.opponent.value.trim(); const matchDate = els.matchDate.value;
+    if (!opponent || !matchDate) { alert("Bitte Gegner und Datum eintragen."); return; }
+    state.meta = { opponent, matchDate };
+    els.headline.textContent = `Statistik vs ${opponent}`; els.topMeta.textContent = formatDate(matchDate);
+    els.setup.classList.add("hidden"); els.workspace.classList.remove("hidden");
+    loadMatchActions().then(() => { renderTable("offense"); renderTable("defense"); updateSelectedButtons("offense"); updateSelectedButtons("defense"); });
   }
 
-  document
-    .querySelectorAll("th button[data-table]")
-    .forEach(button => {
-      button.addEventListener("click", () => {
-        setSort(
-          button.dataset.table,
-          button.dataset.sort
-        );
-      });
-    });
+  document.querySelectorAll("th button[data-table]").forEach(button => button.addEventListener("click", () => setSort(button.dataset.table, button.dataset.sort)));
+  els.startBtn.addEventListener("click", startApp); els.undoBtn.addEventListener("click", undoLast); els.pdfBtn.addEventListener("click", exportPdf); els.offenseSaveBtn.addEventListener("click", () => saveEntry("offense")); els.defenseSaveBtn.addEventListener("click", () => saveEntry("defense")); els.offenseResetBtn.addEventListener("click", () => clearSelection("offense")); els.defenseResetBtn.addEventListener("click", () => clearSelection("defense"));
 
-  els.startBtn.addEventListener(
-    "click",
-    startApp
-  );
+  offenseStructureRows.forEach((row, index) => renderButtons(els[`offenseStructureRow${index + 1}`], row, "structure", "offense"));
+  renderButtons(els.offensePositionButtons, positionOptions, "position", "offense");
+  renderButtons(els.offenseHalfButtons, halfOptions, "half", "offense");
+  renderButtons(els.offenseResultButtons, offenseResults, "result", "offense");
+  renderButtons(els.offenseNumberButtons, offenseNumberOptions, "number", "offense");
+  renderButtons(els.defensePositionGreenButtons, positionOptions, "position", "defense", "green");
+  renderButtons(els.defensePositionRedButtons, positionOptions, "position", "defense", "red");
+  renderButtons(els.defenseFinishGreenButtons, defenseFinishOptions, "finishPosition", "defense", "green");
+  renderButtons(els.defenseFinishRedButtons, defenseFinishOptions, "finishPosition", "defense", "red");
+  renderButtons(els.defenseFinishSpecialButtons, defenseFinishSpecialOptions, "finishPosition", "defense");
+  renderButtons(els.defenseHalfButtons, halfOptions, "half", "defense");
+  renderButtons(els.defenseNumberButtons, defenseNumberOptions, "number", "defense");
 
-  els.undoBtn.addEventListener(
-    "click",
-    undoLast
-  );
+  ["offense", "defense"].forEach(domain => {
+    els[`${domain}FilterKey`].addEventListener("change", e => setFilterKey(domain, e.target.value));
+    els[`${domain}FilterValue`].addEventListener("change", e => applyFilter(domain, currentStore(domain).filter.key, e.target.value));
+    els[`${domain}FilterReset`].addEventListener("click", () => resetFilter(domain));
+  });
 
-  els.pdfBtn.addEventListener(
-    "click",
-    exportPdf
-  );
-
-  els.offenseSaveBtn.addEventListener(
-    "click",
-    () => saveEntry("offense")
-  );
-
-  els.defenseSaveBtn.addEventListener(
-    "click",
-    () => saveEntry("defense")
-  );
-
-  els.offenseResetBtn.addEventListener(
-    "click",
-    () => clearSelection("offense")
-  );
-
-  els.defenseResetBtn.addEventListener(
-    "click",
-    () => clearSelection("defense")
-  );
-
-  offenseStructureRows.forEach(
-    (row, index) => {
-      renderButtons(
-        els[`offenseStructureRow${index + 1}`],
-        row,
-        "structure",
-        "offense"
-      );
-    }
-  );
-
-  renderButtons(
-    els.offensePositionButtons,
-    positionOptions,
-    "position",
-    "offense"
-  );
-
-  renderButtons(
-    els.offenseResultButtons,
-    offenseResults,
-    "result",
-    "offense"
-  );
-
-  renderButtons(
-    els.offenseNumberButtons,
-    offenseNumberOptions,
-    "number",
-    "offense"
-  );
-
-  renderButtons(
-    els.defensePositionGreenButtons,
-    positionOptions,
-    "position",
-    "defense",
-    "green"
-  );
-
-  renderButtons(
-    els.defensePositionRedButtons,
-    positionOptions,
-    "position",
-    "defense",
-    "red"
-  );
-
-  renderButtons(
-    els.defenseFinishGreenButtons,
-    defenseFinishOptions,
-    "finishPosition",
-    "defense",
-    "green"
-  );
-
-  renderButtons(
-    els.defenseFinishRedButtons,
-    defenseFinishOptions,
-    "finishPosition",
-    "defense",
-    "red"
-  );
-
-  renderButtons(
-    els.defenseFinishSpecialButtons,
-    defenseFinishSpecialOptions,
-    "finishPosition",
-    "defense"
-  );
-
-  renderButtons(
-    els.defenseNumberButtons,
-    defenseNumberOptions,
-    "number",
-    "defense"
-  );
-
-  updateSelectedButtons("offense");
-  updateSelectedButtons("defense");
-  setToday();
+  updateSelectedButtons("offense"); updateSelectedButtons("defense"); setToday();
 })();
 </script>
-
 </body>
 </html>
