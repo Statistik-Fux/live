@@ -238,6 +238,10 @@ button { cursor: pointer; }
 .table-tools { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); flex-wrap: wrap; }
 .table-tools h2 { margin: 0; color: #000; }
 .table-wrap { overflow: auto; border: 1px solid var(--border); border-radius: var(--radius-lg); background: #fff; }
+.filter-controls { display: flex; flex-wrap: wrap; gap: .45rem .8rem; margin: .45rem 0; }
+.filter-option { display: inline-flex; align-items: center; gap: .35rem; padding: .35rem .55rem; border: 1px solid var(--border); border-radius: 999px; background: #fff; font-size: var(--text-sm); }
+.filter-option input { width: 1rem; height: 1rem; accent-color: var(--primary); }
+.defense .filter-option input { accent-color: var(--fox-red); }
 table { width: 100%; table-layout: fixed; border-collapse: collapse; }
 th, td { padding: .82rem .72rem; border-bottom: 1px solid rgba(40,37,29,.09); text-align: left; vertical-align: top; word-break: break-word; }
 th { position: sticky; top: 0; background: var(--surface-2); z-index: 1; color: #000; }
@@ -313,7 +317,7 @@ tbody tr.editing { background: #e7f0ff; }
         </div>
       </div>
       <div class="topbar-actions">
-        <button id="undoBtn" class="utility-btn undo" type="button" aria-label="Rückgängig">↶</button>
+        <button id="undoBtn" class="utility-btn undo" type="button" aria-label="Ruckgangig">↶</button>
         <button id="pdfBtn" class="utility-btn primary" type="button">Export PDF</button>
       </div>
     </div>
@@ -322,7 +326,7 @@ tbody tr.editing { background: #e7f0ff; }
       <section class="panel section-card offense">
         <div class="section-head">
           <h2>Offensive Aktionen</h2>
-          <div id="offenseCount" class="entry-count">0 Einträge</div>
+          <div id="offenseCount" class="entry-count">0 Eintrage</div>
         </div>
         <div class="controls">
           <div class="group">
@@ -336,16 +340,16 @@ tbody tr.editing { background: #e7f0ff; }
             <div id="offensePositionButtons" class="button-grid"></div>
           </div>
           <div class="group">
-            <h3>Halbzeit</h3>
-            <div id="offenseHalfButtons" class="button-grid two-wide"></div>
-          </div>
-          <div class="group">
             <h3>Ergebnis</h3>
             <div id="offenseResultButtons" class="result-grid"></div>
           </div>
           <div class="group">
             <h3>Zahl</h3>
             <div id="offenseNumberButtons" class="button-grid"></div>
+          </div>
+          <div class="group">
+            <h3>Halbzeit</h3>
+            <div id="offenseHalfButtons" class="button-grid two-wide"></div>
           </div>
           <div class="action-row">
             <button id="offenseResetBtn" class="save-btn" type="button">Auswahl leeren</button>
@@ -357,7 +361,7 @@ tbody tr.editing { background: #e7f0ff; }
       <section class="panel section-card defense">
         <div class="section-head">
           <h2>Defensive Aktionen</h2>
-          <div id="defenseCount" class="entry-count">0 Einträge</div>
+          <div id="defenseCount" class="entry-count">0 Eintrage</div>
         </div>
         <div class="controls">
           <div class="group">
@@ -376,12 +380,12 @@ tbody tr.editing { background: #e7f0ff; }
             </div>
           </div>
           <div class="group">
-            <h3>Halbzeit</h3>
-            <div id="defenseHalfButtons" class="button-grid two-wide"></div>
-          </div>
-          <div class="group">
             <h3>Zahl</h3>
             <div id="defenseNumberButtons" class="button-grid"></div>
+          </div>
+          <div class="group">
+            <h3>Halbzeit</h3>
+            <div id="defenseHalfButtons" class="button-grid two-wide"></div>
           </div>
           <div class="action-row">
             <button id="defenseResetBtn" class="save-btn" type="button">Auswahl leeren</button>
@@ -396,10 +400,9 @@ tbody tr.editing { background: #e7f0ff; }
         <div class="table-tools">
           <h2>Angriff</h2>
           <div>
-            <label for="offenseFilterKey"><strong>Filter</strong></label>
-            <select id="offenseFilterKey"></select>
-            <select id="offenseFilterValue"></select>
-            <button id="offenseFilterReset" type="button" class="utility-btn">Zurücksetzen</button>
+            <strong>Filter</strong>
+            <div id="offenseFilterControls" class="filter-controls"></div>
+            <button id="offenseFilterReset" type="button" class="utility-btn">Zurucksetzen</button>
           </div>
           <div id="offenseSortInfo"></div>
         </div>
@@ -415,7 +418,7 @@ tbody tr.editing { background: #e7f0ff; }
                 <th style="width:12%"><button type="button" data-table="offense" data-sort="number">Zahl</button></th>
               </tr>
             </thead>
-            <tbody id="offenseTableBody"><tr><td colspan="6" class="empty">Noch keine offensiven Einträge.</td></tr></tbody>
+            <tbody id="offenseTableBody"><tr><td colspan="6" class="empty">Noch keine offensiven Eintrage.</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -424,10 +427,9 @@ tbody tr.editing { background: #e7f0ff; }
         <div class="table-tools">
           <h2>Abwehr</h2>
           <div>
-            <label for="defenseFilterKey"><strong>Filter</strong></label>
-            <select id="defenseFilterKey"></select>
-            <select id="defenseFilterValue"></select>
-            <button id="defenseFilterReset" type="button" class="utility-btn">Zurücksetzen</button>
+            <strong>Filter</strong>
+            <div id="defenseFilterControls" class="filter-controls"></div>
+            <button id="defenseFilterReset" type="button" class="utility-btn">Zurucksetzen</button>
           </div>
           <div id="defenseSortInfo"></div>
         </div>
@@ -442,7 +444,7 @@ tbody tr.editing { background: #e7f0ff; }
                 <th style="width:12%"><button type="button" data-table="defense" data-sort="number">Zahl</button></th>
               </tr>
             </thead>
-            <tbody id="defenseTableBody"><tr><td colspan="5" class="empty">Noch keine defensiven Einträge.</td></tr></tbody>
+            <tbody id="defenseTableBody"><tr><td colspan="5" class="empty">Noch keine defensiven Eintrage.</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -475,7 +477,7 @@ tbody tr.editing { background: #e7f0ff; }
     { key: "1.hz", display: "1. HZ" },
     { key: "2.hz", display: "2. HZ" }
   ];
-  const defenseFinishOptions = ["Außen", "Kreis/DBR breit", "Kreis/DBR zentral", "Fernwurf", "7m"];
+  const defenseFinishOptions = ["Au\u00dfen", "Kreis/DBR breit", "Kreis/DBR zentral", "Fernwurf", "7m"];
   const defenseFinishSpecialOptions = [
     { key: "freiwurf", display: "Freiwurf", variant: "yellow" },
     { key: "tf", display: "TF", variant: "red" }
@@ -526,12 +528,12 @@ tbody tr.editing { background: #e7f0ff; }
   const state = {
     meta: { opponent: "", matchDate: "" },
     undoStack: [],
-    offense: { entries: [], editingId: null, selection: defaultSelection("offense"), sort: { key: "index", dir: "desc" }, filter: { key: "", value: "", values: [] } },
-    defense: { entries: [], editingId: null, selection: defaultSelection("defense"), sort: { key: "index", dir: "desc" }, filter: { key: "", value: "", values: [] } }
+    offense: { entries: [], editingId: null, selection: defaultSelection("offense"), sort: { key: "index", dir: "desc" }, filter: { items: [] } },
+    defense: { entries: [], editingId: null, selection: defaultSelection("defense"), sort: { key: "index", dir: "desc" }, filter: { items: [] } }
   };
 
   const els = {
-    setup: document.getElementById("setup"), workspace: document.getElementById("workspace"), opponent: document.getElementById("opponent"), matchDate: document.getElementById("matchDate"), startBtn: document.getElementById("startBtn"), headline: document.getElementById("headline"), topMeta: document.getElementById("topMeta"), undoBtn: document.getElementById("undoBtn"), pdfBtn: document.getElementById("pdfBtn"), notes: document.getElementById("notes"), offenseCount: document.getElementById("offenseCount"), defenseCount: document.getElementById("defenseCount"), offenseSortInfo: document.getElementById("offenseSortInfo"), defenseSortInfo: document.getElementById("defenseSortInfo"), offenseTableBody: document.getElementById("offenseTableBody"), defenseTableBody: document.getElementById("defenseTableBody"), offenseStructureRow1: document.getElementById("offenseStructureRow1"), offenseStructureRow2: document.getElementById("offenseStructureRow2"), offenseStructureRow3: document.getElementById("offenseStructureRow3"), offensePositionButtons: document.getElementById("offensePositionButtons"), offenseHalfButtons: document.getElementById("offenseHalfButtons"), offenseResultButtons: document.getElementById("offenseResultButtons"), offenseNumberButtons: document.getElementById("offenseNumberButtons"), defensePositionGreenButtons: document.getElementById("defensePositionGreenButtons"), defensePositionRedButtons: document.getElementById("defensePositionRedButtons"), defenseFinishGreenButtons: document.getElementById("defenseFinishGreenButtons"), defenseFinishRedButtons: document.getElementById("defenseFinishRedButtons"), defenseFinishSpecialButtons: document.getElementById("defenseFinishSpecialButtons"), defenseHalfButtons: document.getElementById("defenseHalfButtons"), defenseNumberButtons: document.getElementById("defenseNumberButtons"), offenseSaveBtn: document.getElementById("offenseSaveBtn"), defenseSaveBtn: document.getElementById("defenseSaveBtn"), offenseResetBtn: document.getElementById("offenseResetBtn"), defenseResetBtn: document.getElementById("defenseResetBtn"), offenseFilterKey: document.getElementById("offenseFilterKey"), offenseFilterValue: document.getElementById("offenseFilterValue"), offenseFilterReset: document.getElementById("offenseFilterReset"), defenseFilterKey: document.getElementById("defenseFilterKey"), defenseFilterValue: document.getElementById("defenseFilterValue"), defenseFilterReset: document.getElementById("defenseFilterReset")
+    setup: document.getElementById("setup"), workspace: document.getElementById("workspace"), opponent: document.getElementById("opponent"), matchDate: document.getElementById("matchDate"), startBtn: document.getElementById("startBtn"), headline: document.getElementById("headline"), topMeta: document.getElementById("topMeta"), undoBtn: document.getElementById("undoBtn"), pdfBtn: document.getElementById("pdfBtn"), notes: document.getElementById("notes"), offenseCount: document.getElementById("offenseCount"), defenseCount: document.getElementById("defenseCount"), offenseSortInfo: document.getElementById("offenseSortInfo"), defenseSortInfo: document.getElementById("defenseSortInfo"), offenseTableBody: document.getElementById("offenseTableBody"), defenseTableBody: document.getElementById("defenseTableBody"), offenseStructureRow1: document.getElementById("offenseStructureRow1"), offenseStructureRow2: document.getElementById("offenseStructureRow2"), offenseStructureRow3: document.getElementById("offenseStructureRow3"), offensePositionButtons: document.getElementById("offensePositionButtons"), offenseHalfButtons: document.getElementById("offenseHalfButtons"), offenseResultButtons: document.getElementById("offenseResultButtons"), offenseNumberButtons: document.getElementById("offenseNumberButtons"), defensePositionGreenButtons: document.getElementById("defensePositionGreenButtons"), defensePositionRedButtons: document.getElementById("defensePositionRedButtons"), defenseFinishGreenButtons: document.getElementById("defenseFinishGreenButtons"), defenseFinishRedButtons: document.getElementById("defenseFinishRedButtons"), defenseFinishSpecialButtons: document.getElementById("defenseFinishSpecialButtons"), defenseHalfButtons: document.getElementById("defenseHalfButtons"), defenseNumberButtons: document.getElementById("defenseNumberButtons"), offenseSaveBtn: document.getElementById("offenseSaveBtn"), defenseSaveBtn: document.getElementById("defenseSaveBtn"), offenseResetBtn: document.getElementById("offenseResetBtn"), defenseResetBtn: document.getElementById("defenseResetBtn"), offenseFilterControls: document.getElementById("offenseFilterControls"), offenseFilterReset: document.getElementById("offenseFilterReset"), defenseFilterControls: document.getElementById("defenseFilterControls"), defenseFilterReset: document.getElementById("defenseFilterReset")
   };
 
   let pressTimer = null;
@@ -633,21 +635,16 @@ tbody tr.editing { background: #e7f0ff; }
       if (!Array.isArray(selection.structure)) selection.structure = selection.structure ? [selection.structure] : [];
       if (selection.structure.includes(value)) selection.structure = selection.structure.filter(item => item !== value);
       else if (selection.structure.length < 2) selection.structure.push(value);
-      else alert("Es können höchstens zwei Strukturen ausgewählt werden.");
+      else alert("Es konnen hochstens zwei Strukturen ausgewahlt werden.");
     }
     if (type === "position") { selection.position = value; if (domain === "defense") selection.positionSide = variant; }
     if (type === "finishPosition") { selection.finishPosition = value; if (domain === "defense") selection.finishSide = variant; }
     if (type === "number") {
       if (domain === "defense") {
         if (!Array.isArray(selection.number)) selection.number = selection.number ? [selection.number] : ["6:6"];
-        if (selection.number.includes(value)) {
-          selection.number = selection.number.filter(item => item !== value);
-          if (selection.number.length === 0) selection.number = ["6:6"];
-        } else if (selection.number.length < 3) {
-          selection.number.push(value);
-        } else {
-          alert("Es können höchstens drei Werte ausgewählt werden.");
-        }
+        if (selection.number.includes(value)) { selection.number = selection.number.filter(item => item !== value); if (selection.number.length === 0) selection.number = ["6:6"]; }
+        else if (selection.number.length < 2) selection.number.push(value);
+        else alert("Es konnen hochstens zwei Werte ausgewahlt werden.");
       } else selection.number = value;
     }
     if (type === "result") { selection.result = value; selection.resultDisplay = display; selection.group = group; }
@@ -684,9 +681,9 @@ tbody tr.editing { background: #e7f0ff; }
   function validate(domain) {
     const selection = currentStore(domain).selection;
     const structures = Array.isArray(selection.structure) ? selection.structure : selection.structure ? [selection.structure] : [];
-    if (domain === "offense" && (structures.length === 0 || !selection.number || !selection.result || !selection.half)) { alert("Bitte mindestens eine Struktur, Halbzeit, Zahl und Ergebnis auswählen."); return false; }
+    if (domain === "offense" && (structures.length === 0 || !selection.number || !selection.result || !selection.half)) { alert("Bitte mindestens eine Struktur, Halbzeit, Zahl und Ergebnis auswahlen."); return false; }
     const defenseNumbers = Array.isArray(selection.number) ? selection.number : selection.number ? [selection.number] : ["6:6"];
-    if (domain === "defense" && (!selection.finishPosition || !selection.finishSide || defenseNumbers.length === 0 || !selection.half)) { alert("Bitte Halbzeit, Abschlussposition und Zahl auswählen."); return false; }
+    if (domain === "defense" && (!selection.finishPosition || !selection.finishSide || defenseNumbers.length === 0 || !selection.half)) { alert("Bitte Halbzeit, Abschlussposition und Zahl auswahlen."); return false; }
     return true;
   }
 
@@ -745,7 +742,7 @@ tbody tr.editing { background: #e7f0ff; }
     } catch (error) { console.error(error); alert(error.message || "Fehler beim Speichern."); }
   }
 
-  async function undoLast() { const action = state.undoStack.pop(); if (!action) { alert("Es gibt keine Aktion zum Rückgängigmachen."); return; } const store = currentStore(action.domain); try { if (action.type === "add") { await deleteEntry(action.entry.id); store.entries = store.entries.filter(entry => entry.id !== action.entry.id); } if (action.type === "edit") { const before = action.before; const restoredPayload = { structure: before.structure || "", position: before.position || "", finishPosition: before.finishPosition || "", positionSide: before.positionSide || "", finishSide: before.finishSide || "", half: before.half || "1.hz", number: Array.isArray(before.number) ? before.number.join(" + ") : before.number || "6:6", result: before.result || "", resultDisplay: before.resultDisplay || "", group: before.group || "", createdOrder: before.createdOrder }; const restored = await updateEntry(before.id, action.domain, restoredPayload); const index = store.entries.findIndex(entry => entry.id === before.id); if (index !== -1) store.entries[index] = restored; } clearSelection(action.domain); renderTable("offense"); renderTable("defense"); } catch (error) { console.error(error); alert(error.message || "Fehler beim Rückgängigmachen."); } }
+  async function undoLast() { const action = state.undoStack.pop(); if (!action) { alert("Es gibt keine Aktion zum Ruckgangigmachen."); return; } const store = currentStore(action.domain); try { if (action.type === "add") { await deleteEntry(action.entry.id); store.entries = store.entries.filter(entry => entry.id !== action.entry.id); } if (action.type === "edit") { const before = action.before; const restoredPayload = { structure: before.structure || "", position: before.position || "", finishPosition: before.finishPosition || "", positionSide: before.positionSide || "", finishSide: before.finishSide || "", half: before.half || "1.hz", number: Array.isArray(before.number) ? before.number.join(" + ") : before.number || "6:6", result: before.result || "", resultDisplay: before.resultDisplay || "", group: before.group || "", createdOrder: before.createdOrder }; const restored = await updateEntry(before.id, action.domain, restoredPayload); const index = store.entries.findIndex(entry => entry.id === before.id); if (index !== -1) store.entries[index] = restored; } clearSelection(action.domain); renderTable("offense"); renderTable("defense"); } catch (error) { console.error(error); alert(error.message || "Fehler beim Ruckgangigmachen."); } }
 
   function getSortValue(row, key) {
     if (key === "index") return Number(row.createdOrder) || 0;
@@ -763,35 +760,54 @@ tbody tr.editing { background: #e7f0ff; }
   function getNumberClass(number) { if (number === "6:6") return "number-66"; if (number === "7:6") return "number-76"; if (number === "6:5") return "number-65"; if (number === "Tempo") return "number-tempo"; return "number"; }
   function getNumberDisplay(row) { if (Array.isArray(row.number)) return row.number.map(number => `<span class="pill ${getNumberClass(number)}">${escapeHtml(number)}</span>`).join(" "); if (row.number) return `<span class="pill ${getNumberClass(row.number)}">${escapeHtml(row.number)}</span>`; return "—"; }
   function renderStructureDisplay(value) { if (!value) return "—"; return String(value).split(" + ").filter(Boolean).map(structure => `<span class="pill structure">${escapeHtml(structure)}</span>`).join(" "); }
+
+  function getFilterLabel(domain, key, value) {
+    return `${FILTER_OPTIONS[domain][key].label}: ${value}`;
+  }
+
   function getFilteredRows(domain) {
     const rows = sortEntries(domain);
-    const filter = currentStore(domain).filter;
-    if (!filter.key || !filter.values?.length) return rows;
-    return rows.filter(row => {
-      if (filter.key === "structure") return filter.values.some(value => String(row.structure || "").split(" + ").includes(value));
-      if (filter.key === "position") return filter.values.includes(row.position);
-      if (filter.key === "half") return filter.values.includes(getHalfDisplay(row.half || "1.hz"));
-      if (filter.key === "number") return filter.values.some(value => (Array.isArray(row.number) ? row.number : [row.number]).includes(value));
-      if (filter.key === "result") return filter.values.includes(row.resultDisplay || row.result || "");
-      if (filter.key === "finishPosition") return filter.values.includes(row.finishPosition === "freiwurf" ? "Freiwurf" : row.finishPosition === "tf" ? "TF" : row.finishPosition || "");
+    const filters = currentStore(domain).filter.items || [];
+    if (!filters.length) return rows;
+    return rows.filter(row => filters.every(({ key, value }) => {
+      if (key === "structure") return String(row.structure || "").split(" + ").includes(value);
+      if (key === "position") return row.position === value;
+      if (key === "half") return getHalfDisplay(row.half || "1.hz") === value;
+      if (key === "number") return (Array.isArray(row.number) ? row.number : [row.number]).includes(value);
+      if (key === "result") return (row.resultDisplay || row.result || "") === value;
+      if (key === "finishPosition") return (row.finishPosition === "freiwurf" ? "Freiwurf" : row.finishPosition === "tf" ? "TF" : row.finishPosition || "") === value;
       return true;
-    });
+    }));
   }
 
   function renderFilterControls(domain) {
-    const keyEl = els[`${domain}FilterKey`];
-    const valueEl = els[`${domain}FilterValue`];
+    const mount = els[`${domain}FilterControls`];
     const store = currentStore(domain);
-    const cfg = FILTER_OPTIONS[domain];
-    keyEl.innerHTML = `<option value="">Kein Filter</option>` + Object.entries(cfg).map(([key, spec]) => `<option value="${escapeHtml(key)}" ${store.filter.key === key ? "selected" : ""}>${escapeHtml(spec.label)}</option>`).join("");
-    const activeKey = store.filter.key;
-    const values = activeKey ? cfg[activeKey].values : [];
-    if (!activeKey) { valueEl.innerHTML = `<option value="">—</option>`; valueEl.disabled = true; store.filter.values = []; return; }
-    valueEl.disabled = false;
-    valueEl.multiple = false;
-    valueEl.size = 1;
-    valueEl.innerHTML = `<option value="">${escapeHtml(cfg[activeKey].label)} wählen</option>` + values.map(v => `<option value="${escapeHtml(v)}" ${store.filter.values[0] === v ? "selected" : ""}>${escapeHtml(v)}</option>`).join("");
-    if (store.filter.values.length && !values.some(v => store.filter.values[0] === v)) store.filter.values = [];
+    const selected = store.filter.items || [];
+    mount.innerHTML = Object.entries(FILTER_OPTIONS[domain]).flatMap(([key, spec]) => spec.values.map(value => {
+      const checked = selected.some(item => item.key === key && item.value === value);
+      return `<label class="filter-option"><input type="checkbox" data-filter-key="${escapeHtml(key)}" data-filter-value="${escapeHtml(value)}" ${checked ? "checked" : ""}>${escapeHtml(getFilterLabel(domain, key, value))}</label>`;
+    })).join("");
+    mount.querySelectorAll("input[type=checkbox]").forEach(input => {
+      input.addEventListener("change", () => toggleFilter(domain, input.dataset.filterKey, input.dataset.filterValue, input.checked));
+    });
+  }
+
+  function toggleFilter(domain, key, value, checked) {
+    const store = currentStore(domain);
+    const items = store.filter.items || [];
+    const exists = items.some(item => item.key === key && item.value === value);
+    if (checked && !exists) {
+      if (items.length >= 3) {
+        alert("Es konnen hochstens drei Filter ausgewahlt werden.");
+        renderTable(domain);
+        return;
+      }
+      store.filter.items = [...items, { key, value }];
+    } else if (!checked && exists) {
+      store.filter.items = items.filter(item => !(item.key === key && item.value === value));
+    }
+    renderTable(domain);
   }
 
   function renderTable(domain) {
@@ -801,10 +817,10 @@ tbody tr.editing { background: #e7f0ff; }
     const body = els[`${domain}TableBody`];
     const countElement = els[`${domain}Count`];
     const sortInfo = els[`${domain}SortInfo`];
-    countElement.textContent = `${store.entries.length} Einträge`;
-    sortInfo.textContent = `${store.sort.key} ${store.sort.dir === "asc" ? "↑" : "↓"}` + (store.filter.key && store.filter.values?.length ? ` · Filter: ${FILTER_OPTIONS[domain][store.filter.key].label} = ${store.filter.values.join(", ")}` : "");
+    countElement.textContent = `${store.entries.length} Eintrage`;
+    sortInfo.textContent = `${store.sort.key} ${store.sort.dir === "asc" ? "↑" : "↓"}` + (store.filter.items?.length ? ` · Filter: ${store.filter.items.map(item => getFilterLabel(domain, item.key, item.value)).join(" · ")}` : "");
     if (!rows.length) {
-      body.innerHTML = `<tr><td colspan="${domain === "offense" ? 6 : 5}" class="empty">Noch keine ${domain === "offense" ? "offensiven" : "defensiven"} Einträge.</td></tr>`;
+      body.innerHTML = `<tr><td colspan="${domain === "offense" ? 6 : 5}" class="empty">Noch keine ${domain === "offense" ? "offensiven" : "defensiven"} Eintrage.</td></tr>`;
       return;
     }
     if (domain === "offense") {
@@ -856,31 +872,29 @@ tbody tr.editing { background: #e7f0ff; }
   }
 
   function exportPdf() {
-    if (!window.jspdf || !window.jspdf.jsPDF) { alert("Der PDF-Export konnte nicht geladen werden. Bitte öffne die App einmal mit Internetverbindung und versuche es erneut."); return; }
+    if (!window.jspdf || !window.jspdf.jsPDF) { alert("Der PDF-Export konnte nicht geladen werden. Bitte offne die App einmal mit Internetverbindung und versuche es erneut."); return; }
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
-    if (typeof doc.autoTable !== "function") { alert("Das PDF-Tabellenmodul konnte nicht geladen werden. Bitte öffne die App mit Internetverbindung und versuche es erneut."); return; }
+    if (typeof doc.autoTable !== "function") { alert("Das PDF-Tabellenmodul konnte nicht geladen werden. Bitte offne die App mit Internetverbindung und versuche es erneut."); return; }
     doc.setFontSize(16); doc.text(`Kollektive Statistik vs ${state.meta.opponent}`, 14, 14); doc.setFontSize(10); doc.text(`Datum: ${formatDate(state.meta.matchDate)}`, 14, 21);
     const offenseRows = sortEntries("offense").map(row => [row.createdOrder || "", row.structure || "", row.position || "", getHalfDisplay(row.half || "1.hz"), row.resultDisplay || row.result || "", Array.isArray(row.number) ? row.number.join(" + ") : row.number || ""]);
     const defenseRows = sortEntries("defense").map(row => [row.createdOrder || "", row.position || "", row.finishPosition === "freiwurf" ? "Freiwurf" : row.finishPosition === "tf" ? "TF" : row.finishPosition || "", getHalfDisplay(row.half || "1.hz"), Array.isArray(row.number) ? row.number.join(" + ") : row.number || ""]);
     doc.setFontSize(12); doc.text("Angriff", 14, 30);
-    doc.autoTable({ head: [["#", "Struktur", "Position", "Halbzeit", "Ergebnis", "Zahl"]], body: offenseRows.length ? offenseRows : [["", "Keine Einträge", "", "", "", ""]], startY: 33, theme: "grid", styles: { fontSize: 7.5, cellPadding: 2, lineWidth: .2, lineColor: [140, 140, 140] }, headStyles: { fillColor: [230, 242, 241], textColor: 20 } });
+    doc.autoTable({ head: [["#", "Struktur", "Position", "Halbzeit", "Ergebnis", "Zahl"]], body: offenseRows.length ? offenseRows : [["", "Keine Eintrage", "", "", "", ""]], startY: 33, theme: "grid", styles: { fontSize: 7.5, cellPadding: 2, lineWidth: .2, lineColor: [140, 140, 140] }, headStyles: { fillColor: [230, 242, 241], textColor: 20 } });
     let nextY = doc.lastAutoTable.finalY + 10; if (nextY > 170) { doc.addPage(); nextY = 18; }
     doc.setFontSize(12); doc.text("Abwehr", 14, nextY);
-    doc.autoTable({ head: [["#", "Position", "Abschlussposition", "Halbzeit", "Zahl"]], body: defenseRows.length ? defenseRows : [["", "Keine Einträge", "", "", ""]], startY: nextY + 3, theme: "grid", styles: { fontSize: 7.5, cellPadding: 2, lineWidth: .2, lineColor: [140, 140, 140] }, headStyles: { fillColor: [248, 232, 233], textColor: 20 } });
+    doc.autoTable({ head: [["#", "Position", "Abschlussposition", "Halbzeit", "Zahl"]], body: defenseRows.length ? defenseRows : [["", "Keine Eintrage", "", "", ""]], startY: nextY + 3, theme: "grid", styles: { fontSize: 7.5, cellPadding: 2, lineWidth: .2, lineColor: [140, 140, 140] }, headStyles: { fillColor: [248, 232, 233], textColor: 20 } });
     const noteText = els.notes.value.trim();
     if (noteText) {
       let noteY = doc.lastAutoTable.finalY + 10;
       if (noteY > 180) { doc.addPage(); noteY = 20; }
       doc.setFontSize(11); doc.text("Notizen:", 14, noteY); doc.setFontSize(10); doc.text(doc.splitTextToSize(noteText, 255), 14, noteY + 6);
     }
-    const safeOpponent = state.meta.opponent.replace(/[^\wäöüÄÖÜß-]+/g, "_").replace(/^_+|_+$/g, "");
+    const safeOpponent = state.meta.opponent.replace(/[^\wä¶¼Ä¶Ü§-]+/g, "_").replace(/^_+|_+$/g, "");
     doc.save(`Kollektive_Statistik_vs_${safeOpponent || "Gegner"}.pdf`);
   }
 
-  function applyFilter(domain, key, value) { const store = currentStore(domain); store.filter.key = key; store.filter.values = value ? [value] : []; renderTable(domain); }
-  function resetFilter(domain) { const store = currentStore(domain); store.filter.key = ""; store.filter.values = []; renderTable(domain); }
-  function setFilterKey(domain, key) { const store = currentStore(domain); store.filter.key = key; store.filter.values = key ? [defaultFilterValue(domain, key)] : []; renderTable(domain); }
+  function resetFilter(domain) { const store = currentStore(domain); store.filter.items = []; renderTable(domain); }
 
   function startApp() {
     const opponent = els.opponent.value.trim(); const matchDate = els.matchDate.value;
@@ -908,8 +922,6 @@ tbody tr.editing { background: #e7f0ff; }
   renderButtons(els.defenseNumberButtons, defenseNumberOptions, "number", "defense");
 
   ["offense", "defense"].forEach(domain => {
-    els[`${domain}FilterKey`].addEventListener("change", e => setFilterKey(domain, e.target.value));
-    els[`${domain}FilterValue`].addEventListener("change", e => applyFilter(domain, currentStore(domain).filter.key, e.target.value));
     els[`${domain}FilterReset`].addEventListener("click", () => resetFilter(domain));
   });
 
