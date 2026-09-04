@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Handball Kollektiv - Erfassung</title>
+<title>Handball Kollektiv – Erfassung</title>
 <meta name="theme-color" content="#0b4f16">
-
 <style>
 :root {
   --text-sm: clamp(.9rem,.82rem + .25vw,1rem);
@@ -237,13 +236,7 @@ button { cursor: pointer; }
 .table-tools { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); flex-wrap: wrap; }
 .table-tools h2 { margin: 0; color: #000; }
 .table-wrap { overflow: auto; border: 1px solid var(--border); border-radius: var(--radius-lg); background: #fff; }
-
-/* Kompakte, aufklappbare Filterleisten */
-.filter-box {
-  min-width: min(100%, 310px);
-  max-width: 100%;
-  position: relative;
-}
+.filter-box { min-width: min(100%, 310px); max-width: 100%; position: relative; }
 .filter-toggle {
   display: inline-flex;
   align-items: center;
@@ -289,8 +282,6 @@ button { cursor: pointer; }
 .filter-tags { display: flex; flex-wrap: wrap; gap: .3rem; min-height: 1.2rem; }
 .filter-tag { display: inline-flex; align-items: center; gap: .25rem; border-radius: 999px; padding: .2rem .5rem; background: var(--surface-2); color: var(--text); font-size: .78rem; }
 .filter-tag button { border: 0; background: transparent; padding: 0; color: inherit; font-weight: 700; line-height: 1; }
-.filter-controls { display: none; }
-.filter-reset-legacy { display: none !important; }
 table { width: 100%; table-layout: fixed; border-collapse: collapse; }
 th, td { padding: .82rem .72rem; border-bottom: 1px solid rgba(40,37,29,.09); text-align: left; vertical-align: top; word-break: break-word; }
 th { position: sticky; top: 0; background: var(--surface-2); z-index: 1; color: #000; }
@@ -313,6 +304,37 @@ tbody tr.editing { background: #e7f0ff; }
 .pill.green-tag { background: #e1f0dc; color: #1b5c26; }
 .pill.red-tag { background: #f8dfdf; color: #8d2424; }
 .pill.yellow-tag { background: #f7edc6; color: #7b5c00; }
+
+/* Auswertung: halbseitiges Handballfeld */
+.analysis-card {
+  margin-top: var(--space-5);
+  padding: var(--space-5);
+  border-top: 8px solid var(--fox-red);
+}
+.analysis-head { margin-bottom: var(--space-4); }
+.analysis-head h2 { margin: 0; color: #000; font-size: var(--text-lg); }
+.analysis-head p { margin: var(--space-2) 0 0; color: var(--muted); font-size: var(--text-sm); }
+.quote-legend { display: flex; flex-wrap: wrap; gap: .55rem; margin: 0 0 var(--space-4); }
+.quote-legend-item { display: inline-flex; align-items: center; gap: .35rem; color: #313731; font-size: var(--text-sm); }
+.quote-legend-swatch { width: 1rem; height: 1rem; border: 1px solid rgba(0,0,0,.14); border-radius: .2rem; }
+.quote-legend-swatch.red { background: #ef9a9a; }
+.quote-legend-swatch.yellow { background: #ffe082; }
+.quote-legend-swatch.green { background: #a5d6a7; }
+.quote-legend-swatch.neutral { background: #edf0ed; }
+.handball-court-wrap { width: 100%; max-width: 760px; margin: 0 auto; }
+.handball-court { width: 100%; height: auto; display: block; overflow: visible; }
+.court-outline, .court-line { fill: none; stroke: #151515; stroke-width: 2.7; stroke-linecap: round; stroke-linejoin: round; }
+.court-dashed { fill: none; stroke: #151515; stroke-width: 2.4; stroke-dasharray: 8 7; stroke-linecap: round; }
+.court-sector { stroke: #151515; stroke-width: 2.1; stroke-linejoin: round; transition: fill .18s ease; }
+.court-sector.neutral { fill: #edf0ed; }
+.court-sector.red { fill: #ef9a9a; }
+.court-sector.yellow { fill: #ffe082; }
+.court-sector.green { fill: #a5d6a7; }
+.sector-label { fill: #1a1a1a; text-anchor: middle; font-weight: 700; pointer-events: none; }
+.sector-position { font-size: 14px; opacity: .78; }
+.sector-quote { font-size: 27px; }
+.sector-count { font-size: 15px; font-weight: 600; }
+.goal-dot { fill: #111; }
 .notes { padding: var(--space-5); margin-top: var(--space-5); }
 .notes textarea { min-height: 110px; resize: vertical; }
 .empty { padding: var(--space-8); text-align: center; color: var(--muted); }
@@ -331,12 +353,15 @@ tbody tr.editing { background: #e7f0ff; }
 }
 @media (max-width: 760px) and (orientation: portrait) {
   .app { padding: var(--space-4); }
-  .setup, .section-card, .table-card, .notes, .topbar { padding: var(--space-4); }
+  .setup, .section-card, .table-card, .analysis-card, .notes, .topbar { padding: var(--space-4); }
   .topbar { flex-direction: column; align-items: stretch; }
   .brand-stack { align-items: flex-start; }
   .button-grid, .button-grid.four, .button-grid.two-wide, .structure-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .result-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .filter-menu { position: fixed; top: auto; right: var(--space-4); bottom: var(--space-4); width: calc(100vw - 2 * var(--space-4)); max-height: 70vh; }
+  .sector-position { font-size: 11px; }
+  .sector-quote { font-size: 20px; }
+  .sector-count { font-size: 12px; }
 }
 </style>
 </head>
@@ -367,7 +392,7 @@ tbody tr.editing { background: #e7f0ff; }
         </div>
       </div>
       <div class="topbar-actions">
-        <button id="undoBtn" class="utility-btn undo" type="button" aria-label="Ruckgangig">↶</button>
+        <button id="undoBtn" class="utility-btn undo" type="button" aria-label="Rückgängig">↶</button>
         <button id="pdfBtn" class="utility-btn primary" type="button">Export PDF</button>
       </div>
     </div>
@@ -376,7 +401,7 @@ tbody tr.editing { background: #e7f0ff; }
       <section class="panel section-card offense">
         <div class="section-head">
           <h2>Offensive Aktionen</h2>
-          <div id="offenseCount" class="entry-count">0 Eintrage</div>
+          <div id="offenseCount" class="entry-count">0 Einträge</div>
         </div>
         <div class="controls">
           <div class="group">
@@ -411,7 +436,7 @@ tbody tr.editing { background: #e7f0ff; }
       <section class="panel section-card defense">
         <div class="section-head">
           <h2>Defensive Aktionen</h2>
-          <div id="defenseCount" class="entry-count">0 Eintrage</div>
+          <div id="defenseCount" class="entry-count">0 Einträge</div>
         </div>
         <div class="controls">
           <div class="group">
@@ -445,6 +470,66 @@ tbody tr.editing { background: #e7f0ff; }
       </section>
     </div>
 
+    <section class="panel analysis-card" aria-labelledby="defenseQuoteTitle">
+      <div class="analysis-head">
+        <h2 id="defenseQuoteTitle">Defensive Zweikampfquote nach angegriffener Position</h2>
+        <p>Auswertung für das gesamte Spiel. Gezählt wird ausschließlich die grüne oder rote Auswahl bei „Angegriffene Position“.</p>
+      </div>
+      <div class="quote-legend" aria-label="Legende der Zweikampfquote">
+        <span class="quote-legend-item"><span class="quote-legend-swatch red"></span>0–&lt;40 %</span>
+        <span class="quote-legend-item"><span class="quote-legend-swatch yellow"></span>40–&lt;60 %</span>
+        <span class="quote-legend-item"><span class="quote-legend-swatch green"></span>60–100 %</span>
+        <span class="quote-legend-item"><span class="quote-legend-swatch neutral"></span>Keine Daten</span>
+      </div>
+      <div class="handball-court-wrap">
+        <svg class="handball-court" viewBox="0 0 600 440" role="img" aria-label="Halbes Handballfeld mit Zweikampfquoten für die Positionen 2, 3, 4 und 5">
+          <rect x="30" y="20" width="540" height="395" fill="#fff" stroke="#151515" stroke-width="3"></rect>
+
+          <path id="sector-2" class="court-sector neutral" d="M31 414 L31 95 L128 95 Q165 127 174 212 L120 414 Z"></path>
+          <path id="sector-3" class="court-sector neutral" d="M128 95 L235 95 Q250 151 250 212 L174 212 Q165 127 128 95 Z"></path>
+          <path id="sector-4" class="court-sector neutral" d="M365 95 L472 95 Q435 127 426 212 L350 212 Q350 151 365 95 Z"></path>
+          <path id="sector-5" class="court-sector neutral" d="M472 95 L569 95 L569 414 L480 414 L426 212 Q435 127 472 95 Z"></path>
+
+          <path class="court-line" d="M30 20 L570 20 L570 415 L30 415 Z"></path>
+          <path class="court-line" d="M120 415 L174 212"></path>
+          <path class="court-line" d="M174 212 Q165 127 128 95"></path>
+          <path class="court-line" d="M250 212 Q250 151 235 95"></path>
+          <path class="court-line" d="M350 212 Q350 151 365 95"></path>
+          <path class="court-line" d="M426 212 Q435 127 472 95"></path>
+          <path class="court-line" d="M426 212 L480 415"></path>
+
+          <path class="court-line" d="M190 20 A110 110 0 0 0 410 20"></path>
+          <path class="court-line" d="M190 20 L190 30"></path>
+          <path class="court-line" d="M410 20 L410 30"></path>
+          <path class="court-dashed" d="M110 96 A205 205 0 0 0 490 96"></path>
+          <line class="court-line" x1="300" y1="155" x2="300" y2="415"></line>
+          <line class="court-line" x1="291" y1="212" x2="309" y2="212"></line>
+          <circle class="goal-dot" cx="300" cy="91" r="5"></circle>
+
+          <g id="sector-text-2" class="sector-label">
+            <text class="sector-position" x="93" y="228">Position 2</text>
+            <text id="quote-2" class="sector-quote" x="93" y="258">–</text>
+            <text id="count-2" class="sector-count" x="93" y="281">0/0</text>
+          </g>
+          <g id="sector-text-3" class="sector-label">
+            <text class="sector-position" x="211" y="142">Position 3</text>
+            <text id="quote-3" class="sector-quote" x="211" y="171">–</text>
+            <text id="count-3" class="sector-count" x="211" y="193">0/0</text>
+          </g>
+          <g id="sector-text-4" class="sector-label">
+            <text class="sector-position" x="389" y="142">Position 4</text>
+            <text id="quote-4" class="sector-quote" x="389" y="171">–</text>
+            <text id="count-4" class="sector-count" x="389" y="193">0/0</text>
+          </g>
+          <g id="sector-text-5" class="sector-label">
+            <text class="sector-position" x="507" y="228">Position 5</text>
+            <text id="quote-5" class="sector-quote" x="507" y="258">–</text>
+            <text id="count-5" class="sector-count" x="507" y="281">0/0</text>
+          </g>
+        </svg>
+      </div>
+    </section>
+
     <div class="tables">
       <section class="panel table-card offense">
         <div class="table-tools">
@@ -455,8 +540,8 @@ tbody tr.editing { background: #e7f0ff; }
             </button>
             <div id="offenseFilterMenu" class="filter-menu" role="dialog" aria-label="Angriffsfilter">
               <div class="filter-menu-header">
-                <strong>Filter auswahlen</strong>
-                <button id="offenseFilterReset" class="filter-menu-clear" type="button">Zurucksetzen</button>
+                <strong>Filter auswählen</strong>
+                <button id="offenseFilterReset" class="filter-menu-clear" type="button">Zurücksetzen</button>
               </div>
               <div id="offenseFilterTags" class="filter-tags"></div>
               <div id="offenseFilterControls" class="filter-groups"></div>
@@ -476,7 +561,7 @@ tbody tr.editing { background: #e7f0ff; }
                 <th style="width:12%"><button type="button" data-table="offense" data-sort="number">Zahl</button></th>
               </tr>
             </thead>
-            <tbody id="offenseTableBody"><tr><td colspan="6" class="empty">Noch keine offensiven Eintrage.</td></tr></tbody>
+            <tbody id="offenseTableBody"><tr><td colspan="6" class="empty">Noch keine offensiven Einträge.</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -490,8 +575,8 @@ tbody tr.editing { background: #e7f0ff; }
             </button>
             <div id="defenseFilterMenu" class="filter-menu" role="dialog" aria-label="Abwehrfilter">
               <div class="filter-menu-header">
-                <strong>Filter auswahlen</strong>
-                <button id="defenseFilterReset" class="filter-menu-clear" type="button">Zurucksetzen</button>
+                <strong>Filter auswählen</strong>
+                <button id="defenseFilterReset" class="filter-menu-clear" type="button">Zurücksetzen</button>
               </div>
               <div id="defenseFilterTags" class="filter-tags"></div>
               <div id="defenseFilterControls" class="filter-groups"></div>
@@ -510,7 +595,7 @@ tbody tr.editing { background: #e7f0ff; }
                 <th style="width:12%"><button type="button" data-table="defense" data-sort="number">Zahl</button></th>
               </tr>
             </thead>
-            <tbody id="defenseTableBody"><tr><td colspan="5" class="empty">Noch keine defensiven Eintrage.</td></tr></tbody>
+            <tbody id="defenseTableBody"><tr><td colspan="5" class="empty">Noch keine defensiven Einträge.</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -540,17 +625,17 @@ tbody tr.editing { background: #e7f0ff; }
   ];
   const positionOptions = ["2", "3", "4", "5"];
   const halfOptions = [{ key: "1.hz", display: "1. HZ" }, { key: "2.hz", display: "2. HZ" }];
-  const defenseFinishOptions = ["Au\u00dfen", "Kreis/DBR breit", "Kreis/DBR zentral", "Fernwurf", "7m"];
+  const defenseFinishOptions = ["Außen", "Kreis/DBR breit", "Kreis/DBR zentral", "Fernwurf", "7m"];
   const defenseFinishSpecialOptions = [{ key: "freiwurf", display: "Freiwurf", variant: "yellow" }, { key: "tf", display: "TF", variant: "red" }];
   const offenseNumberOptions = ["6:6", "6:5", "7:6"];
   const defenseNumberOptions = ["6:6", "6:5", "7:6", "Tempo"];
   const offenseResults = [
-    { key: "gute_chance_tor", display: "gute Chance - Tor", group: "green" },
-    { key: "gute_chance_kein_tor", display: "gute Chance - kein Tor", group: "split-green-red" },
+    { key: "gute_chance_tor", display: "gute Chance – Tor", group: "green" },
+    { key: "gute_chance_kein_tor", display: "gute Chance – kein Tor", group: "split-green-red" },
     { key: "freiwurf", display: "Freiwurf", group: "yellow" },
     { key: "tf", display: "TF", group: "red" },
-    { key: "schlechte_chance_kein_tor", display: "schlechte Chance - kein Tor", group: "red" },
-    { key: "schlechte_chance_tor", display: "schlechte Chance - Tor", group: "split-red-green" }
+    { key: "schlechte_chance_kein_tor", display: "schlechte Chance – kein Tor", group: "red" },
+    { key: "schlechte_chance_tor", display: "schlechte Chance – Tor", group: "split-red-green" }
   ];
 
   const FILTER_OPTIONS = {
@@ -571,113 +656,959 @@ tbody tr.editing { background: #e7f0ff; }
   };
 
   function defaultSelection(domain) {
-    return { structure: [], position: "", finishPosition: "", positionSide: "", finishSide: "", half: sessionStorage.getItem(`half-default-${domain}`) || "1.hz", number: domain === "defense" ? ["6:6"] : "6:6", result: "", resultDisplay: "", group: "" };
+    return {
+      structure: [],
+      position: "",
+      finishPosition: "",
+      positionSide: "",
+      finishSide: "",
+      half: sessionStorage.getItem(`half-default-${domain}`) || "1.hz",
+      number: domain === "defense" ? ["6:6"] : "6:6",
+      result: "",
+      resultDisplay: "",
+      group: ""
+    };
   }
+
   const state = {
-    meta: { opponent: "", matchDate: "" }, undoStack: [],
+    meta: { opponent: "", matchDate: "" },
+    undoStack: [],
     offense: { entries: [], editingId: null, selection: defaultSelection("offense"), sort: { key: "index", dir: "desc" }, filter: { items: [] } },
     defense: { entries: [], editingId: null, selection: defaultSelection("defense"), sort: { key: "index", dir: "desc" }, filter: { items: [] } }
   };
+
   const els = {
-    setup: document.getElementById("setup"), workspace: document.getElementById("workspace"), opponent: document.getElementById("opponent"), matchDate: document.getElementById("matchDate"), startBtn: document.getElementById("startBtn"), headline: document.getElementById("headline"), topMeta: document.getElementById("topMeta"), undoBtn: document.getElementById("undoBtn"), pdfBtn: document.getElementById("pdfBtn"), notes: document.getElementById("notes"), offenseCount: document.getElementById("offenseCount"), defenseCount: document.getElementById("defenseCount"), offenseSortInfo: document.getElementById("offenseSortInfo"), defenseSortInfo: document.getElementById("defenseSortInfo"), offenseTableBody: document.getElementById("offenseTableBody"), defenseTableBody: document.getElementById("defenseTableBody"), offenseStructureRow1: document.getElementById("offenseStructureRow1"), offenseStructureRow2: document.getElementById("offenseStructureRow2"), offenseStructureRow3: document.getElementById("offenseStructureRow3"), offensePositionButtons: document.getElementById("offensePositionButtons"), offenseHalfButtons: document.getElementById("offenseHalfButtons"), offenseResultButtons: document.getElementById("offenseResultButtons"), offenseNumberButtons: document.getElementById("offenseNumberButtons"), defensePositionGreenButtons: document.getElementById("defensePositionGreenButtons"), defensePositionRedButtons: document.getElementById("defensePositionRedButtons"), defenseFinishGreenButtons: document.getElementById("defenseFinishGreenButtons"), defenseFinishRedButtons: document.getElementById("defenseFinishRedButtons"), defenseFinishSpecialButtons: document.getElementById("defenseFinishSpecialButtons"), defenseHalfButtons: document.getElementById("defenseHalfButtons"), defenseNumberButtons: document.getElementById("defenseNumberButtons"), offenseSaveBtn: document.getElementById("offenseSaveBtn"), defenseSaveBtn: document.getElementById("defenseSaveBtn"), offenseResetBtn: document.getElementById("offenseResetBtn"), defenseResetBtn: document.getElementById("defenseResetBtn"), offenseFilterControls: document.getElementById("offenseFilterControls"), offenseFilterReset: document.getElementById("offenseFilterReset"), defenseFilterControls: document.getElementById("defenseFilterControls"), defenseFilterReset: document.getElementById("defenseFilterReset")
+    setup: document.getElementById("setup"),
+    workspace: document.getElementById("workspace"),
+    opponent: document.getElementById("opponent"),
+    matchDate: document.getElementById("matchDate"),
+    startBtn: document.getElementById("startBtn"),
+    headline: document.getElementById("headline"),
+    topMeta: document.getElementById("topMeta"),
+    undoBtn: document.getElementById("undoBtn"),
+    pdfBtn: document.getElementById("pdfBtn"),
+    notes: document.getElementById("notes"),
+    offenseCount: document.getElementById("offenseCount"),
+    defenseCount: document.getElementById("defenseCount"),
+    offenseSortInfo: document.getElementById("offenseSortInfo"),
+    defenseSortInfo: document.getElementById("defenseSortInfo"),
+    offenseTableBody: document.getElementById("offenseTableBody"),
+    defenseTableBody: document.getElementById("defenseTableBody"),
+    offenseStructureRow1: document.getElementById("offenseStructureRow1"),
+    offenseStructureRow2: document.getElementById("offenseStructureRow2"),
+    offenseStructureRow3: document.getElementById("offenseStructureRow3"),
+    offensePositionButtons: document.getElementById("offensePositionButtons"),
+    offenseHalfButtons: document.getElementById("offenseHalfButtons"),
+    offenseResultButtons: document.getElementById("offenseResultButtons"),
+    offenseNumberButtons: document.getElementById("offenseNumberButtons"),
+    defensePositionGreenButtons: document.getElementById("defensePositionGreenButtons"),
+    defensePositionRedButtons: document.getElementById("defensePositionRedButtons"),
+    defenseFinishGreenButtons: document.getElementById("defenseFinishGreenButtons"),
+    defenseFinishRedButtons: document.getElementById("defenseFinishRedButtons"),
+    defenseFinishSpecialButtons: document.getElementById("defenseFinishSpecialButtons"),
+    defenseHalfButtons: document.getElementById("defenseHalfButtons"),
+    defenseNumberButtons: document.getElementById("defenseNumberButtons"),
+    offenseSaveBtn: document.getElementById("offenseSaveBtn"),
+    defenseSaveBtn: document.getElementById("defenseSaveBtn"),
+    offenseResetBtn: document.getElementById("offenseResetBtn"),
+    defenseResetBtn: document.getElementById("defenseResetBtn"),
+    offenseFilterControls: document.getElementById("offenseFilterControls"),
+    offenseFilterReset: document.getElementById("offenseFilterReset"),
+    defenseFilterControls: document.getElementById("defenseFilterControls"),
+    defenseFilterReset: document.getElementById("defenseFilterReset")
   };
+
   const clone = value => JSON.parse(JSON.stringify(value));
-  const escapeHtml = value => String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
+  const escapeHtml = value => String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
   const formatDate = value => new Date(`${value}T00:00:00`).toLocaleDateString("de-DE");
-  let pressTimer = null, longPressFired = false;
+  let pressTimer = null;
+  let longPressFired = false;
+
   const currentStore = domain => state[domain];
   function setToday() { els.matchDate.value = new Date().toISOString().split("T")[0]; }
   function setHalfDefault(domain, value) { sessionStorage.setItem(`half-default-${domain}`, value); }
   function getHalfDisplay(value) { return value === "2.hz" ? "2. HZ" : "1. HZ"; }
   function normalizeHalfValue(value) { return value === "2. HZ" || value === "2.hz" ? "2.hz" : "1.hz"; }
-  function normalizeNumberValue(value, domain) { if (domain !== "defense") return value || "6:6"; if (Array.isArray(value)) return value.length ? value : ["6:6"]; if (!value) return ["6:6"]; return String(value).split(" + ").filter(Boolean); }
-  function getDefenseResult(selection) { if (selection.finishPosition === "freiwurf" && selection.finishSide === "yellow") return { result: "freiwurf", resultDisplay: "Freiwurf", group: "yellow" }; if (selection.finishPosition === "tf" && selection.finishSide === "red") return { result: "tf", resultDisplay: "TF", group: "red" }; const success = selection.positionSide === "green" && selection.finishSide === "green"; return { result: success ? "defense_success" : "defense_fail", resultDisplay: success ? "Erfolg" : "Misserfolg", group: success ? "green" : "red" }; }
-  function buildSupabaseRow(domain, payload) { return { match_opponent: state.meta.opponent, match_date: state.meta.matchDate, side: domain, structure: payload.structure, attack_position: payload.position, finish_position: payload.finishPosition, position_side: payload.positionSide, finish_side: payload.finishSide, half: payload.half, number_relation: payload.number, result: payload.result, result_display: payload.resultDisplay, result_group: payload.group, created_order: payload.createdOrder }; }
-  function normalizeRow(row, fallback = {}) { const domain = row.side || fallback.domain || "offense"; return { ...row, id: row.id, createdOrder: row.created_order ?? fallback.createdOrder, structure: row.structure ?? fallback.structure ?? "", position: row.attack_position ?? fallback.position ?? "", finishPosition: row.finish_position ?? fallback.finishPosition ?? "", positionSide: row.position_side ?? fallback.positionSide ?? "", finishSide: row.finish_side ?? fallback.finishSide ?? "", half: normalizeHalfValue(row.half ?? fallback.half ?? "1.hz"), number: normalizeNumberValue(row.number_relation ?? fallback.number, domain), result: row.result ?? fallback.result ?? "", resultDisplay: row.result_display ?? fallback.resultDisplay ?? "", group: row.result_group ?? fallback.group ?? "" }; }
-  async function loadMatchActions() { const { data, error } = await supabase.from("match_actions").select("*").eq("match_opponent", state.meta.opponent).eq("match_date", state.meta.matchDate).order("created_order", { ascending: true }); if (error) { console.error(error); alert(error.message || "Fehler beim Laden der Spieldaten."); return; } state.offense.entries = data.filter(row => row.side === "offense").map(row => normalizeRow(row, { domain: "offense" })); state.defense.entries = data.filter(row => row.side === "defense").map(row => { const normalized = normalizeRow(row, { domain: "defense" }); if (!normalized.result) { const success = normalized.positionSide === "green" && normalized.finishSide === "green"; normalized.result = success ? "defense_success" : "defense_fail"; normalized.resultDisplay = success ? "Erfolg" : normalized.finishPosition === "freiwurf" ? "Freiwurf" : normalized.finishPosition === "tf" ? "TF" : "Misserfolg"; normalized.group = normalized.finishPosition === "freiwurf" ? "yellow" : success ? "green" : "red"; } return normalized; }); }
-  async function insertEntry(domain, payload) { const { data, error } = await supabase.from("match_actions").insert(buildSupabaseRow(domain, payload)).select("*").single(); if (error) throw error; return normalizeRow(data, { ...payload, domain }); }
-  async function updateEntry(id, domain, payload) { const { data, error } = await supabase.from("match_actions").update(buildSupabaseRow(domain, payload)).eq("id", id).select("*").single(); if (error) throw error; return normalizeRow(data, { ...payload, domain }); }
-  async function deleteEntry(id) { const { error } = await supabase.from("match_actions").delete().eq("id", id); if (error) throw error; }
+  function normalizeNumberValue(value, domain) {
+    if (domain !== "defense") return value || "6:6";
+    if (Array.isArray(value)) return value.length ? value : ["6:6"];
+    if (!value) return ["6:6"];
+    return String(value).split(" + ").filter(Boolean);
+  }
 
-  function renderButtons(mount, items, type, domain, variant = "") { mount.innerHTML = ""; items.forEach(item => { const value = typeof item === "string" ? item : item.key, label = typeof item === "string" ? item : item.display, itemVariant = typeof item === "string" ? variant : item.variant || variant, group = typeof item === "string" ? "" : item.group || ""; const button = document.createElement("button"); button.type = "button"; button.dataset.value = value; button.dataset.type = type; button.dataset.domain = domain; if (itemVariant) button.dataset.variant = itemVariant; button.className = type === "result" ? `result-btn ${group}` : `choice-btn ${itemVariant ? `${itemVariant}-variant` : ""}`; button.textContent = label; button.addEventListener("click", () => handleSelection(domain, type, value, group, label, itemVariant)); mount.appendChild(button); }); }
-  function handleSelection(domain, type, value, group, display, variant) { const selection = currentStore(domain).selection; if (type === "structure") { if (!Array.isArray(selection.structure)) selection.structure = selection.structure ? [selection.structure] : []; if (selection.structure.includes(value)) selection.structure = selection.structure.filter(item => item !== value); else if (selection.structure.length < 2) selection.structure.push(value); else alert("Es konnen hochstens zwei Strukturen ausgewahlt werden."); } if (type === "position") { selection.position = value; if (domain === "defense") selection.positionSide = variant; } if (type === "finishPosition") { selection.finishPosition = value; if (domain === "defense") selection.finishSide = variant; } if (type === "number") { if (domain === "defense") { if (!Array.isArray(selection.number)) selection.number = selection.number ? [selection.number] : ["6:6"]; if (selection.number.includes(value)) { selection.number = selection.number.filter(item => item !== value); if (selection.number.length === 0) selection.number = ["6:6"]; } else if (selection.number.length < 2) selection.number.push(value); else alert("Es konnen hochstens zwei Werte ausgewahlt werden."); } else selection.number = value; } if (type === "result") { selection.result = value; selection.resultDisplay = display; selection.group = group; } if (type === "half") { selection.half = value; setHalfDefault(domain, value); } if (domain === "defense") { const result = getDefenseResult(selection); selection.result = result.result; selection.resultDisplay = result.resultDisplay; selection.group = result.group; } updateSelectedButtons(domain); }
-  function updateSelectedButtons(domain) { const selection = currentStore(domain).selection; document.querySelectorAll(`button[data-domain="${domain}"]`).forEach(button => { const type = button.dataset.type, value = button.dataset.value, variant = button.dataset.variant || ""; let selected = false; if (type === "structure") { const structures = Array.isArray(selection.structure) ? selection.structure : selection.structure ? [selection.structure] : []; selected = structures.includes(value); } if (type === "position") selected = value === selection.position && (domain !== "defense" || variant === selection.positionSide); if (type === "finishPosition") selected = value === selection.finishPosition && variant === selection.finishSide; if (type === "number") { if (domain === "defense") { const numbers = Array.isArray(selection.number) ? selection.number : selection.number ? [selection.number] : ["6:6"]; selected = numbers.includes(value); } else selected = value === selection.number; } if (type === "result") selected = value === selection.result; if (type === "half") selected = value === selection.half; button.classList.toggle("selected", selected); }); }
-  function clearSelection(domain) { const store = currentStore(domain); store.selection = defaultSelection(domain); store.editingId = null; updateSelectedButtons(domain); renderTable(domain); }
-  function validate(domain) { const selection = currentStore(domain).selection, structures = Array.isArray(selection.structure) ? selection.structure : selection.structure ? [selection.structure] : []; if (domain === "offense" && (structures.length === 0 || !selection.number || !selection.result || !selection.half)) { alert("Bitte mindestens eine Struktur, Halbzeit, Zahl und Ergebnis auswahlen."); return false; } const defenseNumbers = Array.isArray(selection.number) ? selection.number : selection.number ? [selection.number] : ["6:6"]; if (domain === "defense" && (!selection.finishPosition || !selection.finishSide || defenseNumbers.length === 0 || !selection.half)) { alert("Bitte Halbzeit, Abschlussposition und Zahl auswahlen."); return false; } return true; }
-  function createPayload(domain) { const selection = currentStore(domain).selection, store = currentStore(domain), existing = store.entries.find(entry => entry.id === store.editingId), structures = Array.isArray(selection.structure) ? selection.structure : selection.structure ? [selection.structure] : []; let result = selection.result, resultDisplay = selection.resultDisplay, group = selection.group; if (domain === "defense") { const defenseResult = getDefenseResult(selection); result = defenseResult.result; resultDisplay = defenseResult.resultDisplay; group = defenseResult.group; } let numberValue; if (domain === "defense") { const numbers = Array.isArray(selection.number) ? selection.number : selection.number ? [selection.number] : ["6:6"]; numberValue = numbers.join(" + "); } else numberValue = selection.number || "6:6"; return { structure: domain === "offense" ? structures.join(" + ") : "", position: selection.position || "", finishPosition: domain === "defense" ? selection.finishPosition : "", positionSide: domain === "defense" ? selection.positionSide : "", finishSide: domain === "defense" ? selection.finishSide : "", half: selection.half || "1.hz", number: numberValue, result, resultDisplay, group, createdOrder: existing ? existing.createdOrder : store.entries.length + 1 }; }
-  async function saveEntry(domain) { if (!validate(domain)) return; const store = currentStore(domain), payload = createPayload(domain), editing = Boolean(store.editingId); try { if (editing) { const existing = store.entries.find(entry => entry.id === store.editingId), before = clone(existing), updated = await updateEntry(existing.id, domain, payload), index = store.entries.findIndex(entry => entry.id === existing.id); store.entries[index] = updated; state.undoStack.push({ type: "edit", domain, before, after: clone(updated) }); } else { const inserted = await insertEntry(domain, payload); store.entries.push(inserted); state.undoStack.push({ type: "add", domain, entry: clone(inserted) }); } clearSelection(domain); renderTable("offense"); renderTable("defense"); requestAnimationFrame(() => { const target = document.getElementById("workspace"); if (!target) return; try { target.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (error) { window.scrollTo({ top: 0, behavior: "smooth" }); } }); } catch (error) { console.error(error); alert(error.message || "Fehler beim Speichern."); } }
-  async function undoLast() { const action = state.undoStack.pop(); if (!action) { alert("Es gibt keine Aktion zum Ruckgangigmachen."); return; } const store = currentStore(action.domain); try { if (action.type === "add") { await deleteEntry(action.entry.id); store.entries = store.entries.filter(entry => entry.id !== action.entry.id); } if (action.type === "edit") { const before = action.before, restoredPayload = { structure: before.structure || "", position: before.position || "", finishPosition: before.finishPosition || "", positionSide: before.positionSide || "", finishSide: before.finishSide || "", half: before.half || "1.hz", number: Array.isArray(before.number) ? before.number.join(" + ") : before.number || "6:6", result: before.result || "", resultDisplay: before.resultDisplay || "", group: before.group || "", createdOrder: before.createdOrder }, restored = await updateEntry(before.id, action.domain, restoredPayload), index = store.entries.findIndex(entry => entry.id === before.id); if (index !== -1) store.entries[index] = restored; } clearSelection(action.domain); renderTable("offense"); renderTable("defense"); } catch (error) { console.error(error); alert(error.message || "Fehler beim Ruckgangigmachen."); } }
-  function getSortValue(row, key) { if (key === "index") return Number(row.createdOrder) || 0; if (key === "structure") return row.structure || ""; if (key === "position") return row.position || ""; if (key === "positionLabel") return `${row.positionSide || ""} ${row.position || ""}`; if (key === "finishPositionLabel") return `${row.finishSide || ""} ${row.finishPosition || ""}`; if (key === "number") return Array.isArray(row.number) ? row.number.join(" + ") : row.number || ""; if (key === "result") return row.resultDisplay || row.result || ""; if (key === "half") return getHalfDisplay(row.half || "1.hz"); return ""; }
+  function getDefenseResult(selection) {
+    if (selection.finishPosition === "freiwurf" && selection.finishSide === "yellow") {
+      return { result: "freiwurf", resultDisplay: "Freiwurf", group: "yellow" };
+    }
+    if (selection.finishPosition === "tf" && selection.finishSide === "red") {
+      return { result: "tf", resultDisplay: "TF", group: "red" };
+    }
+    const success = selection.positionSide === "green" && selection.finishSide === "green";
+    return {
+      result: success ? "defense_success" : "defense_fail",
+      resultDisplay: success ? "Erfolg" : "Misserfolg",
+      group: success ? "green" : "red"
+    };
+  }
 
-  function sortEntries(domain) { const store = currentStore(domain), rows = [...store.entries], { key, dir } = store.sort, factor = dir === "asc" ? 1 : -1; rows.sort((a, b) => { const valueA = getSortValue(a, key), valueB = getSortValue(b, key); let comparison; if (typeof valueA === "number" && typeof valueB === "number") comparison = valueA - valueB; else comparison = String(valueA).localeCompare(String(valueB), "de"); if (comparison === 0) comparison = (Number(a.createdOrder) || 0) - (Number(b.createdOrder) || 0); return comparison * factor; }); return rows; }
-  function setSort(domain, key) { const store = currentStore(domain); if (store.sort.key === key) store.sort.dir = store.sort.dir === "asc" ? "desc" : "asc"; else { store.sort.key = key; store.sort.dir = key === "index" ? "desc" : "asc"; } renderTable(domain); }
-  function getNumberClass(number) { if (number === "6:6") return "number-66"; if (number === "7:6") return "number-76"; if (number === "6:5") return "number-65"; if (number === "Tempo") return "number-tempo"; return "number"; }
-  function getNumberDisplay(row) { if (Array.isArray(row.number)) return row.number.map(number => `<span class="pill ${getNumberClass(number)}">${escapeHtml(number)}</span>`).join(" "); if (row.number) return `<span class="pill ${getNumberClass(row.number)}">${escapeHtml(row.number)}</span>`; return "—"; }
-  function renderStructureDisplay(value) { if (!value) return "—"; return String(value).split(" + ").filter(Boolean).map(structure => `<span class="pill structure">${escapeHtml(structure)}</span>`).join(" "); }
-  function getFilterLabel(domain, key, value) { return `${FILTER_OPTIONS[domain][key].label}: ${value}`; }
+  function buildSupabaseRow(domain, payload) {
+    return {
+      match_opponent: state.meta.opponent,
+      match_date: state.meta.matchDate,
+      side: domain,
+      structure: payload.structure,
+      attack_position: payload.position,
+      finish_position: payload.finishPosition,
+      position_side: payload.positionSide,
+      finish_side: payload.finishSide,
+      half: payload.half,
+      number_relation: payload.number,
+      result: payload.result,
+      result_display: payload.resultDisplay,
+      result_group: payload.group,
+      created_order: payload.createdOrder
+    };
+  }
+
+  function normalizeRow(row, fallback = {}) {
+    const domain = row.side || fallback.domain || "offense";
+    return {
+      ...row,
+      id: row.id,
+      createdOrder: row.created_order ?? fallback.createdOrder,
+      structure: row.structure ?? fallback.structure ?? "",
+      position: row.attack_position ?? fallback.position ?? "",
+      finishPosition: row.finish_position ?? fallback.finishPosition ?? "",
+      positionSide: row.position_side ?? fallback.positionSide ?? "",
+      finishSide: row.finish_side ?? fallback.finishSide ?? "",
+      half: normalizeHalfValue(row.half ?? fallback.half ?? "1.hz"),
+      number: normalizeNumberValue(row.number_relation ?? fallback.number, domain),
+      result: row.result ?? fallback.result ?? "",
+      resultDisplay: row.result_display ?? fallback.resultDisplay ?? "",
+      group: row.result_group ?? fallback.group ?? ""
+    };
+  }
+
+  async function loadMatchActions() {
+    const { data, error } = await supabase
+      .from("match_actions")
+      .select("*")
+      .eq("match_opponent", state.meta.opponent)
+      .eq("match_date", state.meta.matchDate)
+      .order("created_order", { ascending: true });
+
+    if (error) {
+      console.error(error);
+      alert(error.message || "Fehler beim Laden der Spieldaten.");
+      return;
+    }
+
+    state.offense.entries = data
+      .filter(row => row.side === "offense")
+      .map(row => normalizeRow(row, { domain: "offense" }));
+
+    state.defense.entries = data
+      .filter(row => row.side === "defense")
+      .map(row => {
+        const normalized = normalizeRow(row, { domain: "defense" });
+        if (!normalized.result) {
+          const success = normalized.positionSide === "green" && normalized.finishSide === "green";
+          normalized.result = success ? "defense_success" : "defense_fail";
+          normalized.resultDisplay = success
+            ? "Erfolg"
+            : normalized.finishPosition === "freiwurf"
+              ? "Freiwurf"
+              : normalized.finishPosition === "tf"
+                ? "TF"
+                : "Misserfolg";
+          normalized.group = normalized.finishPosition === "freiwurf" ? "yellow" : success ? "green" : "red";
+        }
+        return normalized;
+      });
+  }
+
+  async function insertEntry(domain, payload) {
+    const { data, error } = await supabase
+      .from("match_actions")
+      .insert(buildSupabaseRow(domain, payload))
+      .select("*")
+      .single();
+    if (error) throw error;
+    return normalizeRow(data, { ...payload, domain });
+  }
+
+  async function updateEntry(id, domain, payload) {
+    const { data, error } = await supabase
+      .from("match_actions")
+      .update(buildSupabaseRow(domain, payload))
+      .eq("id", id)
+      .select("*")
+      .single();
+    if (error) throw error;
+    return normalizeRow(data, { ...payload, domain });
+  }
+
+  async function deleteEntry(id) {
+    const { error } = await supabase.from("match_actions").delete().eq("id", id);
+    if (error) throw error;
+  }
+
+  function renderButtons(mount, items, type, domain, variant = "") {
+    mount.innerHTML = "";
+    items.forEach(item => {
+      const value = typeof item === "string" ? item : item.key;
+      const label = typeof item === "string" ? item : item.display;
+      const itemVariant = typeof item === "string" ? variant : item.variant || variant;
+      const group = typeof item === "string" ? "" : item.group || "";
+      const button = document.createElement("button");
+      button.type = "button";
+      button.dataset.value = value;
+      button.dataset.type = type;
+      button.dataset.domain = domain;
+      if (itemVariant) button.dataset.variant = itemVariant;
+      button.className = type === "result"
+        ? `result-btn ${group}`
+        : `choice-btn ${itemVariant ? `${itemVariant}-variant` : ""}`;
+      button.textContent = label;
+      button.addEventListener("click", () => handleSelection(domain, type, value, group, label, itemVariant));
+      mount.appendChild(button);
+    });
+  }
+
+  function handleSelection(domain, type, value, group, display, variant) {
+    const selection = currentStore(domain).selection;
+
+    if (type === "structure") {
+      if (!Array.isArray(selection.structure)) selection.structure = selection.structure ? [selection.structure] : [];
+      if (selection.structure.includes(value)) selection.structure = selection.structure.filter(item => item !== value);
+      else if (selection.structure.length < 2) selection.structure.push(value);
+      else alert("Es können höchstens zwei Strukturen ausgewählt werden.");
+    }
+
+    if (type === "position") {
+      selection.position = value;
+      if (domain === "defense") selection.positionSide = variant;
+    }
+
+    if (type === "finishPosition") {
+      selection.finishPosition = value;
+      if (domain === "defense") selection.finishSide = variant;
+    }
+
+    if (type === "number") {
+      if (domain === "defense") {
+        if (!Array.isArray(selection.number)) selection.number = selection.number ? [selection.number] : ["6:6"];
+        if (selection.number.includes(value)) {
+          selection.number = selection.number.filter(item => item !== value);
+          if (selection.number.length === 0) selection.number = ["6:6"];
+        } else if (selection.number.length < 2) {
+          selection.number.push(value);
+        } else {
+          alert("Es können höchstens zwei Werte ausgewählt werden.");
+        }
+      } else {
+        selection.number = value;
+      }
+    }
+
+    if (type === "result") {
+      selection.result = value;
+      selection.resultDisplay = display;
+      selection.group = group;
+    }
+
+    if (type === "half") {
+      selection.half = value;
+      setHalfDefault(domain, value);
+    }
+
+    if (domain === "defense") {
+      const result = getDefenseResult(selection);
+      selection.result = result.result;
+      selection.resultDisplay = result.resultDisplay;
+      selection.group = result.group;
+    }
+
+    updateSelectedButtons(domain);
+  }
+
+  function updateSelectedButtons(domain) {
+    const selection = currentStore(domain).selection;
+    document.querySelectorAll(`button[data-domain="${domain}"]`).forEach(button => {
+      const type = button.dataset.type;
+      const value = button.dataset.value;
+      const variant = button.dataset.variant || "";
+      let selected = false;
+
+      if (type === "structure") {
+        const structures = Array.isArray(selection.structure)
+          ? selection.structure
+          : selection.structure
+            ? [selection.structure]
+            : [];
+        selected = structures.includes(value);
+      }
+      if (type === "position") selected = value === selection.position && (domain !== "defense" || variant === selection.positionSide);
+      if (type === "finishPosition") selected = value === selection.finishPosition && variant === selection.finishSide;
+      if (type === "number") {
+        const numbers = domain === "defense"
+          ? Array.isArray(selection.number)
+            ? selection.number
+            : selection.number
+              ? [selection.number]
+              : ["6:6"]
+          : [selection.number];
+        selected = numbers.includes(value);
+      }
+      if (type === "result") selected = value === selection.result;
+      if (type === "half") selected = value === selection.half;
+      button.classList.toggle("selected", selected);
+    });
+  }
+
+  function clearSelection(domain) {
+    const store = currentStore(domain);
+    store.selection = defaultSelection(domain);
+    store.editingId = null;
+    updateSelectedButtons(domain);
+    renderTable(domain);
+  }
+
+  function validate(domain) {
+    const selection = currentStore(domain).selection;
+    const structures = Array.isArray(selection.structure)
+      ? selection.structure
+      : selection.structure
+        ? [selection.structure]
+        : [];
+
+    if (domain === "offense" && (structures.length === 0 || !selection.number || !selection.result || !selection.half)) {
+      alert("Bitte mindestens eine Struktur, Halbzeit, Zahl und Ergebnis auswählen.");
+      return false;
+    }
+
+    const defenseNumbers = Array.isArray(selection.number)
+      ? selection.number
+      : selection.number
+        ? [selection.number]
+        : ["6:6"];
+
+    if (domain === "defense" && (!selection.finishPosition || !selection.finishSide || defenseNumbers.length === 0 || !selection.half)) {
+      alert("Bitte Halbzeit, Abschlussposition und Zahl auswählen.");
+      return false;
+    }
+
+    return true;
+  }
+
+  function createPayload(domain) {
+    const selection = currentStore(domain).selection;
+    const store = currentStore(domain);
+    const existing = store.entries.find(entry => entry.id === store.editingId);
+    const structures = Array.isArray(selection.structure)
+      ? selection.structure
+      : selection.structure
+        ? [selection.structure]
+        : [];
+
+    let result = selection.result;
+    let resultDisplay = selection.resultDisplay;
+    let group = selection.group;
+
+    if (domain === "defense") {
+      const defenseResult = getDefenseResult(selection);
+      result = defenseResult.result;
+      resultDisplay = defenseResult.resultDisplay;
+      group = defenseResult.group;
+    }
+
+    let numberValue;
+    if (domain === "defense") {
+      const numbers = Array.isArray(selection.number)
+        ? selection.number
+        : selection.number
+          ? [selection.number]
+          : ["6:6"];
+      numberValue = numbers.join(" + ");
+    } else {
+      numberValue = selection.number || "6:6";
+    }
+
+    return {
+      structure: domain === "offense" ? structures.join(" + ") : "",
+      position: selection.position || "",
+      finishPosition: domain === "defense" ? selection.finishPosition : "",
+      positionSide: domain === "defense" ? selection.positionSide : "",
+      finishSide: domain === "defense" ? selection.finishSide : "",
+      half: selection.half || "1.hz",
+      number: numberValue,
+      result,
+      resultDisplay,
+      group,
+      createdOrder: existing ? existing.createdOrder : store.entries.length + 1
+    };
+  }
+
+  async function saveEntry(domain) {
+    if (!validate(domain)) return;
+
+    const store = currentStore(domain);
+    const payload = createPayload(domain);
+    const editing = Boolean(store.editingId);
+
+    try {
+      if (editing) {
+        const existing = store.entries.find(entry => entry.id === store.editingId);
+        const before = clone(existing);
+        const updated = await updateEntry(existing.id, domain, payload);
+        const index = store.entries.findIndex(entry => entry.id === existing.id);
+        store.entries[index] = updated;
+        state.undoStack.push({ type: "edit", domain, before, after: clone(updated) });
+      } else {
+        const inserted = await insertEntry(domain, payload);
+        store.entries.push(inserted);
+        state.undoStack.push({ type: "add", domain, entry: clone(inserted) });
+      }
+
+      clearSelection(domain);
+      renderTable("offense");
+      renderTable("defense");
+      renderDefenseQuote();
+
+      requestAnimationFrame(() => {
+        const target = document.getElementById("workspace");
+        if (!target) return;
+        try {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        } catch (error) {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      });
+    } catch (error) {
+      console.error(error);
+      alert(error.message || "Fehler beim Speichern.");
+    }
+  }
+
+  async function undoLast() {
+    const action = state.undoStack.pop();
+    if (!action) {
+      alert("Es gibt keine Aktion zum Rückgängigmachen.");
+      return;
+    }
+
+    const store = currentStore(action.domain);
+
+    try {
+      if (action.type === "add") {
+        await deleteEntry(action.entry.id);
+        store.entries = store.entries.filter(entry => entry.id !== action.entry.id);
+      }
+
+      if (action.type === "edit") {
+        const before = action.before;
+        const restoredPayload = {
+          structure: before.structure || "",
+          position: before.position || "",
+          finishPosition: before.finishPosition || "",
+          positionSide: before.positionSide || "",
+          finishSide: before.finishSide || "",
+          half: before.half || "1.hz",
+          number: Array.isArray(before.number) ? before.number.join(" + ") : before.number || "6:6",
+          result: before.result || "",
+          resultDisplay: before.resultDisplay || "",
+          group: before.group || "",
+          createdOrder: before.createdOrder
+        };
+        const restored = await updateEntry(before.id, action.domain, restoredPayload);
+        const index = store.entries.findIndex(entry => entry.id === before.id);
+        if (index !== -1) store.entries[index] = restored;
+      }
+
+      clearSelection(action.domain);
+      renderTable("offense");
+      renderTable("defense");
+      renderDefenseQuote();
+    } catch (error) {
+      console.error(error);
+      alert(error.message || "Fehler beim Rückgängigmachen.");
+    }
+  }
+
+  function getSortValue(row, key) {
+    if (key === "index") return Number(row.createdOrder) || 0;
+    if (key === "structure") return row.structure || "";
+    if (key === "position") return row.position || "";
+    if (key === "positionLabel") return `${row.positionSide || ""} ${row.position || ""}`;
+    if (key === "finishPositionLabel") return `${row.finishSide || ""} ${row.finishPosition || ""}`;
+    if (key === "number") return Array.isArray(row.number) ? row.number.join(" + ") : row.number || "";
+    if (key === "result") return row.resultDisplay || row.result || "";
+    if (key === "half") return getHalfDisplay(row.half || "1.hz");
+    return "";
+  }
+
+  function sortEntries(domain) {
+    const store = currentStore(domain);
+    const rows = [...store.entries];
+    const { key, dir } = store.sort;
+    const factor = dir === "asc" ? 1 : -1;
+
+    rows.sort((a, b) => {
+      const valueA = getSortValue(a, key);
+      const valueB = getSortValue(b, key);
+      let comparison;
+      if (typeof valueA === "number" && typeof valueB === "number") comparison = valueA - valueB;
+      else comparison = String(valueA).localeCompare(String(valueB), "de");
+      if (comparison === 0) comparison = (Number(a.createdOrder) || 0) - (Number(b.createdOrder) || 0);
+      return comparison * factor;
+    });
+
+    return rows;
+  }
+
+  function setSort(domain, key) {
+    const store = currentStore(domain);
+    if (store.sort.key === key) store.sort.dir = store.sort.dir === "asc" ? "desc" : "asc";
+    else {
+      store.sort.key = key;
+      store.sort.dir = key === "index" ? "desc" : "asc";
+    }
+    renderTable(domain);
+  }
+
+  function getNumberClass(number) {
+    if (number === "6:6") return "number-66";
+    if (number === "7:6") return "number-76";
+    if (number === "6:5") return "number-65";
+    if (number === "Tempo") return "number-tempo";
+    return "number";
+  }
+
+  function getNumberDisplay(row) {
+    if (Array.isArray(row.number)) {
+      return row.number.map(number => `<span class="pill ${getNumberClass(number)}">${escapeHtml(number)}</span>`).join(" ");
+    }
+    if (row.number) return `<span class="pill ${getNumberClass(row.number)}">${escapeHtml(row.number)}</span>`;
+    return "—";
+  }
+
+  function renderStructureDisplay(value) {
+    if (!value) return "—";
+    return String(value)
+      .split(" + ")
+      .filter(Boolean)
+      .map(structure => `<span class="pill structure">${escapeHtml(structure)}</span>`)
+      .join(" ");
+  }
+
+  function getFilterLabel(domain, key, value) {
+    return `${FILTER_OPTIONS[domain][key].label}: ${value}`;
+  }
 
   function getFilteredRows(domain) {
     const rows = sortEntries(domain);
     const filters = currentStore(domain).filter.items || [];
-
     if (!filters.length) return rows;
 
-    // Gruppiere Filter nach Kategorie (key)
     const filtersByKey = {};
     filters.forEach(({ key, value }) => {
       if (!filtersByKey[key]) filtersByKey[key] = [];
       filtersByKey[key].push(value);
     });
 
-    // Eine Zeile muss ALLE Kategorien erfullen (UND zwischen Kategorien)
-    // Innerhalb einer Kategorie reicht EIN Treffer (ODER zwischen Werten)
-    return rows.filter(row => {
-      return Object.entries(filtersByKey).every(([key, values]) => {
-        return values.some(value => {
-          if (key === "structure") return String(row.structure || "").split(" + ").includes(value);
-          if (key === "position") return row.position === value;
-          if (key === "half") return getHalfDisplay(row.half || "1.hz") === value;
-          if (key === "number") return (Array.isArray(row.number) ? row.number : [row.number]).includes(value);
-          if (key === "result") return (row.resultDisplay || row.result || "") === value;
-          if (key === "finishPosition") return (row.finishPosition === "freiwurf" ? "Freiwurf" : row.finishPosition === "tf" ? "TF" : row.finishPosition || "") === value;
-          return true;
-        });
-      });
-    });
+    return rows.filter(row => Object.entries(filtersByKey).every(([key, values]) => values.some(value => {
+      if (key === "structure") return String(row.structure || "").split(" + ").includes(value);
+      if (key === "position") return row.position === value;
+      if (key === "half") return getHalfDisplay(row.half || "1.hz") === value;
+      if (key === "number") return (Array.isArray(row.number) ? row.number : [row.number]).includes(value);
+      if (key === "result") return (row.resultDisplay || row.result || "") === value;
+      if (key === "finishPosition") {
+        return (row.finishPosition === "freiwurf" ? "Freiwurf" : row.finishPosition === "tf" ? "TF" : row.finishPosition || "") === value;
+      }
+      return true;
+    })));
   }
 
   function renderFilterControls(domain) {
-    const mount = els[`${domain}FilterControls`], selected = currentStore(domain).filter.items || [];
+    const mount = els[`${domain}FilterControls`];
+    const selected = currentStore(domain).filter.items || [];
+
     mount.innerHTML = Object.entries(FILTER_OPTIONS[domain]).map(([key, spec]) => `
       <div class="filter-group">
         <div class="filter-group-title">${escapeHtml(spec.label)}</div>
         <div class="filter-options">
-          ${spec.values.map(value => { const checked = selected.some(item => item.key === key && item.value === value); return `<label class="filter-option"><input type="checkbox" data-filter-key="${escapeHtml(key)}" data-filter-value="${escapeHtml(value)}" ${checked ? "checked" : ""}>${escapeHtml(value)}</label>`; }).join("")}
+          ${spec.values.map(value => {
+            const checked = selected.some(item => item.key === key && item.value === value);
+            return `<label class="filter-option"><input type="checkbox" data-filter-key="${escapeHtml(key)}" data-filter-value="${escapeHtml(value)}" ${checked ? "checked" : ""}>${escapeHtml(value)}</label>`;
+          }).join("")}
         </div>
       </div>`).join("");
-    mount.querySelectorAll("input[type=checkbox]").forEach(input => input.addEventListener("change", () => toggleFilter(domain, input.dataset.filterKey, input.dataset.filterValue, input.checked)));
+
+    mount.querySelectorAll("input[type=checkbox]").forEach(input => {
+      input.addEventListener("change", () => toggleFilter(domain, input.dataset.filterKey, input.dataset.filterValue, input.checked));
+    });
   }
-  function renderFilterTags(domain) { const store = currentStore(domain), tagsMount = document.getElementById(`${domain}FilterTags`), summary = document.getElementById(`${domain}FilterSummary`), items = store.filter.items || []; summary.textContent = items.length ? `${items.length} aktiv` : "keine Auswahl"; tagsMount.innerHTML = items.map(item => `<span class="filter-tag">${escapeHtml(getFilterLabel(domain, item.key, item.value))}<button type="button" aria-label="Filter entfernen" data-remove-key="${escapeHtml(item.key)}" data-remove-value="${escapeHtml(item.value)}">x</button></span>`).join(""); tagsMount.querySelectorAll("button[data-remove-key]").forEach(button => button.addEventListener("click", () => toggleFilter(domain, button.dataset.removeKey, button.dataset.removeValue, false))); }
-  function toggleFilter(domain, key, value, checked) { const store = currentStore(domain), items = store.filter.items || [], exists = items.some(item => item.key === key && item.value === value); if (checked && !exists) { if (items.length >= 3) { alert("Es konnen hochstens drei Filter ausgewahlt werden."); renderTable(domain); return; } store.filter.items = [...items, { key, value }]; } else if (!checked && exists) store.filter.items = items.filter(item => !(item.key === key && item.value === value)); renderTable(domain); }
-  function renderTable(domain) { const store = currentStore(domain), rows = getFilteredRows(domain), body = els[`${domain}TableBody`], countElement = els[`${domain}Count`], sortInfo = els[`${domain}SortInfo`]; renderFilterControls(domain); renderFilterTags(domain); countElement.textContent = `${store.entries.length} Eintrage`; sortInfo.textContent = `${store.sort.key} ${store.sort.dir === "asc" ? "↑" : "↓"}`; if (!rows.length) { body.innerHTML = `<tr><td colspan="${domain === "offense" ? 6 : 5}" class="empty">Noch keine ${domain === "offense" ? "offensiven" : "defensiven"} Eintrage.</td></tr>`; return; } if (domain === "offense") body.innerHTML = rows.map(row => `<tr data-domain="offense" data-id="${row.id}" class="${store.editingId === row.id ? "editing" : ""}"><td>${escapeHtml(row.createdOrder ?? "—")}</td><td>${renderStructureDisplay(row.structure)}</td><td>${row.position ? `<span class="pill position">${escapeHtml(row.position)}</span>` : "—"}</td><td>${row.half ? `<span class="pill structure">${escapeHtml(getHalfDisplay(row.half))}</span>` : "—"}</td><td class="result-cell ${row.group || ""}">${escapeHtml(row.resultDisplay || row.result || "")}</td><td>${getNumberDisplay(row)}</td></tr>`).join(""); else body.innerHTML = rows.map(row => `<tr data-domain="defense" data-id="${row.id}" class="${store.editingId === row.id ? "editing" : ""}"><td>${escapeHtml(row.createdOrder ?? "—")}</td><td>${row.position ? `<span class="pill ${row.positionSide === "green" ? "green-tag" : "red-tag"}">${escapeHtml(row.position)}</span>` : "—"}</td><td>${row.finishPosition ? `<span class="pill ${row.finishSide === "green" ? "green-tag" : row.finishSide === "yellow" ? "yellow-tag" : "red-tag"}">${escapeHtml(row.finishPosition === "freiwurf" ? "Freiwurf" : row.finishPosition === "tf" ? "TF" : row.finishPosition)}</span>` : "—"}</td><td>${row.half ? `<span class="pill structure">${escapeHtml(getHalfDisplay(row.half))}</span>` : "—"}</td><td>${getNumberDisplay(row)}</td></tr>`).join(""); addLongPressListeners(domain); }
-  function addLongPressListeners(domain) { els[`${domain}TableBody`].querySelectorAll("tr[data-id]").forEach(row => { const id = row.dataset.id; row.addEventListener("mousedown", () => startLongPress(domain, id)); row.addEventListener("mouseup", () => { if (!longPressFired) stopLongPress(); }); row.addEventListener("mouseleave", stopLongPress); row.addEventListener("touchstart", event => { startLongPress(domain, id); event.preventDefault(); }, { passive: false }); row.addEventListener("touchend", event => { stopLongPress(); event.preventDefault(); }, { passive: false }); row.addEventListener("touchcancel", stopLongPress); }); }
-  function startLongPress(domain, id) { stopLongPress(); longPressFired = false; pressTimer = setTimeout(() => { longPressFired = true; loadForEdit(domain, id); }, 550); }
-  function stopLongPress() { clearTimeout(pressTimer); }
-  function loadForEdit(domain, id) { const store = currentStore(domain), entry = store.entries.find(row => String(row.id) === String(id)); if (!entry) return; store.editingId = entry.id; const structures = entry.structure ? String(entry.structure).split(" + ").filter(Boolean) : [], numbers = domain === "defense" ? normalizeNumberValue(entry.number, "defense") : entry.number || "6:6"; store.selection = { structure: structures, position: entry.position || "", finishPosition: entry.finishPosition || "", positionSide: entry.positionSide || "", finishSide: entry.finishSide || "", half: normalizeHalfValue(entry.half || "1.hz"), number: numbers, result: entry.result || "", resultDisplay: entry.resultDisplay || "", group: entry.group || "" }; updateSelectedButtons(domain); renderTable(domain); requestAnimationFrame(() => { try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (error) { window.scrollTo(0, 0); } }); }
 
-  function exportPdf() { if (!window.jspdf || !window.jspdf.jsPDF) { alert("Der PDF-Export konnte nicht geladen werden. Bitte offne die App einmal mit Internetverbindung und versuche es erneut."); return; } const { jsPDF } = window.jspdf, doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" }); if (typeof doc.autoTable !== "function") { alert("Das PDF-Tabellenmodul konnte nicht geladen werden. Bitte offne die App mit Internetverbindung und versuche es erneut."); return; } doc.setFontSize(16); doc.text(`Kollektive Statistik vs ${state.meta.opponent}`, 14, 14); doc.setFontSize(10); doc.text(`Datum: ${formatDate(state.meta.matchDate)}`, 14, 21); const offenseRows = sortEntries("offense").map(row => [row.createdOrder || "", row.structure || "", row.position || "", getHalfDisplay(row.half || "1.hz"), row.resultDisplay || row.result || "", Array.isArray(row.number) ? row.number.join(" + ") : row.number || ""]), defenseRows = sortEntries("defense").map(row => [row.createdOrder || "", row.position || "", row.finishPosition === "freiwurf" ? "Freiwurf" : row.finishPosition === "tf" ? "TF" : row.finishPosition || "", getHalfDisplay(row.half || "1.hz"), Array.isArray(row.number) ? row.number.join(" + ") : row.number || ""]); doc.setFontSize(12); doc.text("Angriff", 14, 30); doc.autoTable({ head: [["#", "Struktur", "Position", "Halbzeit", "Ergebnis", "Zahl"]], body: offenseRows.length ? offenseRows : [["", "Keine Eintrage", "", "", "", ""]], startY: 33, theme: "grid", styles: { fontSize: 7.5, cellPadding: 2, lineWidth: .2, lineColor: [140, 140, 140] }, headStyles: { fillColor: [230, 242, 241], textColor: 20 } }); let nextY = doc.lastAutoTable.finalY + 10; if (nextY > 170) { doc.addPage(); nextY = 18; } doc.setFontSize(12); doc.text("Abwehr", 14, nextY); doc.autoTable({ head: [["#", "Position", "Abschlussposition", "Halbzeit", "Zahl"]], body: defenseRows.length ? defenseRows : [["", "Keine Eintrage", "", "", ""]], startY: nextY + 3, theme: "grid", styles: { fontSize: 7.5, cellPadding: 2, lineWidth: .2, lineColor: [140, 140, 140] }, headStyles: { fillColor: [248, 232, 233], textColor: 20 } }); const noteText = els.notes.value.trim(); if (noteText) { let noteY = doc.lastAutoTable.finalY + 10; if (noteY > 180) { doc.addPage(); noteY = 20; } doc.setFontSize(11); doc.text("Notizen:", 14, noteY); doc.setFontSize(10); doc.text(doc.splitTextToSize(noteText, 255), 14, noteY + 6); } const safeOpponent = state.meta.opponent.replace(/[^\\wäııÄıßı-]+/g, "_").replace(/^_+|_+$/g, ""); doc.save(`Kollektive_Statistik_vs_${safeOpponent || "Gegner"}.pdf`); }
-  function resetFilter(domain) { currentStore(domain).filter.items = []; renderTable(domain); }
-  function toggleFilterMenu(domain, force) { const box = document.getElementById(`${domain}FilterBox`), button = document.getElementById(`${domain}FilterToggle`), shouldOpen = typeof force === "boolean" ? force : !box.classList.contains("open"); document.querySelectorAll(".filter-box.open").forEach(other => { if (other !== box) other.classList.remove("open"); }); box.classList.toggle("open", shouldOpen); button.setAttribute("aria-expanded", String(shouldOpen)); }
-  function startApp() { const opponent = els.opponent.value.trim(), matchDate = els.matchDate.value; if (!opponent || !matchDate) { alert("Bitte Gegner und Datum eintragen."); return; } state.meta = { opponent, matchDate }; els.headline.textContent = `Statistik vs ${opponent}`; els.topMeta.textContent = formatDate(matchDate); els.setup.classList.add("hidden"); els.workspace.classList.remove("hidden"); loadMatchActions().then(() => { renderTable("offense"); renderTable("defense"); updateSelectedButtons("offense"); updateSelectedButtons("defense"); }); }
+  function renderFilterTags(domain) {
+    const store = currentStore(domain);
+    const tagsMount = document.getElementById(`${domain}FilterTags`);
+    const summary = document.getElementById(`${domain}FilterSummary`);
+    const items = store.filter.items || [];
 
-  document.querySelectorAll("th button[data-table]").forEach(button => button.addEventListener("click", () => setSort(button.dataset.table, button.dataset.sort)));
-  els.startBtn.addEventListener("click", startApp); els.undoBtn.addEventListener("click", undoLast); els.pdfBtn.addEventListener("click", exportPdf); els.offenseSaveBtn.addEventListener("click", () => saveEntry("offense")); els.defenseSaveBtn.addEventListener("click", () => saveEntry("defense")); els.offenseResetBtn.addEventListener("click", () => clearSelection("offense")); els.defenseResetBtn.addEventListener("click", () => clearSelection("defense"));
-  ["offense", "defense"].forEach(domain => { document.getElementById(`${domain}FilterToggle`).addEventListener("click", () => toggleFilterMenu(domain)); document.getElementById(`${domain}FilterReset`).addEventListener("click", () => resetFilter(domain)); });
-  document.addEventListener("click", event => { if (!event.target.closest(".filter-box")) document.querySelectorAll(".filter-box.open").forEach(box => box.classList.remove("open")); });
+    summary.textContent = items.length ? `${items.length} aktiv` : "keine Auswahl";
+    tagsMount.innerHTML = items.map(item => `
+      <span class="filter-tag">
+        ${escapeHtml(getFilterLabel(domain, item.key, item.value))}
+        <button type="button" aria-label="Filter entfernen" data-remove-key="${escapeHtml(item.key)}" data-remove-value="${escapeHtml(item.value)}">×</button>
+      </span>`).join("");
 
-  offenseStructureRows.forEach((row, index) => renderButtons(els[`offenseStructureRow${index + 1}`], row, "structure", "offense"));
-  renderButtons(els.offensePositionButtons, positionOptions, "position", "offense"); renderButtons(els.offenseHalfButtons, halfOptions, "half", "offense"); renderButtons(els.offenseResultButtons, offenseResults, "result", "offense"); renderButtons(els.offenseNumberButtons, offenseNumberOptions, "number", "offense"); renderButtons(els.defensePositionGreenButtons, positionOptions, "position", "defense", "green"); renderButtons(els.defensePositionRedButtons, positionOptions, "position", "defense", "red"); renderButtons(els.defenseFinishGreenButtons, defenseFinishOptions, "finishPosition", "defense", "green"); renderButtons(els.defenseFinishRedButtons, defenseFinishOptions, "finishPosition", "defense", "red"); renderButtons(els.defenseFinishSpecialButtons, defenseFinishSpecialOptions, "finishPosition", "defense"); renderButtons(els.defenseHalfButtons, halfOptions, "half", "defense"); renderButtons(els.defenseNumberButtons, defenseNumberOptions, "number", "defense");
-  updateSelectedButtons("offense"); updateSelectedButtons("defense"); setToday();
+    tagsMount.querySelectorAll("button[data-remove-key]").forEach(button => {
+      button.addEventListener("click", () => toggleFilter(domain, button.dataset.removeKey, button.dataset.removeValue, false));
+    });
+  }
+
+  function toggleFilter(domain, key, value, checked) {
+    const store = currentStore(domain);
+    const items = store.filter.items || [];
+    const exists = items.some(item => item.key === key && item.value === value);
+
+    if (checked && !exists) {
+      if (items.length >= 3) {
+        alert("Es können höchstens drei Filter ausgewählt werden.");
+        renderTable(domain);
+        return;
+      }
+      store.filter.items = [...items, { key, value }];
+    } else if (!checked && exists) {
+      store.filter.items = items.filter(item => !(item.key === key && item.value === value));
+    }
+
+    renderTable(domain);
+  }
+
+  function renderTable(domain) {
+    const store = currentStore(domain);
+    const rows = getFilteredRows(domain);
+    const body = els[`${domain}TableBody`];
+    const countElement = els[`${domain}Count`];
+    const sortInfo = els[`${domain}SortInfo`];
+
+    renderFilterControls(domain);
+    renderFilterTags(domain);
+    countElement.textContent = `${store.entries.length} Einträge`;
+    sortInfo.textContent = `${store.sort.key} ${store.sort.dir === "asc" ? "↑" : "↓"}`;
+
+    if (!rows.length) {
+      body.innerHTML = `<tr><td colspan="${domain === "offense" ? 6 : 5}" class="empty">Noch keine ${domain === "offense" ? "offensiven" : "defensiven"} Einträge.</td></tr>`;
+      return;
+    }
+
+    if (domain === "offense") {
+      body.innerHTML = rows.map(row => `
+        <tr data-domain="offense" data-id="${row.id}" class="${store.editingId === row.id ? "editing" : ""}">
+          <td>${escapeHtml(row.createdOrder ?? "—")}</td>
+          <td>${renderStructureDisplay(row.structure)}</td>
+          <td>${row.position ? `<span class="pill position">${escapeHtml(row.position)}</span>` : "—"}</td>
+          <td>${row.half ? `<span class="pill structure">${escapeHtml(getHalfDisplay(row.half))}</span>` : "—"}</td>
+          <td class="result-cell ${row.group || ""}">${escapeHtml(row.resultDisplay || row.result || "")}</td>
+          <td>${getNumberDisplay(row)}</td>
+        </tr>`).join("");
+    } else {
+      body.innerHTML = rows.map(row => `
+        <tr data-domain="defense" data-id="${row.id}" class="${store.editingId === row.id ? "editing" : ""}">
+          <td>${escapeHtml(row.createdOrder ?? "—")}</td>
+          <td>${row.position ? `<span class="pill ${row.positionSide === "green" ? "green-tag" : "red-tag"}">${escapeHtml(row.position)}</span>` : "—"}</td>
+          <td>${row.finishPosition ? `<span class="pill ${row.finishSide === "green" ? "green-tag" : row.finishSide === "yellow" ? "yellow-tag" : "red-tag"}">${escapeHtml(row.finishPosition === "freiwurf" ? "Freiwurf" : row.finishPosition === "tf" ? "TF" : row.finishPosition)}</span>` : "—"}</td>
+          <td>${row.half ? `<span class="pill structure">${escapeHtml(getHalfDisplay(row.half))}</span>` : "—"}</td>
+          <td>${getNumberDisplay(row)}</td>
+        </tr>`).join("");
+    }
+
+    addLongPressListeners(domain);
+  }
+
+  /*
+    Die Quote berücksichtigt ausschließlich die Auswahl bei „Angegriffene Position“:
+    Grün = gewonnener Zweikampf, Rot = nicht gewonnener Zweikampf.
+    Abschlussposition, Ergebnis, Zahl und Halbzeit beeinflussen diese Grafik nicht.
+  */
+  function getDefenseQuoteData() {
+    const data = Object.fromEntries(positionOptions.map(position => [position, { won: 0, total: 0 }]));
+
+    state.defense.entries.forEach(entry => {
+      const position = String(entry.position || "");
+      if (!data[position]) return;
+      if (entry.positionSide !== "green" && entry.positionSide !== "red") return;
+
+      data[position].total += 1;
+      if (entry.positionSide === "green") data[position].won += 1;
+    });
+
+    return data;
+  }
+
+  function getQuoteColorClass(quote, total) {
+    if (!total) return "neutral";
+    if (quote < 40) return "red";
+    if (quote < 60) return "yellow";
+    return "green";
+  }
+
+  function renderDefenseQuote() {
+    const data = getDefenseQuoteData();
+
+    positionOptions.forEach(position => {
+      const { won, total } = data[position];
+      const quote = total ? Math.round((won / total) * 100) : null;
+      const colorClass = getQuoteColorClass(quote ?? 0, total);
+      const sector = document.getElementById(`sector-${position}`);
+      const quoteText = document.getElementById(`quote-${position}`);
+      const countText = document.getElementById(`count-${position}`);
+
+      sector.classList.remove("neutral", "red", "yellow", "green");
+      sector.classList.add(colorClass);
+      quoteText.textContent = total ? `${quote} %` : "–";
+      countText.textContent = `${won}/${total}`;
+    });
+  }
+
+  function addLongPressListeners(domain) {
+    els[`${domain}TableBody`].querySelectorAll("tr[data-id]").forEach(row => {
+      const id = row.dataset.id;
+      row.addEventListener("mousedown", () => startLongPress(domain, id));
+      row.addEventListener("mouseup", () => { if (!longPressFired) stopLongPress(); });
+      row.addEventListener("mouseleave", stopLongPress);
+      row.addEventListener("touchstart", event => {
+        startLongPress(domain, id);
+        event.preventDefault();
+      }, { passive: false });
+      row.addEventListener("touchend", event => {
+        stopLongPress();
+        event.preventDefault();
+      }, { passive: false });
+      row.addEventListener("touchcancel", stopLongPress);
+    });
+  }
+
+  function startLongPress(domain, id) {
+    stopLongPress();
+    longPressFired = false;
+    pressTimer = setTimeout(() => {
+      longPressFired = true;
+      loadForEdit(domain, id);
+    }, 550);
+  }
+
+  function stopLongPress() {
+    clearTimeout(pressTimer);
+  }
+
+  function loadForEdit(domain, id) {
+    const store = currentStore(domain);
+    const entry = store.entries.find(row => String(row.id) === String(id));
+    if (!entry) return;
+
+    store.editingId = entry.id;
+    const structures = entry.structure ? String(entry.structure).split(" + ").filter(Boolean) : [];
+    const numbers = domain === "defense" ? normalizeNumberValue(entry.number, "defense") : entry.number || "6:6";
+
+    store.selection = {
+      structure: structures,
+      position: entry.position || "",
+      finishPosition: entry.finishPosition || "",
+      positionSide: entry.positionSide || "",
+      finishSide: entry.finishSide || "",
+      half: normalizeHalfValue(entry.half || "1.hz"),
+      number: numbers,
+      result: entry.result || "",
+      resultDisplay: entry.resultDisplay || "",
+      group: entry.group || ""
+    };
+
+    updateSelectedButtons(domain);
+    renderTable(domain);
+    requestAnimationFrame(() => {
+      try {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } catch (error) {
+        window.scrollTo(0, 0);
+      }
+    });
+  }
+
+  function exportPdf() {
+    if (!window.jspdf || !window.jspdf.jsPDF) {
+      alert("Der PDF-Export konnte nicht geladen werden. Bitte öffne die App einmal mit Internetverbindung und versuche es erneut.");
+      return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
+
+    if (typeof doc.autoTable !== "function") {
+      alert("Das PDF-Tabellenmodul konnte nicht geladen werden. Bitte öffne die App mit Internetverbindung und versuche es erneut.");
+      return;
+    }
+
+    doc.setFontSize(16);
+    doc.text(`Kollektive Statistik vs ${state.meta.opponent}`, 14, 14);
+    doc.setFontSize(10);
+    doc.text(`Datum: ${formatDate(state.meta.matchDate)}`, 14, 21);
+
+    const offenseRows = sortEntries("offense").map(row => [
+      row.createdOrder || "",
+      row.structure || "",
+      row.position || "",
+      getHalfDisplay(row.half || "1.hz"),
+      row.resultDisplay || row.result || "",
+      Array.isArray(row.number) ? row.number.join(" + ") : row.number || ""
+    ]);
+
+    const defenseRows = sortEntries("defense").map(row => [
+      row.createdOrder || "",
+      row.position || "",
+      row.finishPosition === "freiwurf" ? "Freiwurf" : row.finishPosition === "tf" ? "TF" : row.finishPosition || "",
+      getHalfDisplay(row.half || "1.hz"),
+      Array.isArray(row.number) ? row.number.join(" + ") : row.number || ""
+    ]);
+
+    doc.setFontSize(12);
+    doc.text("Angriff", 14, 30);
+    doc.autoTable({
+      head: [["#", "Struktur", "Position", "Halbzeit", "Ergebnis", "Zahl"]],
+      body: offenseRows.length ? offenseRows : [["", "Keine Einträge", "", "", "", ""]],
+      startY: 33,
+      theme: "grid",
+      styles: { fontSize: 7.5, cellPadding: 2, lineWidth: .2, lineColor: [140, 140, 140] },
+      headStyles: { fillColor: [230, 242, 241], textColor: 20 }
+    });
+
+    let nextY = doc.lastAutoTable.finalY + 10;
+    if (nextY > 170) {
+      doc.addPage();
+      nextY = 18;
+    }
+
+    doc.setFontSize(12);
+    doc.text("Abwehr", 14, nextY);
+    doc.autoTable({
+      head: [["#", "Position", "Abschlussposition", "Halbzeit", "Zahl"]],
+      body: defenseRows.length ? defenseRows : [["", "Keine Einträge", "", "", ""]],
+      startY: nextY + 3,
+      theme: "grid",
+      styles: { fontSize: 7.5, cellPadding: 2, lineWidth: .2, lineColor: [140, 140, 140] },
+      headStyles: { fillColor: [248, 232, 233], textColor: 20 }
+    });
+
+    const noteText = els.notes.value.trim();
+    if (noteText) {
+      let noteY = doc.lastAutoTable.finalY + 10;
+      if (noteY > 180) {
+        doc.addPage();
+        noteY = 20;
+      }
+      doc.setFontSize(11);
+      doc.text("Notizen:", 14, noteY);
+      doc.setFontSize(10);
+      doc.text(doc.splitTextToSize(noteText, 255), 14, noteY + 6);
+    }
+
+    const safeOpponent = state.meta.opponent
+      .replace(/[^\wäöüÄÖÜß-]+/g, "_")
+      .replace(/^_+|_+$/g, "");
+    doc.save(`Kollektive_Statistik_vs_${safeOpponent || "Gegner"}.pdf`);
+  }
+
+  function resetFilter(domain) {
+    currentStore(domain).filter.items = [];
+    renderTable(domain);
+  }
+
+  function toggleFilterMenu(domain, force) {
+    const box = document.getElementById(`${domain}FilterBox`);
+    const button = document.getElementById(`${domain}FilterToggle`);
+    const shouldOpen = typeof force === "boolean" ? force : !box.classList.contains("open");
+
+    document.querySelectorAll(".filter-box.open").forEach(other => {
+      if (other !== box) other.classList.remove("open");
+    });
+
+    box.classList.toggle("open", shouldOpen);
+    button.setAttribute("aria-expanded", String(shouldOpen));
+  }
+
+  function startApp() {
+    const opponent = els.opponent.value.trim();
+    const matchDate = els.matchDate.value;
+
+    if (!opponent || !matchDate) {
+      alert("Bitte Gegner und Datum eintragen.");
+      return;
+    }
+
+    state.meta = { opponent, matchDate };
+    els.headline.textContent = `Statistik vs ${opponent}`;
+    els.topMeta.textContent = formatDate(matchDate);
+    els.setup.classList.add("hidden");
+    els.workspace.classList.remove("hidden");
+
+    loadMatchActions().then(() => {
+      renderTable("offense");
+      renderTable("defense");
+      renderDefenseQuote();
+      updateSelectedButtons("offense");
+      updateSelectedButtons("defense");
+    });
+  }
+
+  document.querySelectorAll("th button[data-table]").forEach(button => {
+    button.addEventListener("click", () => setSort(button.dataset.table, button.dataset.sort));
+  });
+
+  els.startBtn.addEventListener("click", startApp);
+  els.undoBtn.addEventListener("click", undoLast);
+  els.pdfBtn.addEventListener("click", exportPdf);
+  els.offenseSaveBtn.addEventListener("click", () => saveEntry("offense"));
+  els.defenseSaveBtn.addEventListener("click", () => saveEntry("defense"));
+  els.offenseResetBtn.addEventListener("click", () => clearSelection("offense"));
+  els.defenseResetBtn.addEventListener("click", () => clearSelection("defense"));
+
+  ["offense", "defense"].forEach(domain => {
+    document.getElementById(`${domain}FilterToggle`).addEventListener("click", () => toggleFilterMenu(domain));
+    document.getElementById(`${domain}FilterReset`).addEventListener("click", () => resetFilter(domain));
+  });
+
+  document.addEventListener("click", event => {
+    if (!event.target.closest(".filter-box")) {
+      document.querySelectorAll(".filter-box.open").forEach(box => box.classList.remove("open"));
+    }
+  });
+
+  offenseStructureRows.forEach((row, index) => {
+    renderButtons(els[`offenseStructureRow${index + 1}`], row, "structure", "offense");
+  });
+
+  renderButtons(els.offensePositionButtons, positionOptions, "position", "offense");
+  renderButtons(els.offenseHalfButtons, halfOptions, "half", "offense");
+  renderButtons(els.offenseResultButtons, offenseResults, "result", "offense");
+  renderButtons(els.offenseNumberButtons, offenseNumberOptions, "number", "offense");
+  renderButtons(els.defensePositionGreenButtons, positionOptions, "position", "defense", "green");
+  renderButtons(els.defensePositionRedButtons, positionOptions, "position", "defense", "red");
+  renderButtons(els.defenseFinishGreenButtons, defenseFinishOptions, "finishPosition", "defense", "green");
+  renderButtons(els.defenseFinishRedButtons, defenseFinishOptions, "finishPosition", "defense", "red");
+  renderButtons(els.defenseFinishSpecialButtons, defenseFinishSpecialOptions, "finishPosition", "defense");
+  renderButtons(els.defenseHalfButtons, halfOptions, "half", "defense");
+  renderButtons(els.defenseNumberButtons, defenseNumberOptions, "number", "defense");
+
+  updateSelectedButtons("offense");
+  updateSelectedButtons("defense");
+  renderDefenseQuote();
+  setToday();
 })();
 </script>
 </body>
